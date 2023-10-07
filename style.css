@@ -80,6 +80,11 @@
   font-size: 20px;
   font-weight: 700;
 }
+@media (max-width: 800px) {
+  .container .main .pDiv p {
+    font-size: 15px;
+  }
+}
 .container .main .divButtons {
   display: flex;
   width: 100%;
