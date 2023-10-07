@@ -219,7 +219,7 @@ let arr = [
             "Две полосы": true,
             "Три полосы": false,
         },
-    },
+    }
 ];
 
 let count = 0;
@@ -326,6 +326,3 @@ arrChoiseNum.forEach((item) => {
     item.onclick = handleClick;
 });
 
-arrChoiseNum.forEach((item=>{
-    console.log(item);
-}))
