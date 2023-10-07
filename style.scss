@@ -5,11 +5,19 @@
     box-sizing: border-box;
     font-family: 'Arimo', sans-serif;
 }
-
+.header-div{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    .aty{
+        width: 17%;
+        height: auto;
+        margin: auto;
+    }
+}
 .container{
     display: flex;
     flex-direction: column;
-    background-color:#f5f5f5;
     max-width: 1024px;
     margin: auto;
     justify-content: center;
@@ -29,16 +37,14 @@
             padding: 8px 11px 8px 11px;
         }
     }
-    
     .main{
         display: flex;
         width: 100%;
         justify-content: center;
         flex-direction: column;
         font-weight: bold;
-        background-color: #f5f5f5;
-        margin-top: 15;
-        padding: 15px 15px 0px 15px;
+        background-color:white;
+        padding: 0px 15px 0px 15px;
         ol{
             margin-top: 15px;
             margin-left: 21px;
