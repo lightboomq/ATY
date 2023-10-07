@@ -10,9 +10,14 @@
     width: 100%;
     justify-content: center;
     .aty{
-        width: 25%;
+        width: 10%;
         height: auto;
         margin: auto;
+    }
+    @media (max-width:800px) {
+        .aty{
+            width: 25%;
+        }
     }
 }
 .container{
@@ -103,7 +108,7 @@
             button{
                 all: unset;
                 cursor:pointer;
-                color:rgb(25, 63, 233);
+                color:rgb(0, 0, 0);
                 font-size: 18px;
                 font-weight: lighter;
             }

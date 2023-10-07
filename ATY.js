@@ -234,7 +234,7 @@ function objAnswer() {
     for (let key of Object.keys(arr[count].answers)) {
         nKey += `<li>${key}</li>`;
     }
-    return `<ol>${nKey}</ol>`;
+    return `${nKey}`;
 }
 function answer() {
     let li = document.querySelectorAll("li");
@@ -257,15 +257,20 @@ function answer() {
 }
 
 function block(arr) {
-    let html = ''
-    main.innerHTML = "";
+    let html
+        if(document.querySelector('.div-remove')){
+            document.querySelector('.div-remove').remove()
+        }
     return [
+        html=
+        `<div class = "div-remove">
+            <h3>Вопрос: ${count+1}</h3>
+            <img src = '${arr[count].img}'/>
+            <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
+            <ol>${objAnswer()}</ol>
+        </div>`,    
+        
         main.insertAdjacentHTML('beforeend',html),
-        main.innerHTML=`<h3>Вопрос: ${count+1}</h3>
-        <img src = '${arr[count].img}'/>
-        <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>`,
-        objAnswer(),
-        main.insertAdjacentHTML("beforeend", objAnswer()),
         main.insertAdjacentElement("beforeend", divButtons),
         answer(),
     ];
@@ -315,7 +320,7 @@ let back = function () {
     main.insertAdjacentElement("beforeend", divButtons);
 };
 
-main.insertAdjacentElement("beforeend", divButtons);
+
 document.querySelector(".btn-move").onclick = move;
 document.querySelector(".btn-back").onclick = back;
 
