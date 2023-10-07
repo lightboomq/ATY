@@ -257,11 +257,13 @@ function answer() {
 }
 
 function block(arr) {
-    main.innerHTML = "";
+    let html = ''
     return [
-        main.innerHTML=`<h3>Вопрос: ${count+1}</h3>
+        html=`<h3>Вопрос: ${count+1}</h3>
         <img src = '${arr[count].img}'/>
         <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>`,
+        objAnswer(),
+        main.insertAdjacentHTML('beforeend',html),
         objAnswer(),
         main.insertAdjacentHTML("beforeend", objAnswer()),
         main.insertAdjacentElement("beforeend", divButtons),
