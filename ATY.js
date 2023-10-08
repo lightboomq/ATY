@@ -1,12 +1,12 @@
 import { arr } from "./arr.js";
 let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
-document.querySelector(".btn-move").onclick = nextTicket;
-document.querySelector(".btn-back").onclick = prevTicket;
+document.querySelector(".btn-move").onclick = getNextQuestion;
+document.querySelector(".btn-back").onclick = getPrevQuestion;
 
 let count = 0;
 
-function getAnswerFromArr() {
+function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
         nKey += `<li>${key}</li>`;
@@ -50,7 +50,7 @@ function getHtml(arr) {
             <h3>Вопрос: ${count + 1}</h3>
             <img src = '${arr[count].img}'/>
             <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
-            <ol>${getAnswerFromArr()}</ol>
+            <ol>${getHtmlAnswersFromArr()}</ol>
         </div>`),
         main.insertAdjacentHTML("afterbegin", html),
         main.insertAdjacentElement("beforeend", divButtons),
@@ -73,7 +73,7 @@ NodeListItemGrid.forEach((item) => {
 
 let a = "";
 let b = null;
-function nextTicket() {
+function getNextQuestion() {
     if (a == b) {
         count++;
         b = "";
@@ -91,7 +91,7 @@ function nextTicket() {
     getHtml(arr);
     main.insertAdjacentElement("beforeend", divButtons);
 }
-function prevTicket() {
+function getPrevQuestion() {
     if (a == b) {
         count--;
         b = "";
