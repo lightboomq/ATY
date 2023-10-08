@@ -5,34 +5,12 @@ document.querySelector(".btn-move").onclick = move;
 document.querySelector(".btn-back").onclick = back;
 
 let count = 0;
-let arrChoise = document.querySelector(".array-choise");
-
-for (let i = 0; i < arr.length; i++) {
-    arrChoise.innerHTML += `<div class="grid">${i + 1}</div>`;
-}
 function objAnswer() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
         nKey += `<li>${key}</li>`;
     }
     return `${nKey}`;
-}
-function answer() {
-    let li = document.querySelectorAll("li");
-    li.forEach((item) => {
-        item.onclick = handleClickLi;
-    });
-    function handleClickLi(e) {
-        let correctly;
-        correctly = arr[count].answers[e.target.textContent];
-        if (correctly == true) {
-            arrChoiseNum[count].style.backgroundColor = "green";
-        } else {
-            arrChoiseNum[count].style.backgroundColor = "red";
-        }
-        count++;
-        block(arr);
-    }
 }
 
 function block(arr) {
@@ -55,9 +33,44 @@ function block(arr) {
 
 block(arr);
 
+let correctly;
+function answer() {
+    let li = document.querySelectorAll("li");
+    li.forEach((item) => {
+        item.onclick = handleClickLi;
+    });
+    function handleClickLi(e) { 
+        correctly = arr[count].answers[e.target.textContent];
+        if (correctly == true) {
+            arrChoiseNum[count].style.backgroundColor = "green";
+        } else {
+            arrChoiseNum[count].style.backgroundColor = "red";
+        }
+        count++;
+        block(arr);
+    }
+}
+
+let arrChoise = document.querySelector(".array-choise");
+for (let i = 0; i < arr.length; i++) {
+    arrChoise.innerHTML += `<div class="grid">${i + 1}</div>`;
+}
+let arrChoiseNum = document.querySelectorAll(".grid");
+function handleClick(e) {
+    if(correctly==true || correctly==false){
+        return false
+    }
+    count = +e.target.textContent - 1;
+    block(arr);
+}
+arrChoiseNum.forEach((item) => {
+    item.onclick = handleClick;
+});
+
+
+
 let a = "";
 let b = null;
-
 function move() {
     if (a == b) {
         count++;
@@ -76,7 +89,6 @@ function move() {
     block(arr);
     main.insertAdjacentElement("beforeend", divButtons);
 }
-
 function back() {
     if (a == b) {
         count--;
@@ -97,11 +109,3 @@ function back() {
     
     main.insertAdjacentElement("beforeend", divButtons);
 }
-let arrChoiseNum = document.querySelectorAll(".grid");
-function handleClick(e) {
-    count = +e.target.textContent - 1;
-    block(arr);
-}
-arrChoiseNum.forEach((item) => {
-    item.onclick = handleClick;
-});
