@@ -28,12 +28,12 @@
   margin: auto;
   justify-content: center;
 }
-.container .array-choise {
+.container .grid-block {
   display: flex;
   margin-top: 15px;
   overflow: auto;
 }
-.container .array-choise .grid {
+.container .grid-block .grid {
   display: flex;
   justify-content: center;
   align-items: center;

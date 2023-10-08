@@ -1,11 +1,12 @@
 import { arr } from "./arr.js";
 let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
-document.querySelector(".btn-move").onclick = move;
-document.querySelector(".btn-back").onclick = back;
+document.querySelector(".btn-move").onclick = nextTicket;
+document.querySelector(".btn-back").onclick = prevTicket;
 
 let count = 0;
-function objAnswer() {
+
+function getAnswerFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
         nKey += `<li>${key}</li>`;
@@ -13,7 +14,33 @@ function objAnswer() {
     return `${nKey}`;
 }
 
-function block(arr) {
+getHtml(arr);
+
+function giveCorrectlyAnswer() {
+    let correctly;
+    let answers = document.querySelectorAll("li");
+    answers.forEach((answers) => {
+        answers.onclick = clickByAnswer;
+    });
+    function clickByAnswer(e) {
+        correctly = arr[count].answers[e.target.textContent];
+        if (correctly == true) {
+            NodeListItemGrid[count].style.backgroundColor = "green";
+        } else {
+            NodeListItemGrid[count].style.backgroundColor = "red";
+        }
+        count++;
+        getHtml(arr);
+    }
+}
+let gridBlock = document.querySelector(".grid-block");
+for (let i = 0; i < arr.length; i++) {
+    gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
+}
+let NodeListItemGrid = document.querySelectorAll(".grid");
+
+let backgroundColor;
+function getHtml(arr) {
     let html;
     if (document.querySelector(".div-remove")) {
         document.querySelector(".div-remove").remove();
@@ -23,55 +50,30 @@ function block(arr) {
             <h3>Вопрос: ${count + 1}</h3>
             <img src = '${arr[count].img}'/>
             <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
-            <ol>${objAnswer()}</ol>
+            <ol>${getAnswerFromArr()}</ol>
         </div>`),
         main.insertAdjacentHTML("afterbegin", html),
         main.insertAdjacentElement("beforeend", divButtons),
-        answer(),
+        giveCorrectlyAnswer(),
     ];
 }
-
-block(arr);
-
-let correctly;
-function answer() {
-    let li = document.querySelectorAll("li");
-    li.forEach((item) => {
-        item.onclick = handleClickLi;
-    });
-    function handleClickLi(e) { 
-        correctly = arr[count].answers[e.target.textContent];
-        if (correctly == true) {
-            arrChoiseNum[count].style.backgroundColor = "green";
-        } else {
-            arrChoiseNum[count].style.backgroundColor = "red";
-        }
-        count++;
-        block(arr);
-    }
-}
-
-let arrChoise = document.querySelector(".array-choise");
-for (let i = 0; i < arr.length; i++) {
-    arrChoise.innerHTML += `<div class="grid">${i + 1}</div>`;
-}
-let arrChoiseNum = document.querySelectorAll(".grid");
-function handleClick(e) {
-    if(correctly==true || correctly==false){
-        return false
-    }
+function clickByNum(e) {
     count = +e.target.textContent - 1;
-    block(arr);
+    backgroundColor = NodeListItemGrid[count].style.backgroundColor;
+    if (backgroundColor === "red" || backgroundColor === "green") {
+        return false;
+    }
+    console.log(count + 1);
+    getHtml(arr);
 }
-arrChoiseNum.forEach((item) => {
-    item.onclick = handleClick;
+
+NodeListItemGrid.forEach((item) => {
+    item.onclick = clickByNum;
 });
-
-
 
 let a = "";
 let b = null;
-function move() {
+function nextTicket() {
     if (a == b) {
         count++;
         b = "";
@@ -86,10 +88,10 @@ function move() {
     if (count > arr.length - 1) {
         count = 0;
     }
-    block(arr);
+    getHtml(arr);
     main.insertAdjacentElement("beforeend", divButtons);
 }
-function back() {
+function prevTicket() {
     if (a == b) {
         count--;
         b = "";
@@ -105,7 +107,7 @@ function back() {
         count = arr.length - 1;
         b = arr[count];
     }
-    block(arr);
-    
+    getHtml(arr);
+
     main.insertAdjacentElement("beforeend", divButtons);
 }
