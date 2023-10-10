@@ -4,6 +4,13 @@ let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
 document.querySelector(".btn-back").onclick = getPrevQuestion;
 
+
+let gridBlock = document.querySelector(".grid-block");
+for (let i = 0; i < arr.length; i++) {
+    gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
+}
+let NodeListItemGrid = document.querySelectorAll(".grid");
+
 let count = 0;
 
 function getHtmlAnswersFromArr() {
@@ -13,7 +20,6 @@ function getHtmlAnswersFromArr() {
     }
     return `${nKey}`;
 }
-
 getHtml(arr);
 
 function giveCorrectlyAnswer() {
@@ -29,18 +35,15 @@ function giveCorrectlyAnswer() {
         } else {
             NodeListItemGrid[count].style.backgroundColor = "red";
         }
-        count++;
+        count++
         getHtml(arr);
     }
 }
-let gridBlock = document.querySelector(".grid-block");
-for (let i = 0; i < arr.length; i++) {
-    gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
-}
-let NodeListItemGrid = document.querySelectorAll(".grid");
-
 let backgroundColor;
 function getHtml(arr) {
+    while(NodeListItemGrid[count].style.backgroundColor=='red'||NodeListItemGrid[count].style.backgroundColor=='green'){
+        count++;
+    }
     let html;
     if (document.querySelector(".div-remove")) {
         document.querySelector(".div-remove").remove();
@@ -66,7 +69,6 @@ function clickByNum(e) {
     console.log(count + 1);
     getHtml(arr);
 }
-
 NodeListItemGrid.forEach((item) => {
     item.onclick = clickByNum;
 });
