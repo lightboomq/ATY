@@ -2,7 +2,7 @@ import { arr } from "./arr.js";
 let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
-document.querySelector(".btn-back").onclick = getPrevQuestion;
+
 
 
 let gridBlock = document.querySelector(".grid-block");
@@ -43,6 +43,9 @@ let backgroundColor;
 function getHtml(arr) {
     while(NodeListItemGrid[count].style.backgroundColor=='red'||NodeListItemGrid[count].style.backgroundColor=='green'){
         count++;
+    }
+    if(NodeListItemGrid[count].style.backgroundColor=='white'){
+        NodeListItemGrid[count].style.backgroundColor=='blue'
     }
     let html;
     if (document.querySelector(".div-remove")) {
@@ -93,23 +96,4 @@ function getNextQuestion() {
     getHtml(arr);
     main.insertAdjacentElement("beforeend", divButtons);
 }
-function getPrevQuestion() {
-    if (a == b) {
-        count--;
-        b = "";
-        a = "";
-    }
-    b = arr[count];
-    if (a == b) {
-        b = null;
-        a = "";
-    }
-    count--;
-    if (count < 0) {
-        count = arr.length - 1;
-        b = arr[count];
-    }
-    getHtml(arr);
 
-    main.insertAdjacentElement("beforeend", divButtons);
-}
