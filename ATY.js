@@ -2,15 +2,12 @@ import { arr } from "./arr.js";
 let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
-
-
-
 let gridBlock = document.querySelector(".grid-block");
+const result = []
 for (let i = 0; i < arr.length; i++) {
     gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
 let NodeListItemGrid = document.querySelectorAll(".grid");
-
 let count = 0;
 
 function getHtmlAnswersFromArr() {
@@ -20,6 +17,7 @@ function getHtmlAnswersFromArr() {
     }
     return `${nKey}`;
 }
+
 getHtml(arr);
 
 function giveCorrectlyAnswer() {
@@ -30,46 +28,67 @@ function giveCorrectlyAnswer() {
     });
     function clickByAnswer(e) {
         correctly = arr[count].answers[e.target.textContent];
+        correctly==true?result.push(1) : result.push(0);
         if (correctly == true) {
             NodeListItemGrid[count].style.backgroundColor = "green";
         } else {
             NodeListItemGrid[count].style.backgroundColor = "red";
         }
-        count++
+        if(count>=19){
+            count=0
+        }
+        else{
+            count++;
+        }
         getHtml(arr);
     }
 }
-let backgroundColor;
+
 function getHtml(arr) {
-    while(NodeListItemGrid[count].style.backgroundColor=='red'||NodeListItemGrid[count].style.backgroundColor=='green'){
-        count++;
-    }
-    if(NodeListItemGrid[count].style.backgroundColor=='white'){
-        NodeListItemGrid[count].style.backgroundColor=='blue'
-    }
     let html;
-    if (document.querySelector(".div-remove")) {
-        document.querySelector(".div-remove").remove();
+    if (document.querySelector(".divBlockHtml")) {
+        document.querySelector(".divBlockHtml").remove();
+    }
+    if(result.length>=20){ //Доделать 
+        return [
+            html=`<div class="divBlockHtml">
+            <h3>Успешно</h3>
+        </div>`,
+        main.insertAdjacentHTML("afterbegin", html),
+        divButtons.style.display = 'none',
+        gridBlock.style.display = 'none'
+        ]
+        
+    }
+    while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green"){
+        if(count>=19){
+            count=0
+            console.log('while if');
+        }
+        else{
+            console.log('while else');
+            count++
+        }
     }
     return [
-        (html = `<div class = "div-remove">
+        html = `<div class = "divBlockHtml">
             <h3>Вопрос: ${count + 1}</h3>
             <img src = '${arr[count].img}'/>
             <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
             <ol>${getHtmlAnswersFromArr()}</ol>
-        </div>`),
+        </div>`,
         main.insertAdjacentHTML("afterbegin", html),
         main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
     ];
+    
 }
+
 function clickByNum(e) {
     count = +e.target.textContent - 1;
-    backgroundColor = NodeListItemGrid[count].style.backgroundColor;
-    if (backgroundColor === "red" || backgroundColor === "green") {
+    if (NodeListItemGrid[count].style.backgroundColor === "red" || NodeListItemGrid[count].style.backgroundColor === "green") {
         return false;
     }
-    console.log(count + 1);
     getHtml(arr);
 }
 NodeListItemGrid.forEach((item) => {
@@ -94,6 +113,7 @@ function getNextQuestion() {
         count = 0;
     }
     getHtml(arr);
-    main.insertAdjacentElement("beforeend", divButtons);
 }
+
+
 

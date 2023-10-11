@@ -39,9 +39,9 @@
             margin-left: 10px;
             border-radius: 3px;
             cursor: pointer;
-            //background-color: #e3e8ef;
-            background-color: white;
             padding: 8px 11px 8px 11px;
+            background-color: lightblue;
+            border: 2px solid gainsboro;
         }
     }
     .main{
@@ -52,6 +52,7 @@
         font-weight: bold;
         background-color:white;
         padding: 0px 15px 0px 15px;
+        
         ol{
             margin-top: 15px;
             margin-left: 21px;

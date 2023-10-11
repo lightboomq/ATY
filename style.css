@@ -40,8 +40,9 @@
   margin-left: 10px;
   border-radius: 3px;
   cursor: pointer;
-  background-color: #e3e8ef;
   padding: 8px 11px 8px 11px;
+  background-color: lightblue;
+  border: 2px solid gainsboro;
 }
 .container .main {
   display: flex;
