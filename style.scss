@@ -1,10 +1,9 @@
 
-
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arimo', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 .header-div{
     display: flex;
@@ -27,7 +26,16 @@
     max-width: 1024px;
     margin: auto;
     justify-content: center;
-    //margin-top: 130px;
+    margin-top: 30px;
+    .timerBlock{
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        .timerP{
+            font-size: 17px;
+            margin-left: 5px;
+        }
+    }
     .grid-block{
         display: flex;
         margin-top: 15px;
@@ -51,7 +59,7 @@
         flex-direction: column;
         font-weight: bold;
         background-color:white;
-        padding: 0px 15px 0px 15px;
+        
         
         ol{
             margin-top: 15px;
@@ -68,9 +76,6 @@
             li::marker{
                 color: black;
                 
-            }
-            li:hover{
-                color: rgb(216, 49, 49);
             }
             @media (max-width:800px) {
                 li{

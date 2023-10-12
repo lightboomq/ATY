@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Arimo", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .header-div {
@@ -27,6 +27,16 @@
   max-width: 1024px;
   margin: auto;
   justify-content: center;
+  margin-top: 30px;
+}
+.container .timerBlock {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.container .timerBlock .timerP {
+  font-size: 17px;
+  margin-left: 5px;
 }
 .container .grid-block {
   display: flex;
@@ -51,7 +61,6 @@
   flex-direction: column;
   font-weight: bold;
   background-color: white;
-  padding: 0px 15px 0px 15px;
 }
 .container .main ol {
   margin-top: 15px;
@@ -67,9 +76,6 @@
 }
 .container .main ol li::marker {
   color: black;
-}
-.container .main ol li:hover {
-  color: rgb(216, 49, 49);
 }
 @media (max-width: 800px) {
   .container .main ol li {

@@ -1,15 +1,19 @@
 import { arr } from "./arr.js";
+let container = document.querySelector(".container")
 let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
 let gridBlock = document.querySelector(".grid-block");
+let timerP = document.querySelector('.timerP')
+
+    
 const result = []
 for (let i = 0; i < arr.length; i++) {
     gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
 let NodeListItemGrid = document.querySelectorAll(".grid");
 let count = 0;
-
+document.conta
 function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
@@ -29,17 +33,8 @@ function giveCorrectlyAnswer() {
     function clickByAnswer(e) {
         correctly = arr[count].answers[e.target.textContent];
         correctly==true?result.push(1) : result.push(0);
-        if (correctly == true) {
-            NodeListItemGrid[count].style.backgroundColor = "green";
-        } else {
-            NodeListItemGrid[count].style.backgroundColor = "red";
-        }
-        if(count>=19){
-            count=0
-        }
-        else{
-            count++;
-        }
+        correctly==true?NodeListItemGrid[count].style.backgroundColor = "green" : NodeListItemGrid[count].style.backgroundColor = "red";
+        count>=19 ? count=0 : count++;
         getHtml(arr);
     }
 }
@@ -49,26 +44,32 @@ function getHtml(arr) {
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
     }
-    if(result.length>=20){ //Доделать 
-        return [
-            html=`<div class="divBlockHtml">
-            <h3>Успешно</h3>
-        </div>`,
-        main.insertAdjacentHTML("afterbegin", html),
-        divButtons.style.display = 'none',
-        gridBlock.style.display = 'none'
+    if(result.length>=20){ 
+        let sum = result.reduce((sum,num)=>sum+num,0);
+        if(result.length-sum>=2){
+            let sum2 = result.length-sum
+            return [ 
+            html = `<div class="divBlockHtml">
+                        <h3>Результаты экзамена АТУ</h3><br/>
+                        <h3>Экзамен не сдан 😔</h3>;
+                        <p>Правильных ответов: ${sum} из ${sum2}<p/>
+                    </div>`,
+                    main.insertAdjacentHTML("afterbegin", html),
+                    divButtons.style.display = 'none',                
         ]
-        
-    }
-    while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green"){
-        if(count>=19){
-            count=0
-            console.log('while if');
         }
         else{
-            console.log('while else');
-            count++
+            return [
+                html=`<div class="divBlockHtml">
+                        <h3>Вашь результат ${sum}</h3>
+                    </div>`,
+                    main.insertAdjacentHTML("afterbegin", html),
+                    divButtons.style.display = 'none',
+            ]
         }
+    }
+    while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green"){
+        count>=19?count=0 : count++;
     }
     return [
         html = `<div class = "divBlockHtml">
@@ -83,7 +84,6 @@ function getHtml(arr) {
     ];
     
 }
-
 function clickByNum(e) {
     count = +e.target.textContent - 1;
     if (NodeListItemGrid[count].style.backgroundColor === "red" || NodeListItemGrid[count].style.backgroundColor === "green") {
@@ -116,4 +116,20 @@ function getNextQuestion() {
 }
 
 
+function timer(){
+    let time = 1200
+    let h 
+    function t(){
+        let minutes = Math.floor(time/60)
+        let seconds = time % 60
+        seconds = seconds < 10 ? "0" + seconds: seconds
+        time--
+        h = `${minutes}:${seconds}`;
+        return timerP.innerHTML=h
+    }
+    setInterval(t,1000)
+    t()
+}
 
+
+timer()
