@@ -51,7 +51,7 @@ function getHtml(arr) {
             return [ 
             html = `<div class="divBlockHtml">
                         <h3>Результаты экзамена АТУ</h3><br/>
-                        <h3>Экзамен не сдан 😔</h3>;
+                        <h3>Экзамен не сдан 😔</h3>
                         <p>Правильных ответов: ${sum} из ${sum2}<p/>
                     </div>`,
                     main.insertAdjacentHTML("afterbegin", html),
