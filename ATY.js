@@ -6,8 +6,11 @@ document.querySelector(".btn-move").onclick = getNextQuestion;
 let gridBlock = document.querySelector(".grid-block");
 let timerP = document.querySelector('.timerP')
 
-    
+
 const result = []
+for(let i=0; i<arr.length; i++){
+    console.log(arr[i].img);
+}
 for (let i = 0; i < arr.length; i++) {
     gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
