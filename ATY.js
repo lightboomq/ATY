@@ -4,11 +4,12 @@ let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
 let gridBlock = document.querySelector(".grid-block");
+let timerBlock = document.querySelector(".timerBlock")
 let timerP = document.querySelector('.timerP')
-
-
+let minutes; 
+let seconds
 const result = []
-
+console.log(timerBlock);
 for (let i = 0; i < arr.length; i++) {
     gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
@@ -41,7 +42,6 @@ function giveCorrectlyAnswer() {
 }
 
 function getHtml(arr) {
-    let img = arr[count].img
     let html;
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
@@ -49,15 +49,19 @@ function getHtml(arr) {
     if(result.length>=20){ 
         let sum = result.reduce((sum,num)=>sum+num,0);
         if(result.length-sum>=2){
-            let sum2 = result.length-sum
             return [ 
-            html = `<div class="divBlockHtml">
-                        <h3>Результаты экзамена АТУ</h3><br/>
-                        <h3>Экзамен не сдан 😔</h3>
-                        <p>Правильных ответов: ${sum} из ${sum2}<p/>
+            html = `<div class="divBlockHtml"> 
+                        <div class="timerBlockEnd">
+                            <h2 class = "examInvalid">Экзамен не сдан</h2>
+                            <h2>😔</h2>
+                            <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
+                            <p>Время сдачи экзамена: ${minutes}: ${seconds}<p/>
+                            <h3>Результаты экзамена АТУ:</h3><br/>
+                        </div>
                     </div>`,
                     main.insertAdjacentHTML("afterbegin", html),
-                    divButtons.style.display = 'none',                
+                    divButtons.style.display = 'none',
+                    timerBlock.style.display = 'none',    
         ]
         }
         else{
@@ -74,18 +78,19 @@ function getHtml(arr) {
         count>=19?count=0 : count++;
     }
     return [
-        html = `<div class = "divBlockHtml">
-            <h3>Вопрос: ${count + 1}</h3>
-            <img src = '${img}'/>
-            <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
-            <ol>${getHtmlAnswersFromArr()}</ol>
-        </div>`,
+        html = `<div class="divBlockHtml">
+                    <h3>Вопрос: ${count + 1}</h3>
+                    <img src = '${arr[count].img}'/>
+                    <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
+                    <ol>${getHtmlAnswersFromArr()}</ol>
+                </div>`,
         main.insertAdjacentHTML("afterbegin", html),
         main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
     ];
     
 }
+
 function clickByNum(e) {
     count = +e.target.textContent - 1;
     if (NodeListItemGrid[count].style.backgroundColor === "red" || NodeListItemGrid[count].style.backgroundColor === "green") {
@@ -116,20 +121,36 @@ function getNextQuestion() {
     }
     getHtml(arr);
 }
-
-
+;
 function timer(){
     let time = 1200
-    let h 
     function t(){
-        let minutes = Math.floor(time/60)
-        let seconds = time % 60
+        let h 
+        minutes = Math.floor(time/60)
+        seconds = time % 60
         seconds = seconds < 10 ? "0" + seconds: seconds
         time--
         h = `${minutes}:${seconds}`;
+       if(minutes==0 && seconds == 0){
+        let html
+        if (document.querySelector(".divBlockHtml")) {
+            document.querySelector(".divBlockHtml").remove();
+        }
+            return [
+                clearInterval(invalid),
+                html=`<div class="divBlockHtml">
+                        <h3>Результаты экзамена АТУ</h3><br/>
+                        <h3 class = "examInvalid">Экзамен не сдан! У Вас закончилось время</h3>
+                    </div>`,
+                    main.insertAdjacentHTML('afterbegin',html),false,
+                    divButtons.style.display = 'none',
+                    gridBlock.style.display = 'none',
+                    document.querySelector('.examAty').style.display = 'none'
+            ]
+       }
         return timerP.innerHTML=h
     }
-    setInterval(t,1000)
+    let invalid=setInterval(t,1000)
     t()
 }
 

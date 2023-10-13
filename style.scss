@@ -31,10 +31,28 @@
         display: flex;
         margin-top: 10px;
         margin-bottom: 10px;
-        padding: 0px 10px 0px 10px;
+        padding: 0px 10px 0px 7px;
         .timerP{
             font-size: 17px;
             margin-left: 5px;
+        }
+    }
+    .timerBlockEnd{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .examInvalid{
+            color:red;
+            font-size: 30px;
+            margin-top: 10px;
+        }
+        p{
+            font-weight: 200;
+            font-size: 14px;
+        }
+        h3{
+            margin-top: 10px;
         }
     }
     .grid-block{
@@ -60,7 +78,6 @@
         font-weight: bold;
         background-color:white;
         padding: 0px 10px 0px 10px;
-        
         ol{
             margin-top: 15px;
             margin-left: 21px;

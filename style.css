@@ -33,11 +33,29 @@
   display: flex;
   margin-top: 10px;
   margin-bottom: 10px;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 10px 0px 7px;
 }
 .container .timerBlock .timerP {
   font-size: 17px;
   margin-left: 5px;
+}
+.container .timerBlockEnd {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container .timerBlockEnd .examInvalid {
+  color: red;
+  font-size: 30px;
+  margin-top: 10px;
+}
+.container .timerBlockEnd p {
+  font-weight: 200;
+  font-size: 14px;
+}
+.container .timerBlockEnd h3 {
+  margin-top: 10px;
 }
 .container .grid-block {
   display: flex;
