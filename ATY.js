@@ -8,9 +8,7 @@ let timerP = document.querySelector('.timerP')
 
 
 const result = []
-for(let i=0; i<arr.length; i++){
-    console.log(arr[i].img);
-}
+
 for (let i = 0; i < arr.length; i++) {
     gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
@@ -43,6 +41,9 @@ function giveCorrectlyAnswer() {
 }
 
 function getHtml(arr) {
+    for(let i=0; i<arr.length; i++){
+        console.log(arr[i].img);
+    }
     let html;
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
