@@ -41,9 +41,7 @@ function giveCorrectlyAnswer() {
 }
 
 function getHtml(arr) {
-    for(let i=0; i<arr.length; i++){
-        console.log(arr[i].img);
-    }
+    let img = arr[count].img
     let html;
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
@@ -78,7 +76,7 @@ function getHtml(arr) {
     return [
         html = `<div class = "divBlockHtml">
             <h3>Вопрос: ${count + 1}</h3>
-            <img src = '${arr[count].img}'/>
+            <img src = '${img}'/>
             <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
             <ol>${getHtmlAnswersFromArr()}</ol>
         </div>`,
