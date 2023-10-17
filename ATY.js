@@ -32,7 +32,6 @@ function giveCorrectlyAnswer() {
     answers.forEach((answers) => {
         answers.onclick = clickByAnswer;
     });
-
     function clickByAnswer(e) {
         correctly = arr[count].answers[e.target.textContent];
         correctly==true?result.push(1) : result.push(0);
@@ -46,9 +45,7 @@ function giveCorrectlyAnswer() {
 for(let i=0; i<NodeListItemGrid.length; i++){
   NodeListItemGrid[i].style.backgroundColor = 'lightgray'
 }
-
-NodeListItemGrid[0].style.backgroundColor = 'lightblue'
-
+NodeListItemGrid[0].style.backgroundColor = 'lightblue'; NodeListItemGrid[0].style.border = '1px solid black'
 function getHtml(arr) {
   if(NodeListItemGrid[count].style.backgroundColor=='lightgray'){
     NodeListItemGrid[count].style.backgroundColor='blue'
@@ -100,21 +97,19 @@ function getHtml(arr) {
         main.insertAdjacentHTML("afterbegin", html),
         main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
-        NodeListItemGrid[count].style.backgroundColor = 'lightblue'
+        NodeListItemGrid[count].style.backgroundColor = 'lightblue',NodeListItemGrid[count].style.border = '1px solid black',
     ];
-    
 }
 
 function clickByNum(e) {
     // При нажатии на другую кнопку, у всех остальных кнопок цвет становиться серым
     for(let i=0; i < NodeListItemGrid.length; i++){
       if(NodeListItemGrid[i].style.backgroundColor != 'red' && NodeListItemGrid[i].style.backgroundColor != 'green'){
-        NodeListItemGrid[i].style.backgroundColor = 'lightgray'
+        NodeListItemGrid[i].style.backgroundColor = 'lightgray';
+        NodeListItemGrid[count].style.border = ''
       }
     }
-    
     count = +e.target.textContent - 1;
-
     if (NodeListItemGrid[count].style.backgroundColor === "red" || NodeListItemGrid[count].style.backgroundColor === "green") {
         return false;
     }
@@ -181,10 +176,8 @@ timer()
 function getStatisticsResult(){
   let nkey 
   let statisticCount = 1
-
   arr.map(obj => {
       nkey = Object.keys(obj.answers).map(item => `<li>${item}</li>`).join('')
-
       main.innerHTML += `<div class = "divBlockHtml">
           <h3>Вопрос: ${statisticCount++}</h3>
           <img src = '${obj.img}'/>
