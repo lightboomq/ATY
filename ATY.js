@@ -44,17 +44,12 @@ function giveCorrectlyAnswer() {
     }
 }
 
-// // arr.map(obj=>{console.log(obj.img)
-// //     console.log(obj.isQuastion)
-// //     Object.keys(obj.answers).map(item=>console.log(item));
-// // }   
-// )
 function getStatisticsResult(){
     let nkey = ''
     let statisticCount = 1
-    console.log(nkey);
     arr.map(obj=>{
-        nkey=Object.keys(obj.answers).map(item=>`<li>${item}</li>`)
+        nkey=Object.keys(obj.answers).map(item=>`<li>${item}</li>`).join('')
+        console.log(typeof nkey);
         main.innerHTML+=`<div class = "divBlockHtml">
             <h3>Вопрос: ${statisticCount++}</h3>
             <img src = '${obj.img}'/>
