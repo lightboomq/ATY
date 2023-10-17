@@ -8,7 +8,6 @@ let timerBlock = document.querySelector(".timerBlock")
 let timerP = document.querySelector('.timerP')
 let minutes; 
 let seconds
-
 const result = []
 
 for (let i = 0; i < arr.length; i++) {
@@ -29,12 +28,11 @@ getHtml(arr);
 
 function giveCorrectlyAnswer() {
     let correctly;
- 
     let answers = document.querySelectorAll("li");
     answers.forEach((answers) => {
         answers.onclick = clickByAnswer;
-
     });
+
     function clickByAnswer(e) {
         correctly = arr[count].answers[e.target.textContent];
         correctly==true?result.push(1) : result.push(0);
@@ -44,52 +42,48 @@ function giveCorrectlyAnswer() {
     }
 }
 
-function getStatisticsResult(){
-    let nkey = ''
-    let statisticCount = 1
-    arr.map(obj=>{
-        nkey=Object.keys(obj.answers).map(item=>`<li>${item}</li>`).join('')
-        console.log(typeof nkey);
-        main.innerHTML+=`<div class = "divBlockHtml">
-            <h3>Вопрос: ${statisticCount++}</h3>
-            <img src = '${obj.img}'/>
-            <div class = "pDiv"><p>${obj.isQuastion}</p></div>
-            <ol>${nkey}</ol>
-        </div>`;
-    }) 
+// Добавляем всем кнопкам серый цвет
+for(let i=0; i<NodeListItemGrid.length; i++){
+  NodeListItemGrid[i].style.backgroundColor = 'lightgray'
 }
 
+NodeListItemGrid[0].style.backgroundColor = 'lightblue'
+
 function getHtml(arr) {
+  if(NodeListItemGrid[count].style.backgroundColor=='lightgray'){
+    NodeListItemGrid[count].style.backgroundColor='blue'
+  }
     let html;
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
     }
-    if(result.length>=2){ 
+    if(result.length>=20){ 
         let sum = result.reduce((sum,num)=>sum+num,0);
-        if(result.length-sum>=1){
+        if(result.length-sum>=2){
             return [ 
             html = `<div class="divBlockHtml"> 
                         <div class="timerBlockEnd">
                             <h2 class = "examInvalid">Экзамен не сдан</h2>
                             <h2>😔</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
-                            <p>Время сдачи экзамена: ${minutes}:${seconds}<p/>
-                            <h3>Результаты экзамена АТУ:</h3><br/>
+                            <p>Время сдачи экзамена: ${minutes}: ${seconds}<p/>
+                            <h3 class='exam-results'>Результаты экзамена АТУ:</h3><br/>
+                            
                         </div>
                     </div>`,
                     main.insertAdjacentHTML("afterbegin", html),
                     divButtons.style.display = 'none',
-                    timerBlock.style.display = 'none',  
-                    getStatisticsResult(),  
-        ]
-        }
-        else{
-            return [
-                html=`<div class="divBlockHtml">
-                        <h3>Вашь результат ${sum}</h3>
-                    </div>`,
-                    main.insertAdjacentHTML("afterbegin", html),
-                    divButtons.style.display = 'none',
+                    timerBlock.style.display = 'none', 
+                    getStatisticsResult()   
+                    ]
+                    }
+                  else{
+                  return [
+                  html=`<div class="divBlockHtml">
+                          <h3>Вашь результат ${sum}</h3>
+                      </div>`,
+                      main.insertAdjacentHTML("afterbegin", html),
+                      divButtons.style.display = 'none',
             ]
         }
     }
@@ -106,19 +100,28 @@ function getHtml(arr) {
         main.insertAdjacentHTML("afterbegin", html),
         main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
+        NodeListItemGrid[count].style.backgroundColor = 'lightblue'
     ];
     
 }
 
 function clickByNum(e) {
+    // При нажатии на другую кнопку, у всех остальных кнопок цвет становиться серым
+    for(let i=0; i < NodeListItemGrid.length; i++){
+      if(NodeListItemGrid[i].style.backgroundColor != 'red' && NodeListItemGrid[i].style.backgroundColor != 'green'){
+        NodeListItemGrid[i].style.backgroundColor = 'lightgray'
+      }
+    }
+    
     count = +e.target.textContent - 1;
+
     if (NodeListItemGrid[count].style.backgroundColor === "red" || NodeListItemGrid[count].style.backgroundColor === "green") {
         return false;
     }
     getHtml(arr);
 }
 NodeListItemGrid.forEach((item) => {
-    item.onclick = clickByNum;
+  item.onclick = clickByNum;
 });
 
 let a = "";
@@ -170,7 +173,23 @@ function timer(){
         return timerP.innerHTML=h
     }
     let invalid=setInterval(t,1000)
-    
     t()
 }
+
 timer()
+
+function getStatisticsResult(){
+  let nkey 
+  let statisticCount = 1
+
+  arr.map(obj => {
+      nkey = Object.keys(obj.answers).map(item => `<li>${item}</li>`).join('')
+
+      main.innerHTML += `<div class = "divBlockHtml">
+          <h3>Вопрос: ${statisticCount++}</h3>
+          <img src = '${obj.img}'/>
+          <div class = "pDiv"><p>${obj.isQuastion}</p></div>
+          <ol>${nkey}</ol>
+      </div>`
+  }) 
+}
