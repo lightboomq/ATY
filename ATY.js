@@ -8,14 +8,15 @@ let timerBlock = document.querySelector(".timerBlock")
 let timerP = document.querySelector('.timerP')
 let minutes; 
 let seconds
+
 const result = []
-console.log(timerBlock);
+
 for (let i = 0; i < arr.length; i++) {
     gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
 let NodeListItemGrid = document.querySelectorAll(".grid");
 let count = 0;
-document.conta
+
 function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
@@ -28,9 +29,11 @@ getHtml(arr);
 
 function giveCorrectlyAnswer() {
     let correctly;
+ 
     let answers = document.querySelectorAll("li");
     answers.forEach((answers) => {
         answers.onclick = clickByAnswer;
+
     });
     function clickByAnswer(e) {
         correctly = arr[count].answers[e.target.textContent];
@@ -41,27 +44,48 @@ function giveCorrectlyAnswer() {
     }
 }
 
+// // arr.map(obj=>{console.log(obj.img)
+// //     console.log(obj.isQuastion)
+// //     Object.keys(obj.answers).map(item=>console.log(item));
+// // }   
+// )
+function getStatisticsResult(){
+    let nkey = ''
+    let statisticCount = 1
+    console.log(nkey);
+    arr.map(obj=>{
+        nkey=Object.keys(obj.answers).map(item=>`<li>${item}</li>`)
+        main.innerHTML+=`<div class = "divBlockHtml">
+            <h3>Вопрос: ${statisticCount++}</h3>
+            <img src = '${obj.img}'/>
+            <div class = "pDiv"><p>${obj.isQuastion}</p></div>
+            <ol>${nkey}</ol>
+        </div>`;
+    }) 
+}
+
 function getHtml(arr) {
     let html;
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
     }
-    if(result.length>=20){ 
+    if(result.length>=2){ 
         let sum = result.reduce((sum,num)=>sum+num,0);
-        if(result.length-sum>=2){
+        if(result.length-sum>=1){
             return [ 
             html = `<div class="divBlockHtml"> 
                         <div class="timerBlockEnd">
                             <h2 class = "examInvalid">Экзамен не сдан</h2>
                             <h2>😔</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
-                            <p>Время сдачи экзамена: ${minutes}: ${seconds}<p/>
+                            <p>Время сдачи экзамена: ${minutes}:${seconds}<p/>
                             <h3>Результаты экзамена АТУ:</h3><br/>
                         </div>
                     </div>`,
                     main.insertAdjacentHTML("afterbegin", html),
                     divButtons.style.display = 'none',
-                    timerBlock.style.display = 'none',    
+                    timerBlock.style.display = 'none',  
+                    getStatisticsResult(),  
         ]
         }
         else{
@@ -151,8 +175,7 @@ function timer(){
         return timerP.innerHTML=h
     }
     let invalid=setInterval(t,1000)
+    
     t()
 }
-
-
 timer()
