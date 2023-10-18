@@ -14,7 +14,6 @@ for (let i = 0; i < arr.length; i++) {
 }
 let NodeListItemGrid = document.querySelectorAll(".grid");
 let count = 0;
-
 function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
@@ -22,9 +21,7 @@ function getHtmlAnswersFromArr() {
     }
     return `${nKey}`;
 }
-
 getHtml(arr);
-
 function giveCorrectlyAnswer() {
     let correctly;
     let answers = document.querySelectorAll("li");
@@ -32,14 +29,21 @@ function giveCorrectlyAnswer() {
         answers.onclick = clickByAnswer;
     });
     function clickByAnswer(e) {
+        
         correctly = arr[count].answers[e.target.textContent];
-        correctly==true?NodeListItemGrid[count].style.backgroundColor = "green" : NodeListItemGrid[count].style.backgroundColor = "red";
-        correctly==true?result.push(1) : result.push(0);
+        if(correctly==true){
+            NodeListItemGrid[count].style.backgroundColor = "green"
+            NodeListItemGrid[count].style.color = "white"
+        }
+        else{
+            NodeListItemGrid[count].style.backgroundColor = "red"
+            NodeListItemGrid[count].style.color = "white"
+        }
+        //correctly==true? NodeListItemGrid[count].style.backgroundColor = "green" : NodeListItemGrid[count].style.backgroundColor = "red"
+        correctly==true? result.push(1) : result.push(0);
         getHtml(arr);
     }
 }
-
-
 for(let i=0; i<NodeListItemGrid.length; i++){
   NodeListItemGrid[i].style.backgroundColor = 'lightgray'
 }
@@ -59,7 +63,7 @@ function getHtml(arr) {
                             <h2 class = "examInvalid">Экзамен не сдан</h2>
                             <h2>😔</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
-                            <p>Время сдачи экзамена: ${minutes}: ${seconds}<p/>
+                            <p>Оставшееся время экзамена: ${minutes}: ${seconds}<p/>
                             <h3 class='exam-results'>Результаты экзамена АТУ:</h3><br/> 
                         </div>
                     </div>`,
@@ -82,6 +86,7 @@ function getHtml(arr) {
     while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green"  ){
         count>=19?count=0 : count++;
     }
+
     return [
         html = `<div class="divBlockHtml">
                     <h3>Вопрос: ${count + 1}</h3>
@@ -95,7 +100,6 @@ function getHtml(arr) {
         NodeListItemGrid[count].style.backgroundColor = 'lightblue',NodeListItemGrid[count].style.border = '1px solid black',
     ];
 }
-
 function clickByItemGrid(e) {
     for(let i=0; i < NodeListItemGrid.length; i++){
       if(NodeListItemGrid[i].style.backgroundColor != 'red' && NodeListItemGrid[i].style.backgroundColor != 'green'){
@@ -175,7 +179,7 @@ function getStatisticsResult(){
   let statisticCount = 1
   arr.map(obj => {
       nkey = Object.keys(obj.answers).map(item => `<li>${item}</li>`).join('')
-      main.innerHTML += `<div class = "divBlockHtml">
+      main.innerHTML += `<div class = "divBlockHtmlStatistic">
           <h3>Вопрос: ${statisticCount++}</h3>
           <img src = '${obj.img}'/>
           <div class = "pDiv"><p>${obj.isQuastion}</p></div>

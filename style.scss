@@ -57,8 +57,8 @@
     }
     .grid-block{
         display: flex;
-        margin-top: 15px;
         overflow: auto;
+        margin-top: 15px;
         .grid{
             display: flex;
             justify-content: center;
@@ -78,6 +78,9 @@
         font-weight: bold;
         background-color:white;
         padding: 0px 10px 0px 10px;
+        .divBlockHtmlStatistic{
+            margin-top: 10px;
+        }
         ol{
             margin-top: 15px;
             margin-left: 21px;
@@ -103,7 +106,6 @@
             all: unset;
             font-size: 20px;
             margin-top: 10px;
-            margin-bottom: 10px;
             font-weight: 700;
         }
         img{
@@ -127,15 +129,16 @@
         }
         .divButtons{
             display: flex;
+            margin: auto;
             width: 100%;
             justify-content: space-around;
             margin-bottom: 20px;
             button{
                 all: unset;
                 cursor:pointer;
-                color:rgb(0, 0, 0);
-                font-size: 18px;
-                font-weight: lighter;
+                color:rgb(255, 115, 0);
+                font-size: 16px;
+                font-weight: 200;
             }
             @media (max-width:800px) {
                 button{
