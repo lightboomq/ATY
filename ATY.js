@@ -15,6 +15,8 @@ for (let i = 0; i < arr.length; i++) {
 let NodeListItemGrid = document.querySelectorAll(".grid");
 let count = 0;
 
+
+
 function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
@@ -33,8 +35,8 @@ function giveCorrectlyAnswer() {
     });
     function clickByAnswer(e) {
         correctly = arr[count].answers[e.target.textContent];
-        correctly==true?result.push(1) : result.push(0);
         correctly==true?NodeListItemGrid[count].style.backgroundColor = "green" : NodeListItemGrid[count].style.backgroundColor = "red";
+        correctly==true?result.push(1) : result.push(0);
         getHtml(arr);
     }
 }
@@ -43,7 +45,8 @@ function giveCorrectlyAnswer() {
 for(let i=0; i<NodeListItemGrid.length; i++){
   NodeListItemGrid[i].style.backgroundColor = 'lightgray'
 }
-NodeListItemGrid[0].style.backgroundColor = 'lightblue'; NodeListItemGrid[0].style.border = '1px solid black'
+NodeListItemGrid[0].style.backgroundColor = 'lightblue'; NodeListItemGrid[0].style.border = '1px solid black';
+
 function getHtml(arr) {
     let html;
     if (document.querySelector(".divBlockHtml")) {
@@ -79,7 +82,7 @@ function getHtml(arr) {
             ]
         }
     }
-    while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green"){
+    while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green"  ){
         count>=19?count=0 : count++;
     }
     return [
@@ -105,11 +108,12 @@ function clickByItemGrid(e) {
       }
     }
     count = +e.target.textContent - 1;
-    if (NodeListItemGrid[count].style.backgroundColor === "red" || NodeListItemGrid[count].style.backgroundColor === "green") {
-        return false;
-    }
+    // if (NodeListItemGrid[count].style.backgroundColor === "red" || NodeListItemGrid[count].style.backgroundColor === "green") {
+    //     return false
+    // }
     getHtml(arr);
 }
+
 NodeListItemGrid.forEach((item) => {
   item.onclick = clickByItemGrid;
 });
@@ -132,6 +136,7 @@ function getNextQuestion() {
         count = 0;
     }
     NodeListItemGrid[count-1].style.backgroundColor='lightgray'
+    NodeListItemGrid[count-1].style.border = ''
     getHtml(arr);
 }
 ;
