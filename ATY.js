@@ -15,8 +15,6 @@ for (let i = 0; i < arr.length; i++) {
 let NodeListItemGrid = document.querySelectorAll(".grid");
 let count = 0;
 
-
-
 function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
@@ -41,7 +39,7 @@ function giveCorrectlyAnswer() {
     }
 }
 
-// Добавляем всем кнопкам серый цвет
+
 for(let i=0; i<NodeListItemGrid.length; i++){
   NodeListItemGrid[i].style.backgroundColor = 'lightgray'
 }
@@ -62,8 +60,7 @@ function getHtml(arr) {
                             <h2>😔</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
                             <p>Время сдачи экзамена: ${minutes}: ${seconds}<p/>
-                            <h3 class='exam-results'>Результаты экзамена АТУ:</h3><br/>
-                            
+                            <h3 class='exam-results'>Результаты экзамена АТУ:</h3><br/> 
                         </div>
                     </div>`,
                     main.insertAdjacentHTML("afterbegin", html),
@@ -75,10 +72,10 @@ function getHtml(arr) {
                   else{
                   return [
                   html=`<div class="divBlockHtml">
-                          <h3>Вашь результат ${sum}</h3>
-                      </div>`,
-                      main.insertAdjacentHTML("afterbegin", html),
-                      divButtons.style.display = 'none',
+                            <h3>Вашь результат ${sum}</h3>
+                        </div>`,
+                        main.insertAdjacentHTML("afterbegin", html),
+                        divButtons.style.display = 'none',
             ]
         }
     }
@@ -100,7 +97,6 @@ function getHtml(arr) {
 }
 
 function clickByItemGrid(e) {
-    // При нажатии на другую кнопку, у всех остальных кнопок цвет становиться серым
     for(let i=0; i < NodeListItemGrid.length; i++){
       if(NodeListItemGrid[i].style.backgroundColor != 'red' && NodeListItemGrid[i].style.backgroundColor != 'green'){
         NodeListItemGrid[i].style.backgroundColor = 'lightgray';
@@ -108,12 +104,8 @@ function clickByItemGrid(e) {
       }
     }
     count = +e.target.textContent - 1;
-    // if (NodeListItemGrid[count].style.backgroundColor === "red" || NodeListItemGrid[count].style.backgroundColor === "green") {
-    //     return false
-    // }
     getHtml(arr);
 }
-
 NodeListItemGrid.forEach((item) => {
   item.onclick = clickByItemGrid;
 });
@@ -145,7 +137,6 @@ function getNextQuestion() {
         getHtml(arr)
     }
 }
-;
 function timer(){
     let time = 1200
     function t(){
@@ -177,7 +168,6 @@ function timer(){
     let invalid=setInterval(t,1000)
     t()
 }
-
 timer()
 
 function getStatisticsResult(){
