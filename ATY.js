@@ -1,5 +1,4 @@
 import { arr } from "./arr.js";
-let container = document.querySelector(".container")
 let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
@@ -36,7 +35,6 @@ function giveCorrectlyAnswer() {
         correctly = arr[count].answers[e.target.textContent];
         correctly==true?result.push(1) : result.push(0);
         correctly==true?NodeListItemGrid[count].style.backgroundColor = "green" : NodeListItemGrid[count].style.backgroundColor = "red";
-        count>=19 ? count=0 : count++;
         getHtml(arr);
     }
 }
@@ -47,9 +45,6 @@ for(let i=0; i<NodeListItemGrid.length; i++){
 }
 NodeListItemGrid[0].style.backgroundColor = 'lightblue'; NodeListItemGrid[0].style.border = '1px solid black'
 function getHtml(arr) {
-  if(NodeListItemGrid[count].style.backgroundColor=='lightgray'){
-    NodeListItemGrid[count].style.backgroundColor='blue'
-  }
     let html;
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
@@ -101,7 +96,7 @@ function getHtml(arr) {
     ];
 }
 
-function clickByNum(e) {
+function clickByItemGrid(e) {
     // При нажатии на другую кнопку, у всех остальных кнопок цвет становиться серым
     for(let i=0; i < NodeListItemGrid.length; i++){
       if(NodeListItemGrid[i].style.backgroundColor != 'red' && NodeListItemGrid[i].style.backgroundColor != 'green'){
@@ -116,7 +111,7 @@ function clickByNum(e) {
     getHtml(arr);
 }
 NodeListItemGrid.forEach((item) => {
-  item.onclick = clickByNum;
+  item.onclick = clickByItemGrid;
 });
 
 let a = "";
@@ -136,6 +131,7 @@ function getNextQuestion() {
     if (count > arr.length - 1) {
         count = 0;
     }
+    NodeListItemGrid[count-1].style.backgroundColor='lightgray'
     getHtml(arr);
 }
 ;
