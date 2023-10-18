@@ -132,12 +132,18 @@ function getNextQuestion() {
         a = "";
     }
     count++;
-    if (count > arr.length - 1) {
+    console.log('count' + count);
+    if (count > arr.length-1) {
+        NodeListItemGrid[count-1].style.backgroundColor='lightgray'
+        NodeListItemGrid[count-1].style.border = ''
         count = 0;
+        getHtml(arr);
     }
-    NodeListItemGrid[count-1].style.backgroundColor='lightgray'
-    NodeListItemGrid[count-1].style.border = ''
-    getHtml(arr);
+    else{
+        NodeListItemGrid[count-1].style.backgroundColor='lightgray'
+        NodeListItemGrid[count-1].style.border = ''
+        getHtml(arr)
+    }
 }
 ;
 function timer(){
