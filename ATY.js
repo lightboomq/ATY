@@ -8,12 +8,14 @@ let timerP = document.querySelector('.timerP')
 let minutes; 
 let seconds
 const result = []
+let count = 0;
+
 
 for (let i = 0; i < arr.length; i++) {
     gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
 let NodeListItemGrid = document.querySelectorAll(".grid");
-let count = 0;
+
 function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
@@ -29,7 +31,6 @@ function giveCorrectlyAnswer() {
         answers.onclick = clickByAnswer;
     });
     function clickByAnswer(e) {
-        
         correctly = arr[count].answers[e.target.textContent];
         if(correctly==true){
             NodeListItemGrid[count].style.backgroundColor = "green"
@@ -39,7 +40,6 @@ function giveCorrectlyAnswer() {
             NodeListItemGrid[count].style.backgroundColor = "red"
             NodeListItemGrid[count].style.color = "white"
         }
-        //correctly==true? NodeListItemGrid[count].style.backgroundColor = "green" : NodeListItemGrid[count].style.backgroundColor = "red"
         correctly==true? result.push(1) : result.push(0);
         getHtml(arr);
     }
@@ -86,16 +86,17 @@ function getHtml(arr) {
     while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green"  ){
         count>=19?count=0 : count++;
     }
-
+    const img =  `<img src = '${arr[count].img}'/>`
+    console.log(img);
     return [
         html = `<div class="divBlockHtml">
                     <h3>Вопрос: ${count + 1}</h3>
-                    <img src = '${arr[count].img}'/>
+                    ${img}
                     <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
                     <ol>${getHtmlAnswersFromArr()}</ol>
                 </div>`,
         main.insertAdjacentHTML("afterbegin", html),
-        //main.insertAdjacentElement("beforeend", divButtons),
+        main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
         NodeListItemGrid[count].style.backgroundColor = 'lightblue',NodeListItemGrid[count].style.border = '1px solid black',
     ];
