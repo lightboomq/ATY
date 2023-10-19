@@ -95,7 +95,7 @@ function getHtml(arr) {
                     <ol>${getHtmlAnswersFromArr()}</ol>
                 </div>`,
         main.insertAdjacentHTML("afterbegin", html),
-        main.insertAdjacentElement("beforeend", divButtons),
+        //main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
         NodeListItemGrid[count].style.backgroundColor = 'lightblue',NodeListItemGrid[count].style.border = '1px solid black',
     ];
