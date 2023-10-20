@@ -99,15 +99,15 @@ function getHtml(arr) {
        img = arr.map(obj=>`<img id="${obj.id}" src="${obj.img}" style="display:none"/>`).join(''),
        main.innerHTML=img,
         document.getElementById(count+1).style.display='',
-        html = `<div class="divBlockHtml">
+        // html = `<div class="divBlockHtml">
                     
-                    
-                    <ol>${getHtmlAnswersFromArr()}</ol> 
-                </div>`,
+        //             <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
+        //             <ol>${getHtmlAnswersFromArr()}</ol> 
+        //         </div>`,
                 
-        main.insertAdjacentHTML("beforeend", html),
-        main.insertAdjacentElement("beforeend", divButtons),
-        giveCorrectlyAnswer(),
+        // main.insertAdjacentHTML("beforeend", html),
+        // main.insertAdjacentElement("beforeend", divButtons),
+        // giveCorrectlyAnswer(),
         NodeListItemGrid[count].style.backgroundColor = 'lightblue',NodeListItemGrid[count].style.border = '1px solid black',
     ];
 }
