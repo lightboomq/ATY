@@ -5,16 +5,7 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
-body::after{
-    content: 
-        url('./img/1.jpg')
-        url('./img/2.jpg')
-        url('./img/3.jpg')
-        url('./img/4.jpg')
-        url('./img/5.jpg')
-    ;
-    //display: none;
-}
+
 .header-div{
     display: flex;
     width: 100%;

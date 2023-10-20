@@ -7,15 +7,14 @@ let timerBlock = document.querySelector(".timerBlock")
 let timerP = document.querySelector('.timerP')
 let minutes; 
 let seconds
-const result = []
-let count = 0;
 
+const result = []
 
 for (let i = 0; i < arr.length; i++) {
     gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
 let NodeListItemGrid = document.querySelectorAll(".grid");
-
+let count = 0;
 function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
@@ -24,6 +23,7 @@ function getHtmlAnswersFromArr() {
     return `${nKey}`;
 }
 getHtml(arr);
+
 function giveCorrectlyAnswer() {
     let correctly;
     let answers = document.querySelectorAll("li");
@@ -51,6 +51,8 @@ NodeListItemGrid[0].style.backgroundColor = 'lightblue'; NodeListItemGrid[0].sty
 
 function getHtml(arr) {
     let html;
+    let img
+    
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
     }
@@ -78,20 +80,26 @@ function getHtml(arr) {
                   html=`<div class="divBlockHtml">
                             <h3>Вашь результат ${sum}</h3>
                         </div>`,
-                        main.insertAdjacentHTML("afterbegin", html),
-                        divButtons.style.display = 'none',
+                    main.insertAdjacentHTML("afterbegin", html),
+                    divButtons.style.display = 'none',
             ]
         }
     }
     while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green"  ){
-        count>=19?count=0 : count++;
+        if(count>=19){
+            count=0
+        }
+        else{
+            document.getElementById(count+1).style.display='none';
+            count++
+        }
     }
-    const img =  `<img src = '${arr[count].img}'/>`
-    console.log(img);
     return [
+        img = arr.map(obj=>`<img id="${obj.id}" src="${obj.img}" style="display:none"/>`).join(''),
+        main.innerHTML=img,
         html = `<div class="divBlockHtml">
                     <h3>Вопрос: ${count + 1}</h3>
-                    ${img}
+                    ${document.getElementById(count+1).style.display='block'}
                     <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
                     <ol>${getHtmlAnswersFromArr()}</ol>
                 </div>`,
@@ -142,6 +150,7 @@ function getNextQuestion() {
         getHtml(arr)
     }
 }
+
 function timer(){
     let time = 1200
     function t(){
