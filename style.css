@@ -27,7 +27,6 @@
   max-width: 1024px;
   margin: auto;
   justify-content: center;
-  margin-top: 30px;
 }
 .container .timerBlock {
   display: flex;
@@ -72,6 +71,7 @@
   background-color: lightgray;
 }
 .container .main {
+  position: relative;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -81,12 +81,88 @@
   padding: 0px 10px 0px 10px;
 }
 .container .main .gg {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  margin: auto;
+}
+.container .main img {
   position: absolute;
-  left: 0;
-  top: 0;
+  width: 98%;
 }
 .container .main .divBlockHtml {
-  margin-top: 120px;
+  float: left;
+  margin-top: 370px;
+}
+@media (max-width: 980px) {
+  .container .main .divBlockHtml {
+    margin-top: 350px;
+  }
+}
+@media (max-width: 920px) {
+  .container .main .divBlockHtml {
+    margin-top: 330px;
+  }
+}
+@media (max-width: 840px) {
+  .container .main .divBlockHtml {
+    margin-top: 300px;
+  }
+}
+@media (max-width: 780px) {
+  .container .main .divBlockHtml {
+    margin-top: 280px;
+  }
+}
+@media (max-width: 730px) {
+  .container .main .divBlockHtml {
+    margin-top: 260px;
+  }
+}
+@media (max-width: 650px) {
+  .container .main .divBlockHtml {
+    margin-top: 230px;
+  }
+}
+@media (max-width: 650px) {
+  .container .main .divBlockHtml {
+    margin-top: 230px;
+  }
+}
+@media (max-width: 580px) {
+  .container .main .divBlockHtml {
+    margin-top: 210px;
+  }
+}
+@media (max-width: 510px) {
+  .container .main .divBlockHtml {
+    margin-top: 180px;
+  }
+}
+@media (max-width: 460px) {
+  .container .main .divBlockHtml {
+    margin-top: 160px;
+  }
+}
+@media (max-width: 410px) {
+  .container .main .divBlockHtml {
+    margin-top: 140px;
+  }
+}
+@media (max-width: 410px) {
+  .container .main .divBlockHtml {
+    margin-top: 140px;
+  }
+}
+@media (max-width: 370px) {
+  .container .main .divBlockHtml {
+    margin-top: 130px;
+  }
+}
+@media (max-width: 340px) {
+  .container .main .divBlockHtml {
+    margin-top: 120px;
+  }
 }
 .container .main .divBlockHtmlStatistic {
   margin-top: 10px;
@@ -116,10 +192,6 @@
   font-size: 20px;
   margin-top: 10px;
   font-weight: 700;
-}
-.container .main img {
-  width: 100%;
-  height: 100%;
 }
 .container .main .pDiv {
   border-bottom: 1px solid gray;

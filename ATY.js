@@ -15,6 +15,7 @@ for (let i = 0; i < arr.length; i++) {
 }
 let NodeListItemGrid = document.querySelectorAll(".grid");
 let count = 0;
+
 function getHtmlAnswersFromArr() {
     let nKey = "";
     for (let key of Object.keys(arr[count].answers)) {
@@ -96,20 +97,15 @@ function getHtml(arr) {
             count++;
         }
     }
+    document.querySelector('.count-question').textContent = `Вопрос: ${count+1}`
     return [
-        (img = arr
-            .map(
-                (obj) =>
-                    `<div class="gg"><img id="${obj.id}" src="${obj.img}" style="opacity:0"/></div>`
-            )
-            .join("")),
-        (main.innerHTML = img),
-        (document.getElementById(count + 1).style.opacity = "1"),
-        (html = `<div class="divBlockHtml">
-                    
+        img = arr .map(obj =>`<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>` ).join(""),
+        main.innerHTML = `<div class="gg">${img}</div>`,
+        document.getElementById(count + 1).style.opacity = "1",
+        html = `<div class="divBlockHtml">
                     <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
                     <ol>${getHtmlAnswersFromArr()}</ol> 
-                </div>`),
+                </div>`,
 
         main.insertAdjacentHTML("beforeend", html),
         main.insertAdjacentElement("beforeend", divButtons),
@@ -194,7 +190,7 @@ function timer() {
     let invalid = setInterval(t, 1000);
     t();
 }
-//timer()
+timer()
 
 function getStatisticsResult() {
     let nkey;
