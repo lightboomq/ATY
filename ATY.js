@@ -48,11 +48,12 @@ for(let i=0; i<NodeListItemGrid.length; i++){
   NodeListItemGrid[i].style.backgroundColor = 'lightgray'
 }
 NodeListItemGrid[0].style.backgroundColor = 'lightblue'; NodeListItemGrid[0].style.border = '1px solid black';
+let divBlockHtml=document.querySelector('.divBlockHtml')
 
 function getHtml(arr) {
     let html;
     let img
-    
+   
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
     }
@@ -95,15 +96,16 @@ function getHtml(arr) {
         }
     }
     return [
-        img = arr.map(obj=>`<img id="${obj.id}" src="${obj.img}" style="display:none"/>`).join(''),
-        main.innerHTML=img,
+       img = arr.map(obj=>`<img id="${obj.id}" src="${obj.img}" style="display:none"/>`).join(''),
+       main.innerHTML=img,
+       
         html = `<div class="divBlockHtml">
-                    <h3>Вопрос: ${count + 1}</h3>
-                    ${document.getElementById(count+1).style.display='block'}
                     <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
                     <ol>${getHtmlAnswersFromArr()}</ol>
+                    ${document.getElementById(count+1).style.display=''}
                 </div>`,
-        main.insertAdjacentHTML("afterbegin", html),
+                
+        main.insertAdjacentHTML("beforeend", html),
         main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
         NodeListItemGrid[count].style.backgroundColor = 'lightblue',NodeListItemGrid[count].style.border = '1px solid black',
