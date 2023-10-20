@@ -151,88 +151,55 @@
   .container .main .divBlockHtml {
     margin-top: 370px;
   }
-  .container .main ol {
-    height: 300px;
-  }
 }
 @media (max-width: 920px) {
   .container .main .divBlockHtml {
     margin-top: 340px;
-  }
-  .container .main ol {
-    height: 320px;
   }
 }
 @media (max-width: 840px) {
   .container .main .divBlockHtml {
     margin-top: 320px;
   }
-  .container .main ol {
-    height: 350px;
-  }
 }
 @media (max-width: 800px) {
   .container .main .divBlockHtml {
     margin-top: 320px;
-  }
-  .container .main ol {
-    height: auto;
   }
 }
 @media (max-width: 780px) {
   .container .main .divBlockHtml {
     margin-top: 290px;
   }
-  .container .main ol {
-    height: auto;
-  }
 }
 @media (max-width: 730px) {
   .container .main .divBlockHtml {
     margin-top: 280px;
-  }
-  .container .main ol {
-    height: auto;
   }
 }
 @media (max-width: 700px) {
   .container .main .divBlockHtml {
     margin-top: 260px;
   }
-  .container .main ol {
-    height: auto;
-  }
 }
 @media (max-width: 650px) {
   .container .main .divBlockHtml {
     margin-top: 240px;
-  }
-  .container .main ol {
-    height: auto;
   }
 }
 @media (max-width: 580px) {
   .container .main .divBlockHtml {
     margin-top: 220px;
   }
-  .container .main ol {
-    height: auto;
-  }
 }
 @media (max-width: 535px) {
   .container .main .divBlockHtml {
     margin-top: 200px;
   }
-  .container .main ol {
-    height: auto;
-  }
 }
 @media (max-width: 510px) {
   .container .main .divBlockHtml {
     margin-top: 190px;
-  }
-  .container .main ol {
-    height: auto;
   }
   .container .main .pDiv {
     height: auto;
@@ -242,31 +209,19 @@
   .container .main .divBlockHtml {
     margin-top: 170px;
   }
-  .container .main ol {
-    height: auto;
-  }
 }
 @media (max-width: 410px) {
   .container .main .divBlockHtml {
     margin-top: 160px;
-  }
-  .container .main ol {
-    height: auto;
   }
 }
 @media (max-width: 370px) {
   .container .main .divBlockHtml {
     margin-top: 140px;
   }
-  .container .main ol {
-    height: auto;
-  }
 }
 @media (max-width: 340px) {
   .container .main .divBlockHtml {
     margin-top: 120px;
-  }
-  .container .main ol {
-    height: auto;
   }
 }/*# sourceMappingURL=style.css.map */
