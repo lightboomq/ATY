@@ -98,11 +98,11 @@ function getHtml(arr) {
     return [
        img = arr.map(obj=>`<img id="${obj.id}" src="${obj.img}" style="display:none"/>`).join(''),
        main.innerHTML=img,
-       
+        document.getElementById(count+1).style.display='',
         html = `<div class="divBlockHtml">
-                    <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
-                    <ol>${getHtmlAnswersFromArr()}</ol>
-                    ${document.getElementById(count+1).style.display=''}
+                    
+                    
+                    <ol>${getHtmlAnswersFromArr()}</ol> 
                 </div>`,
                 
         main.insertAdjacentHTML("beforeend", html),
