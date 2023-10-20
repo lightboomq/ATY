@@ -60,7 +60,7 @@
 .container .grid-block {
   display: flex;
   overflow: auto;
-  margin-top: 15px;
+  margin-top: 315px;
 }
 .container .grid-block .grid {
   display: flex;
