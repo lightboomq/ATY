@@ -80,10 +80,11 @@
   background-color: white;
   padding: 0px 10px 0px 10px;
 }
-.container .main .gg {
+.container .main .divImagesBlock {
   display: flex;
   justify-content: center;
   width: 90%;
+  max-height: 500px;
   margin: auto;
 }
 .container .main img {

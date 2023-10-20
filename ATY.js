@@ -100,7 +100,7 @@ function getHtml(arr) {
     document.querySelector('.count-question').textContent = `Вопрос: ${count+1}`
     return [
         img = arr .map(obj =>`<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>` ).join(""),
-        main.innerHTML = `<div class="gg">${img}</div>`,
+        main.innerHTML = `<div class="divImagesBlock">${img}</div>`,
         document.getElementById(count + 1).style.opacity = "1",
         html = `<div class="divBlockHtml">
                     <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>

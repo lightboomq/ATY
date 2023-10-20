@@ -79,10 +79,11 @@
         font-weight: bold;
         background-color:white;
         padding: 0px 10px 0px 10px;
-        .gg{
+        .divImagesBlock{
            display: flex;
            justify-content: center;
            width: 90%;
+           max-height:500px;
            margin: auto;
         }
         img{
