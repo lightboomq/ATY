@@ -79,6 +79,12 @@
 .container .main .divBlockHtmlStatistic {
   margin-top: 10px;
 }
+.container .main .divBlockHtmlStatistic img {
+  position: relative;
+}
+.container .main .divBlockHtmlStatistic ol {
+  height: auto;
+}
 .container .main ol {
   margin-top: 15px;
   margin-left: 21px;

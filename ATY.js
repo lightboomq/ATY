@@ -28,7 +28,7 @@ getHtml(arr);
 function giveCorrectlyAnswer() {
     let correctly;
     let answers = document.querySelectorAll("li");
-    answers.forEach((answers) => {
+    answers.forEach(answers => {
         answers.onclick = clickByAnswer;
     });
     function clickByAnswer(e) {
@@ -51,6 +51,21 @@ NodeListItemGrid[0].style.backgroundColor = "lightblue";
 NodeListItemGrid[0].style.border = "1px solid black";
 
 
+
+
+function getStatisticsResult() {
+    let nkey;
+    let statisticCount = 1;
+    arr.map(obj => { nkey = Object.keys(obj.answers).map(item => `<li>${item}</li>`).join("");
+        main.innerHTML += `<div class = "divBlockHtmlStatistic">
+          <h3>Вопрос: ${statisticCount++}</h3>
+          <img src = '${obj.img}'/>
+          <div class = "pDiv"><p>${obj.isQuastion}</p></div>
+          <ol>${nkey}</ol>
+      </div>`;
+    });
+}
+
 function getHtml(arr) {
     let html;
     let img;
@@ -62,27 +77,31 @@ function getHtml(arr) {
         let sum = result.reduce((sum, num) => sum + num, 0);
         if (result.length - sum >= 2) {
             return [
-                (html = `<div class="divBlockHtml"> 
+                html = `<div class="divBlockHtml"> 
                         <div class="timerBlockEnd">
-                            <h2 class = "examInvalid">Экзамен не сдан</h2>
-                            <h2>😔</h2>
+                            <h2 class = "examInvalid">Билет не сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
                             <p>Оставшееся время экзамена: ${minutes}: ${seconds}<p/>
-                            <h3 class='exam-results'>Результаты экзамена АТУ:</h3><br/> 
+                            <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
                         </div>
-                    </div>`),
+                    </div>`,
                 main.insertAdjacentHTML("afterbegin", html),
-                (divButtons.style.display = "none"),
-                (timerBlock.style.display = "none"),
+                hideElements(),
                 getStatisticsResult(),
             ];
         } else {
             return [
-                (html = `<div class="divBlockHtml">
-                            <h3>Вашь результат ${sum}</h3>
-                        </div>`),
+                html = `<div class="divBlockHtml"> 
+                        <div class="timerBlockEnd">
+                            <h2 class = "examInvalid">Билет не сдан</h2>
+                            <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
+                            <p>Оставшееся время экзамена: ${minutes}: ${seconds}<p/>
+                            <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
+                        </div>
+                    </div>`,
                 main.insertAdjacentHTML("afterbegin", html),
-                (divButtons.style.display = "none"),
+                hideElements(),
+                getStatisticsResult(),
             ];
         }
     }
@@ -97,21 +116,22 @@ function getHtml(arr) {
             count++;
         }
     }
-    document.querySelector('.count-question').textContent = `Вопрос: ${count+1}`
+    document.querySelector(".count-question").textContent = `Вопрос: ${
+        count + 1
+    }`;
     return [
-        img = arr .map(obj =>`<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>` ).join(""),
+        img = arr.map(obj =>`<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>`).join(""),
         main.innerHTML = `<div class="divImagesBlock">${img}</div>`,
         document.getElementById(count + 1).style.opacity = "1",
         html = `<div class="divBlockHtml">
                     <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
                     <ol>${getHtmlAnswersFromArr()}</ol> 
                 </div>`,
-
         main.insertAdjacentHTML("beforeend", html),
         main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
-        (NodeListItemGrid[count].style.backgroundColor = "lightblue"),
-        (NodeListItemGrid[count].style.border = "1px solid black"),
+        NodeListItemGrid[count].style.backgroundColor = "lightblue",
+        NodeListItemGrid[count].style.border = "1px solid black",
     ];
 }
 function clickByItemGrid(e) {
@@ -127,7 +147,7 @@ function clickByItemGrid(e) {
     count = +e.target.textContent - 1;
     getHtml(arr);
 }
-NodeListItemGrid.forEach((item) => {
+NodeListItemGrid.forEach(item => {
     item.onclick = clickByItemGrid;
 });
 
@@ -190,20 +210,18 @@ function timer() {
     let invalid = setInterval(t, 1000);
     t();
 }
-timer()
+timer();
 
-function getStatisticsResult() {
-    let nkey;
-    let statisticCount = 1;
-    arr.map((obj) => {
-        nkey = Object.keys(obj.answers)
-            .map((item) => `<li>${item}</li>`)
-            .join("");
-        main.innerHTML += `<div class = "divBlockHtmlStatistic">
-          <h3>Вопрос: ${statisticCount++}</h3>
-          <img src = '${obj.img}'/>
-          <div class = "pDiv"><p>${obj.isQuastion}</p></div>
-          <ol>${nkey}</ol>
-      </div>`;
-    });
+
+function hideElements(){
+    console.log(count);
+    return(
+        divButtons.style.display = "none",
+        timerBlock.style.display = "none",
+        gridBlock.style.display='none',
+        document.querySelector(".count-question").style.display='none',
+        document.getElementById(count+1).style.opacity='0',
+        document.querySelector(".divBlockHtml").style.marginTop='20px'
+    )
+    
 }
