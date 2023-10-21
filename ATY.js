@@ -93,7 +93,7 @@ function getHtml(arr) {
             return [
                 html = `<div class="divBlockHtml"> 
                         <div class="timerBlockEnd">
-                            <h2 class = "examInvalid">Билет не сдан</h2>
+                            <h2 style = "color:green;">Билет сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
                             <p>Оставшееся время экзамена: ${minutes}: ${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
@@ -214,14 +214,10 @@ timer();
 
 
 function hideElements(){
-    console.log(count);
-    return(
         divButtons.style.display = "none",
         timerBlock.style.display = "none",
         gridBlock.style.display='none',
         document.querySelector(".count-question").style.display='none',
         document.getElementById(count+1).style.opacity='0',
         document.querySelector(".divBlockHtml").style.marginTop='20px'
-    )
-    
 }
