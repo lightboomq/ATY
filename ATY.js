@@ -133,17 +133,16 @@ function getStatisticsResult() {
    
     arr.map(obj => { 
         key=obj.answers.map(item => {
-            if(item.is_correct==true){
+            if (item.is_correct) {
                 return `<li>${item.answer_text} 
-                    <span style="color:green;"> (Эталон)</span>
-                    <span style="color:red;">${item.your_answer}</span>
-                </li> `
-            }
-            else{
+                            <span style="color:green;"> (Эталон)</span>
+                            <span style="color:red;">${item.your_answer || ""}</span>
+                        </li> `;
+              } else {
                 return `<li>${item.answer_text}
-                    <span style="color:red;">${item.your_answer}</span>
-                </li>`
-            }
+                            <span style="color:red;">${item.your_answer || ""}</span>
+                        </li>`;
+              }
         });
         main.innerHTML += `<div class = "divBlockHtmlStatistic">
           <h3>Вопрос: ${statisticCount++}</h3>
