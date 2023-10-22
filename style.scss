@@ -61,6 +61,7 @@
         flex-direction: column;
         font-weight: bold;
         padding: 0px 10px 0px 10px;
+       
         .divImagesBlock{
            display: flex;
            justify-content: center;
@@ -75,12 +76,18 @@
             margin-top:390px;
         }
         .divBlockHtmlStatistic{
-            margin-top: 10px;
+            margin-top: 20px;
+            background-color: #F5F5F5;
+            padding: 15px;
             img{
                 position: relative;
             }
             ol{
                 height: auto;
+            }
+            .pDiv{
+                height: auto;
+                margin-top: 10px;
             }
         }
         ol{

@@ -7,7 +7,9 @@ let timerBlock = document.querySelector(".timerBlock");
 let timerP = document.querySelector(".timerP");
 let minutes;
 let seconds;
+let correctly;
 
+const answersStyle=[]
 const result = [];
 
 for (let i = 0; i < arr.length; i++) {
@@ -17,26 +19,36 @@ let NodeListItemGrid = document.querySelectorAll(".grid");
 let count = 0;
 
 function getHtmlAnswersFromArr() {
-    let nKey = "";
-    for (let key of Object.keys(arr[count].answers)) {
-        nKey += `<li>${key}</li>`;
+    let objKey;
+    for(let i=-1; i<count; i++){
+        objKey=arr[count].answers.map(item=>`<li class='liAnswer'>${item.answer_text}</li>`);
     }
-    return `${nKey}`;
+    return objKey.join(' ')
 }
+
 getHtml(arr);
 
 function giveCorrectlyAnswer() {
-    let correctly;
+    
     let answers = document.querySelectorAll("li");
     answers.forEach(answers => {
         answers.onclick = clickByAnswer;
     });
     function clickByAnswer(e) {
-        correctly = arr[count].answers[e.target.textContent];
+        let arrAnswers=[]
+        let indexArrAnswers
+        for(let i=0; i<answers.length; i++){
+            arrAnswers.push(answers[i].textContent)
+        }   
+        indexArrAnswers = arrAnswers.indexOf(e.target.textContent)
+        
+        correctly=arr[count].answers[indexArrAnswers].is_correct
         if (correctly == true) {
+            answersStyle.push(`<li style="color:red">${arr[count].answers[indexArrAnswers].answer_text}</li>`);
             NodeListItemGrid[count].style.backgroundColor = "green";
             NodeListItemGrid[count].style.color = "white";
         } else {
+            answersStyle.push(`<li>${arr[count].answers[indexArrAnswers].answer_text}</li>`);
             NodeListItemGrid[count].style.backgroundColor = "red";
             NodeListItemGrid[count].style.color = "white";
         }
@@ -52,36 +64,22 @@ NodeListItemGrid[0].style.border = "1px solid black";
 
 
 
-
-function getStatisticsResult() {
-    let nkey;
-    let statisticCount = 1;
-    arr.map(obj => { nkey = Object.keys(obj.answers).map(item => `<li>${item}</li>`).join("");
-        main.innerHTML += `<div class = "divBlockHtmlStatistic">
-          <h3>Вопрос: ${statisticCount++}</h3>
-          <img src = '${obj.img}'/>
-          <div class = "pDiv"><p>${obj.isQuastion}</p></div>
-          <ol>${nkey}</ol>
-      </div>`;
-    });
-}
-
 function getHtml(arr) {
+    console.log(answersStyle);
     let html;
     let img;
-
     if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
     }
-    if (result.length >= 20) {
+    if(result.length >= 5) {
         let sum = result.reduce((sum, num) => sum + num, 0);
-        if (result.length - sum >= 2) {
+        if(result.length - sum >= 2) {
             return [
-                html = `<div class="divBlockHtml"> 
+                html = `<div  class="divBlockHtml"> 
                         <div class="timerBlockEnd">
                             <h2 class = "examInvalid">Билет не сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
-                            <p>Оставшееся время экзамена: ${minutes}: ${seconds}<p/>
+                            <p>Оставшееся время экзамена: ${minutes}:${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
                         </div>
                     </div>`,
@@ -95,7 +93,7 @@ function getHtml(arr) {
                         <div class="timerBlockEnd">
                             <h2 style = "color:green;">Билет сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
-                            <p>Оставшееся время экзамена: ${minutes}: ${seconds}<p/>
+                            <p>Оставшееся время экзамена: ${minutes}:${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
                         </div>
                     </div>`,
@@ -105,28 +103,26 @@ function getHtml(arr) {
             ];
         }
     }
-    while (
-        NodeListItemGrid[count].style.backgroundColor == "red" ||
-        NodeListItemGrid[count].style.backgroundColor == "green"
-    ) {
-        if (count >= 19) {
+    while (NodeListItemGrid[count].style.backgroundColor == "red" || NodeListItemGrid[count].style.backgroundColor == "green") {
+        if (count >= 4) {
             count = 0;
         } else {
             document.getElementById(count + 1).style.display = "none";
-            count++;
+            count++;  
         }
     }
-    document.querySelector(".count-question").textContent = `Вопрос: ${
-        count + 1
-    }`;
+    
+    document.querySelector(".count-question").textContent = `Вопрос: ${count + 1 }`;
+   
     return [
         img = arr.map(obj =>`<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>`).join(""),
         main.innerHTML = `<div class="divImagesBlock">${img}</div>`,
         document.getElementById(count + 1).style.opacity = "1",
         html = `<div class="divBlockHtml">
-                    <div class = "pDiv"><p>${arr[count].isQuastion}</p></div>
-                    <ol>${getHtmlAnswersFromArr()}</ol> 
+                    <div class = "pDiv"><p>${arr[count].question}</p></div>
+                    <ol>${getHtmlAnswersFromArr()}</ol>
                 </div>`,
+       
         main.insertAdjacentHTML("beforeend", html),
         main.insertAdjacentElement("beforeend", divButtons),
         giveCorrectlyAnswer(),
@@ -134,12 +130,30 @@ function getHtml(arr) {
         NodeListItemGrid[count].style.border = "1px solid black",
     ];
 }
+function getStatisticsResult() {
+    let key;
+    let statisticCount=1
+   
+    arr.map(obj => { 
+        key=obj.answers.map(item => {
+            if(item.is_correct==true){
+                return `<li style="color:green">${item.answer_text} (Эталон)</li>`
+            }
+            else{
+                return `<li>${item.answer_text}</li>`
+            }
+        });
+        main.innerHTML += `<div class = "divBlockHtmlStatistic">
+          <h3>Вопрос: ${statisticCount++}</h3>
+          <img src = '${obj.img}'/>
+          <div class = "pDiv"><p>${obj.question}</p></div>
+          <ol>${key.join('')}</ol>
+      </div>`;
+    });
+}
 function clickByItemGrid(e) {
     for (let i = 0; i < NodeListItemGrid.length; i++) {
-        if (
-            NodeListItemGrid[i].style.backgroundColor != "red" &&
-            NodeListItemGrid[i].style.backgroundColor != "green"
-        ) {
+        if (NodeListItemGrid[i].style.backgroundColor != "red" && NodeListItemGrid[i].style.backgroundColor != "green"){
             NodeListItemGrid[i].style.backgroundColor = "lightgray";
             NodeListItemGrid[count].style.border = "";
         }
@@ -180,6 +194,7 @@ function getNextQuestion() {
 
 function timer() {
     let time = 1200;
+    let sum2 = result.reduce((sum, num) => sum + num, 0);
     function t() {
         let h;
         minutes = Math.floor(time / 60);
@@ -194,24 +209,25 @@ function timer() {
             }
             return [
                 clearInterval(invalid),
-                (html = `<div class="divBlockHtml">
-                        <h3>Результаты экзамена АТУ</h3><br/>
-                        <h3 class = "examInvalid">Экзамен не сдан! У Вас закончилось время</h3>
-                    </div>`),
-                main.insertAdjacentHTML("afterbegin", html),
-                false,
-                (divButtons.style.display = "none"),
-                (gridBlock.style.display = "none"),
-                (document.querySelector(".examAty").style.display = "none"),
+                html = `<div class="divBlockHtml"> 
+                <div class="timerBlockEnd">
+                    <h2 style = "color:red;">Билет не сдан</h2>
+                    <h3>Правильных ответов: ${sum2} из ${result.length}<h3/>
+                    <p>У вас закончилось время: ${minutes}:${seconds}<p/>
+                    <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
+                </div>
+            </div>`,
+        main.insertAdjacentHTML("afterbegin", html),
+        hideElements(),
+        getStatisticsResult(),
             ];
         }
-        return (timerP.innerHTML = h);
+        return timerP.innerHTML = h;
     }
     let invalid = setInterval(t, 1000);
     t();
 }
 timer();
-
 
 function hideElements(){
         divButtons.style.display = "none",
