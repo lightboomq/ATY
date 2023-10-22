@@ -9,7 +9,7 @@ let minutes;
 let seconds;
 let correctly;
 
-const answersStyle=[]
+
 const result = [];
 
 for (let i = 0; i < arr.length; i++) {
@@ -29,7 +29,6 @@ function getHtmlAnswersFromArr() {
 getHtml(arr);
 
 function giveCorrectlyAnswer() {
-    
     let answers = document.querySelectorAll("li");
     answers.forEach(answers => {
         answers.onclick = clickByAnswer;
@@ -41,14 +40,14 @@ function giveCorrectlyAnswer() {
             arrAnswers.push(answers[i].textContent)
         }   
         indexArrAnswers = arrAnswers.indexOf(e.target.textContent)
-        
+        arr[count].answers[indexArrAnswers].your_answer = 'Ваш ответ'
         correctly=arr[count].answers[indexArrAnswers].is_correct
         if (correctly == true) {
-            answersStyle.push(`<li style="color:red">${arr[count].answers[indexArrAnswers].answer_text}</li>`);
+            // answersStyle.push(`<li style="color:red">${arr[count].answers[indexArrAnswers].answer_text}</li>`);
             NodeListItemGrid[count].style.backgroundColor = "green";
             NodeListItemGrid[count].style.color = "white";
         } else {
-            answersStyle.push(`<li>${arr[count].answers[indexArrAnswers].answer_text}</li>`);
+            // answersStyle.push(`<li>${arr[count].answers[indexArrAnswers].answer_text}</li>`);
             NodeListItemGrid[count].style.backgroundColor = "red";
             NodeListItemGrid[count].style.color = "white";
         }
@@ -65,7 +64,7 @@ NodeListItemGrid[0].style.border = "1px solid black";
 
 
 function getHtml(arr) {
-    console.log(answersStyle);
+    console.log(arr);
     let html;
     let img;
     if (document.querySelector(".divBlockHtml")) {
@@ -137,10 +136,15 @@ function getStatisticsResult() {
     arr.map(obj => { 
         key=obj.answers.map(item => {
             if(item.is_correct==true){
-                return `<li style="color:green">${item.answer_text} (Эталон)</li>`
+                return `<li>${item.answer_text} 
+                    <span style="color:green;"> (Эталон)</span>
+                    <span style="color:red;">${item.your_answer}</span>
+                </li> `
             }
             else{
-                return `<li>${item.answer_text}</li>`
+                return `<li>${item.answer_text}
+                    <span style="color:red;">${item.your_answer}</span>
+                </li>`
             }
         });
         main.innerHTML += `<div class = "divBlockHtmlStatistic">

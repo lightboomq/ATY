@@ -6,15 +6,18 @@ export let arr = [
         answers: [
             {
                 "answer_text": "Одну полосу",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
             {
                 "answer_text": "Две полосы",
-                "is_correct": true
+                "is_correct": true,
+                "your_answer":'',
             },
             {
                 "answer_text": "Три полосы",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
         ],
     },
@@ -25,15 +28,18 @@ export let arr = [
         answers: [
             {
                 "answer_text": "Только по правой",
-                "is_correct": true
+                "is_correct": true,
+                "your_answer":'',
             },
             {
                 "answer_text": "Только по левой",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
             {
                 "answer_text": "По любой",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
         ],
     },
@@ -44,19 +50,23 @@ export let arr = [
         answers: [
             {
                 "answer_text": "Только грузовому автомобилю",
-                "is_correct": true
+                "is_correct": true,
+                "your_answer":'',
             },
             {
                 "answer_text": "Легковому и грузовому автомобилям",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
             {
                 "answer_text": "Грузовому автомобилю и автобусу",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
             {
                 "answer_text": "Всем перечисленным транспортным средствам",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
         ],
     },
@@ -67,15 +77,18 @@ export let arr = [
         answers: [
             {
                 "answer_text": "Не обязаны",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
             {
                 "answer_text": "Обязаны",
-                "is_correct": true
+                "is_correct": true,
+                "your_answer":'',
             },
             {
                 "answer_text": "Обязаны, только при наличии движущегося сзади транспортного средства",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
         ],
     },
@@ -86,15 +99,18 @@ export let arr = [
         answers: [
             {
                 "answer_text": "О наличии через 500 м опасных поворотов",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
             {
                 "answer_text": "О том, что на расстоянии 150 - 300 м за дорожным знаком начнётся участок дороги протяженностью 500 м с опасными поворотами",
-                "is_correct": true
+                "is_correct": true,
+                "your_answer":'',
             },
             {
                 "answer_text": "О том, что сразу за знаком начнется участок протяженностью 500 м с опасными поворотами",
-                "is_correct": false
+                "is_correct": false,
+                "your_answer":'',
             },
         ],
     },
