@@ -40,14 +40,12 @@ function giveCorrectlyAnswer() {
             arrAnswers.push(answers[i].textContent)
         }   
         indexArrAnswers = arrAnswers.indexOf(e.target.textContent)
-        arr[count].answers[indexArrAnswers].your_answer = 'Ваш ответ'
+        arr[count].answers[indexArrAnswers].your_answer = '(Ваш ответ)'
         correctly=arr[count].answers[indexArrAnswers].is_correct
         if (correctly == true) {
-            // answersStyle.push(`<li style="color:red">${arr[count].answers[indexArrAnswers].answer_text}</li>`);
             NodeListItemGrid[count].style.backgroundColor = "green";
             NodeListItemGrid[count].style.color = "white";
         } else {
-            // answersStyle.push(`<li>${arr[count].answers[indexArrAnswers].answer_text}</li>`);
             NodeListItemGrid[count].style.backgroundColor = "red";
             NodeListItemGrid[count].style.color = "white";
         }
