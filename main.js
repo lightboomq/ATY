@@ -10,7 +10,7 @@ let index = 0;
 
 const globalArr = [ticket_1, ticket_2];
 let arr = globalArr[index];
-
+container.style.display='none'
 for (let i = 0; i < globalArr.length; i++) {
   ticketItemsHtml += `<div class="ticket-items-html">${i + 1}</div>`;
 }
@@ -19,10 +19,11 @@ ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
 let node = document.querySelectorAll(".ticket-items-html");
 
 const clickByItem = (e) => {
+  time=1200
   index = e.target.textContent - 1;
   arr = globalArr[index];
   ticketItemsBlock.style.display='none'
-  time=1200
+  container.style.display='block'
   getHtml(arr);
 };
 node.forEach((item) => {
