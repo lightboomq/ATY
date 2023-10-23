@@ -22,8 +22,6 @@ for (let i = 0; i < globalArr.length; i++) {
     ticketItemsHtml += `<div class="ticket-items-html">${i + 1}</div>`;
 }
 
-
-
 container.insertAdjacentElement('afterbegin',ticketItemsBlock)
 ticketItemsBlock.insertAdjacentHTML('afterbegin',ticketItemsHtml)
 let node = document.querySelectorAll('.ticket-items-html')
