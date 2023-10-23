@@ -1,4 +1,4 @@
-import { arr } from "./arr.js";
+import { arr } from "./globalArr.js";
 let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
@@ -42,14 +42,14 @@ function giveCorrectlyAnswer() {
         indexArrAnswers = arrAnswers.indexOf(e.target.textContent)
         arr[count].answers[indexArrAnswers].your_answer = '(Ваш ответ)'
         correctly=arr[count].answers[indexArrAnswers].is_correct
-        if (correctly == true) {
+        if (correctly) {
             NodeListItemGrid[count].style.backgroundColor = "green";
             NodeListItemGrid[count].style.color = "white";
         } else {
             NodeListItemGrid[count].style.backgroundColor = "red";
             NodeListItemGrid[count].style.color = "white";
         }
-        correctly == true ? result.push(1) : result.push(0);
+        correctly ? result.push(1) : result.push(0);
         getHtml(arr);
     }
 }
@@ -59,10 +59,7 @@ for (let i = 0; i < NodeListItemGrid.length; i++) {
 NodeListItemGrid[0].style.backgroundColor = "lightblue";
 NodeListItemGrid[0].style.border = "1px solid black";
 
-
-
 function getHtml(arr) {
-    console.log(arr);
     let html;
     let img;
     if (document.querySelector(".divBlockHtml")) {
@@ -130,7 +127,6 @@ function getHtml(arr) {
 function getStatisticsResult() {
     let key;
     let statisticCount=1
-   
     arr.map(obj => { 
         key=obj.answers.map(item => {
             if (item.is_correct) {

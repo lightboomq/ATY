@@ -11,6 +11,23 @@
     max-width: 1024px;
     margin: auto;
     justify-content: center;
+    .ticket-items-block{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        .ticket-items-html{
+            display: flex;
+            height: 40px;
+            width: 40px;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: rgb(226, 226, 226);
+            padding: 8px 11px 8px 11px;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+    }
     .timerBlock{
         display: flex;
         margin-top: 10px;
@@ -53,6 +70,7 @@
             background-color: lightgray;
         }
     }
+    
     .main{
         position: relative;
         display: flex;
