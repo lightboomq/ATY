@@ -1,13 +1,10 @@
+////////////////////////////////////--ГЛОБАЛЬНЫЙ МАССИВ--////////////////////////////////////////// 
 import { ticket_1 } from "./ticket_1.js";
 import { ticket_2 } from "./ticket_2.js";
 
-let main = document.querySelector(".main");
-
-////////////////////////////////////////////////////////////////////////////// ГЛОБАЛЬНЫЙ МАССИВ
 let container = document.querySelector(".container");
 let ticketItemsBlock = document.querySelector(".ticket-items-block");
-container.insertAdjacentElement("afterbegin", ticketItemsBlock);
-ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
+let time=1200;
 let ticketItemsHtml = "";
 let index = 0;
 
@@ -17,18 +14,22 @@ let arr = globalArr[index];
 for (let i = 0; i < globalArr.length; i++) {
   ticketItemsHtml += `<div class="ticket-items-html">${i + 1}</div>`;
 }
+
+ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
 let node = document.querySelectorAll(".ticket-items-html");
 
 const clickByItem = (e) => {
-  console.log("clickByItem");
   index = e.target.textContent - 1;
   arr = globalArr[index];
+  ticketItemsBlock.style.display='none'
+  time=1200
   getHtml(arr);
 };
 node.forEach((item) => {
   item.onclick = clickByItem;
 });
 //////////////////////////////////////////////////////////////////////////////
+let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
 let gridBlock = document.querySelector(".grid-block");
@@ -87,7 +88,7 @@ for (let i = 0; i < NodeListItemGrid.length; i++) {
 NodeListItemGrid[0].style.backgroundColor = "lightblue";
 NodeListItemGrid[0].style.border = "1px solid black";
 
-export function getHtml(arr) {
+function getHtml(arr) {
   let html;
   let img;
   if (document.querySelector(".divBlockHtml")) {
@@ -231,7 +232,7 @@ function getNextQuestion() {
 }
 
 function timer() {
-  let time = 1200;
+  
   let sum2 = result.reduce((sum, num) => sum + num, 0);
   function t() {
     let h;
@@ -247,14 +248,14 @@ function timer() {
       }
       return [
         clearInterval(invalid),
-        (html = `<div class="divBlockHtml"> 
+        html = `<div class="divBlockHtml"> 
                 <div class="timerBlockEnd">
                     <h2 style = "color:red;">Билет не сдан</h2>
                     <h3>Правильных ответов: ${sum2} из ${result.length}<h3/>
                     <p>У вас закончилось время: ${minutes}:${seconds}<p/>
                     <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
                 </div>
-            </div>`),
+            </div>`,
         main.insertAdjacentHTML("afterbegin", html),
         hideElements(),
         getStatisticsResult(),
@@ -268,10 +269,10 @@ function timer() {
 timer();
 
 function hideElements() {
-  (divButtons.style.display = "none"),
-    (timerBlock.style.display = "none"),
-    (gridBlock.style.display = "none"),
-    (document.querySelector(".count-question").style.display = "none"),
-    (document.getElementById(count + 1).style.opacity = "0"),
-    (document.querySelector(".divBlockHtml").style.marginTop = "20px");
+  divButtons.style.display = "none",
+    timerBlock.style.display = "none",
+    gridBlock.style.display = "none",
+    document.querySelector(".count-question").style.display = "none",
+    document.getElementById(count + 1).style.opacity = "0",
+    document.querySelector(".divBlockHtml").style.marginTop = "20px";
 }
