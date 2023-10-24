@@ -1,28 +1,49 @@
 ////////////////////////////////////--ГЛОБАЛЬНЫЙ МАССИВ--////////////////////////////////////////// 
-import { ticket_1 } from "./ticket_1.js";
-import { ticket_2 } from "./ticket_2.js";
+import { ticket_1 } from "./ticket_1/ticket_1.js";
+import { ticket_2 } from "./ticket_2/ticket_2.js";
+import { ticket_3 } from "./ticket_3/ticket_3.js";
+import { ticket_4 } from "./ticket_4/ticket_4.js";
+import { ticket_5 } from "./ticket_5/ticket_5.js";
+import { ticket_6 } from "./ticket_6/ticket_6.js";
+import { ticket_7 } from "./ticket_7/ticket_7.js";
+import { ticket_8 } from "./ticket_8/ticket_8.js";
+import { ticket_9 } from "./ticket_9/ticket_9.js";
+import { ticket_10} from "./ticket_10/ticket_10.js";
 
 let container = document.querySelector(".container");
 let ticketItemsBlock = document.querySelector(".ticket-items-block");
-let time=1200;
+let h3AndTicketsItemsBlock = document.querySelector(".h3_and_ticket-items-block")
+let timerSvg = document.querySelector('.timerSvg')
+
+
+let time;
 let ticketItemsHtml = "";
 let index = 0;
 
-const globalArr = [ticket_1, ticket_2];
+const globalArr = [
+    ticket_1, ticket_2,
+    ticket_3, ticket_4,
+    ticket_5, ticket_6, 
+    ticket_7, ticket_8, 
+    ticket_9, ticket_10,
+];
 let arr = globalArr[index];
-container.style.display='none'
+container.style.display='none';
+
 for (let i = 0; i < globalArr.length; i++) {
   ticketItemsHtml += `<div class="ticket-items-html">${i + 1}</div>`;
 }
-
 ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
 let node = document.querySelectorAll(".ticket-items-html");
 
 const clickByItem = (e) => {
+  divButtons.style.display = "";
+  timerSvg.style.display=''
   time=1200
+  timer();
   index = e.target.textContent - 1;
   arr = globalArr[index];
-  ticketItemsBlock.style.display='none'
+  h3AndTicketsItemsBlock.style.display='none'
   container.style.display='block'
   getHtml(arr);
 };
@@ -39,7 +60,6 @@ let timerP = document.querySelector(".timerP");
 let minutes;
 let seconds;
 let correctly;
-
 const result = [];
 
 for (let i = 0; i < arr.length; i++) {
@@ -95,15 +115,15 @@ function getHtml(arr) {
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
-  if (result.length >= 5) {
+  if (result.length >= 20) {
     let sum = result.reduce((sum, num) => sum + num, 0);
     if (result.length - sum >= 2) {
       return [
         html = `<div  class="divBlockHtml"> 
                         <div class="timerBlockEnd">
-                            <h2 class = "examInvalid">Билет не сдан</h2>
+                            <h2 class = "examInvalid">Билет № ${index+1} не сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
-                            <p>Оставшееся время экзамена: ${minutes}:${seconds}<p/>
+                            <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
                         </div>
                     </div>`,
@@ -115,9 +135,9 @@ function getHtml(arr) {
       return [
         html = `<div class="divBlockHtml"> 
                         <div class="timerBlockEnd">
-                            <h2 style = "color:green;">Билет сдан</h2>
+                            <h2 style = "color:green;">Билет № ${index+1} сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
-                            <p>Оставшееся время экзамена: ${minutes}:${seconds}<p/>
+                            <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
                         </div>
                     </div>`,
@@ -131,7 +151,7 @@ function getHtml(arr) {
     NodeListItemGrid[count].style.backgroundColor == "red" ||
     NodeListItemGrid[count].style.backgroundColor == "green"
   ) {
-    if (count >= 4) {
+    if (count >= 19) {
       count = 0;
     } else {
       document.getElementById(count + 1).style.display = "none";
@@ -145,8 +165,7 @@ function getHtml(arr) {
 
   return [
     img = arr
-      .map((obj) => `<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>`)
-      .join(""),
+      .map(obj => `<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>`).join(""),
     main.innerHTML = `<div class="divImagesBlock">${img}</div>`,
     document.getElementById(count + 1).style.opacity = "1",
     html = `<div class="divBlockHtml">
@@ -156,8 +175,8 @@ function getHtml(arr) {
     main.insertAdjacentHTML("beforeend", html),
     main.insertAdjacentElement("beforeend", divButtons),
     giveCorrectlyAnswer(),
-    (NodeListItemGrid[count].style.backgroundColor = "lightblue"),
-    (NodeListItemGrid[count].style.border = "1px solid black"),
+    NodeListItemGrid[count].style.backgroundColor = "lightblue",
+    NodeListItemGrid[count].style.border = "1px solid black",
   ];
 }
 function getStatisticsResult() {
@@ -168,15 +187,11 @@ function getStatisticsResult() {
       if (item.is_correct) {
         return `<li>${item.answer_text} 
                             <span style="color:green;"> (Эталон)</span>
-                            <span style="color:red;">${
-                              item.your_answer || ""
-                            }</span>
+                            <span style="color:red;">${item.your_answer || ""}</span>
                         </li> `;
       } else {
         return `<li>${item.answer_text}
-                            <span style="color:red;">${
-                              item.your_answer || ""
-                            }</span>
+                            <span style="color:red;">${item.your_answer || ""}</span>
                         </li>`;
       }
     });
@@ -251,7 +266,7 @@ function timer() {
         clearInterval(invalid),
         html = `<div class="divBlockHtml"> 
                 <div class="timerBlockEnd">
-                    <h2 style = "color:red;">Билет не сдан</h2>
+                    <h2 style = "color:red;">Билет № ${index+1} не сдан</h2>
                     <h3>Правильных ответов: ${sum2} из ${result.length}<h3/>
                     <p>У вас закончилось время: ${minutes}:${seconds}<p/>
                     <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
@@ -262,15 +277,15 @@ function timer() {
         getStatisticsResult(),
       ];
     }
-    return (timerP.innerHTML = h);
+    return timerP.innerHTML = h;
   }
   let invalid = setInterval(t, 1000);
   t();
 }
-timer();
+
 
 function hideElements() {
-  divButtons.style.display = "none",
+    divButtons.style.display = "none",
     timerBlock.style.display = "none",
     gridBlock.style.display = "none",
     document.querySelector(".count-question").style.display = "none",

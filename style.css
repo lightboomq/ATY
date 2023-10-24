@@ -5,23 +5,37 @@
   font-family: "Roboto", sans-serif;
 }
 
-.ticket-items-block {
-  display: flex;
+.h3_and_ticket-items-block {
+  margin: auto;
   max-width: 1024px;
+  text-align: center;
+  margin-top: 200px;
+}
+.h3_and_ticket-items-block h3 {
+  color: #0206f5;
+  margin-bottom: 6px;
+}
+.h3_and_ticket-items-block .ticket-items-block {
+  display: flex;
+  width: 100%;
   flex-wrap: wrap;
   margin: auto;
+  text-align: center;
+  justify-content: center;
 }
-.ticket-items-block .ticket-items-html {
+.h3_and_ticket-items-block .ticket-items-block .ticket-items-html {
   display: flex;
   height: 40px;
   width: 40px;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: rgb(226, 226, 226);
+  background-color: rgb(37, 201, 64);
   padding: 8px 11px 8px 11px;
   margin-left: 10px;
-  margin-top: 5px;
+  margin-top: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 .container {
@@ -102,6 +116,7 @@
 }
 .container .main .divBlockHtmlStatistic img {
   position: relative;
+  margin-top: 5px;
 }
 .container .main .divBlockHtmlStatistic ol {
   height: auto;

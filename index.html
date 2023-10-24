@@ -12,18 +12,20 @@
     </head>
 
     <body>
-
-        <div class="ticket-items-block"></div>
+        <div class="h3_and_ticket-items-block">
+            <h2>Билеты АТУ</h2>
+            <div class="ticket-items-block"></div>
+        </div>
+        
         <div class="container">
             <div style="margin-top: 10px;"class="grid-block"></div>
-          
             <div class="timerBlock">
-                <img class="timerSvg" style="width:22px; height:22px" src = './img/timer.svg'/>
+                <img class="timerSvg" style="width:22px; height:22px;display: none;" src = './img/timer.svg'/>
                 <p class="timerP"></p>
             </div>
             <h3 class="count-question" style="margin-left: 10px"></h3>
             <div class="main">
-                <div class="divButtons">
+                <div style="display:none;" class="divButtons">
                     <button class="btn-move">Пропустить</button>
                     <button class="btn-move">Подсказка</button>
                 </div>

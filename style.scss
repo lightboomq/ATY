@@ -5,22 +5,36 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
-.ticket-items-block{
-    display: flex;
-    max-width: 1024px;
-    flex-wrap: wrap;
+.h3_and_ticket-items-block{
     margin: auto;
-    .ticket-items-html{
+    max-width: 1024px;
+    text-align: center;
+    margin-top: 200px;
+    h3{
+       color: #0206f5;
+       margin-bottom: 6px;
+    }
+    .ticket-items-block{
         display: flex;
-        height: 40px;
-        width: 40px;
+        width: 100%;
+        flex-wrap: wrap;
+        margin: auto;
+        text-align: center;
         justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        background-color: rgb(226, 226, 226);
-        padding: 8px 11px 8px 11px;
-        margin-left: 10px;
-        margin-top: 5px;
+        .ticket-items-html{
+            display: flex;
+            height: 40px;
+            width: 40px;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: rgb(37, 201, 64);
+            padding: 8px 11px 8px 11px;
+            margin-left: 10px;
+            margin-top: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
     }
 }
 .container{
@@ -71,7 +85,6 @@
             background-color: lightgray;
         }
     }
-    
     .main{
         position: relative;
         display: flex;
@@ -100,6 +113,7 @@
             padding: 15px;
             img{
                 position: relative;
+                margin-top: 5px;
             }
             ol{
                 height: auto;
