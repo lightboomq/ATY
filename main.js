@@ -10,6 +10,7 @@ import { ticket_8 } from "./ticket_8/ticket_8.js";
 import { ticket_9 } from "./ticket_9/ticket_9.js";
 import { ticket_10} from "./ticket_10/ticket_10.js";
 
+
 let container = document.querySelector(".container");
 let ticketItemsBlock = document.querySelector(".ticket-items-block");
 let h3AndTicketsItemsBlock = document.querySelector(".h3_and_ticket-items-block")
@@ -22,10 +23,7 @@ let index = 0;
 
 const globalArr = [
     ticket_1, ticket_2,
-    ticket_3, ticket_4,
-    ticket_5, ticket_6, 
-    ticket_7, ticket_8, 
-    ticket_9, ticket_10,
+    ticket_3, 
 ];
 let arr = globalArr[index];
 container.style.display='none';
@@ -36,7 +34,7 @@ for (let i = 0; i < globalArr.length; i++) {
 ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
 let node = document.querySelectorAll(".ticket-items-html");
 
-const clickByItem = (e) => {
+const clickByItemGlobalArr = (e) => {
   divButtons.style.display = "";
   timerSvg.style.display=''
   time=1200
@@ -48,7 +46,7 @@ const clickByItem = (e) => {
   getHtml(arr);
 };
 node.forEach((item) => {
-  item.onclick = clickByItem;
+  item.onclick = clickByItemGlobalArr;
 });
 //////////////////////////////////////////////////////////////////////////////
 let main = document.querySelector(".main");
@@ -75,6 +73,7 @@ function getHtmlAnswersFromArr() {
   }
   return objKey.join(" ");
 }
+
 
 getHtml(arr);
 
@@ -109,9 +108,11 @@ for (let i = 0; i < NodeListItemGrid.length; i++) {
 NodeListItemGrid[0].style.backgroundColor = "lightblue";
 NodeListItemGrid[0].style.border = "1px solid black";
 
+
 function getHtml(arr) {
   let html;
   let img;
+
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
@@ -151,7 +152,8 @@ function getHtml(arr) {
     NodeListItemGrid[count].style.backgroundColor == "red" ||
     NodeListItemGrid[count].style.backgroundColor == "green"
   ) {
-    if (count >= 19) {
+    if (count >= 19
+      ) {
       count = 0;
     } else {
       document.getElementById(count + 1).style.display = "none";
@@ -162,10 +164,9 @@ function getHtml(arr) {
   document.querySelector(".count-question").textContent = `Вопрос: ${
     count + 1
   }`;
-
+  
   return [
-    img = arr
-      .map(obj => `<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>`).join(""),
+    img = arr.map(obj => `<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>`).join(""),
     main.innerHTML = `<div class="divImagesBlock">${img}</div>`,
     document.getElementById(count + 1).style.opacity = "1",
     html = `<div class="divBlockHtml">
@@ -176,33 +177,52 @@ function getHtml(arr) {
     main.insertAdjacentElement("beforeend", divButtons),
     giveCorrectlyAnswer(),
     NodeListItemGrid[count].style.backgroundColor = "lightblue",
-    NodeListItemGrid[count].style.border = "1px solid black",
-  ];
+    NodeListItemGrid[count].style.border = "1px solid black",  
+];
+  
 }
+
 function getStatisticsResult() {
   let key;
   let statisticCount = 1;
-  arr.map((obj) => {
-    key = obj.answers.map((item) => {
+  let help
+  let is_correctTrue
+ 
+  arr.map(obj => {
+    is_correctTrue=obj.answers.findIndex(is_correctTrue=>is_correctTrue.is_correct==true);
+    key = obj.answers.map(item => {
+      if(item.your_answer=='(Ваш ответ)' && item.is_correct==false){
+         help = `<div class="helpBlock">
+          <h4>Правильный ответ: ${is_correctTrue+1}</h4>
+          <p>${obj.help}</p>
+        </div>` 
+      }
+      else if(item.your_answer=='(Ваш ответ)' && item.is_correct==true){
+        help=''
+      }
       if (item.is_correct) {
         return `<li>${item.answer_text} 
-                            <span style="color:green;"> (Эталон)</span>
-                            <span style="color:red;">${item.your_answer || ""}</span>
-                        </li> `;
+                  <span style="color:green;"> (Эталон)</span>
+                  <span style="color:red;">${item.your_answer || ""}</span>
+                </li> `;
       } else {
         return `<li>${item.answer_text}
-                            <span style="color:red;">${item.your_answer || ""}</span>
-                        </li>`;
+                  <span style="color:red;">${item.your_answer || ""}</span>     
+                </li>`;
       }
+      
     });
+    
     main.innerHTML += `<div class = "divBlockHtmlStatistic">
           <h3>Вопрос: ${statisticCount++}</h3>
           <img src = '${obj.img}'/>
           <div class = "pDiv"><p>${obj.question}</p></div>
           <ol>${key.join("")}</ol>
+          ${help}
       </div>`;
   });
 }
+
 function clickByItemGrid(e) {
   for (let i = 0; i < NodeListItemGrid.length; i++) {
     if (

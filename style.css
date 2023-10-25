@@ -121,9 +121,21 @@
 .container .main .divBlockHtmlStatistic ol {
   height: auto;
 }
+.container .main .divBlockHtmlStatistic ol li {
+  color: black;
+}
 .container .main .divBlockHtmlStatistic .pDiv {
   height: auto;
   margin-top: 10px;
+}
+.container .main .divBlockHtmlStatistic .helpBlock {
+  font-weight: 100;
+}
+.container .main .divBlockHtmlStatistic .helpBlock h4 {
+  font-size: 14px;
+}
+.container .main .divBlockHtmlStatistic .helpBlock p {
+  font-size: 14px;
 }
 .container .main ol {
   margin-top: 15px;
