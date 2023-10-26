@@ -2,25 +2,16 @@
 import { ticket_1 } from "./ticket_1/ticket_1.js";
 import { ticket_2 } from "./ticket_2/ticket_2.js";
 import { ticket_3 } from "./ticket_3/ticket_3.js";
-import { ticket_4 } from "./ticket_4/ticket_4.js";
-import { ticket_5 } from "./ticket_5/ticket_5.js";
-import { ticket_6 } from "./ticket_6/ticket_6.js";
-import { ticket_7 } from "./ticket_7/ticket_7.js";
-import { ticket_8 } from "./ticket_8/ticket_8.js";
-import { ticket_9 } from "./ticket_9/ticket_9.js";
-import { ticket_10} from "./ticket_10/ticket_10.js";
-
 
 let container = document.querySelector(".container");
 let ticketItemsBlock = document.querySelector(".ticket-items-block");
-let h3AndTicketsItemsBlock = document.querySelector(".h3_and_ticket-items-block")
 let timerSvg = document.querySelector('.timerSvg')
 
 
 let time;
 let ticketItemsHtml = "";
 let index = 0;
-
+let str
 const globalArr = [
     ticket_1, ticket_2,
     ticket_3, 
@@ -29,19 +20,21 @@ let arr = globalArr[index];
 container.style.display='none';
 
 for (let i = 0; i < globalArr.length; i++) {
-  ticketItemsHtml += `<div class="ticket-items-html">${i + 1}</div>`;
+  ticketItemsHtml += `<div class="ticket-items-html">Билет ${i + 1}</div>`;
 }
 ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
 let node = document.querySelectorAll(".ticket-items-html");
 
 const clickByItemGlobalArr = (e) => {
-  divButtons.style.display = "";
-  timerSvg.style.display=''
+  document.querySelector('.h2-block').style.display='none'
+  ticketItemsBlock.style.display='none'
+  str=e.target.textContent;
+  index = Number(str[6]-1)
+  divButtons.style.display = '';
+  timerSvg.style.display = ''
   time=1200
   timer();
-  index = e.target.textContent - 1;
   arr = globalArr[index];
-  h3AndTicketsItemsBlock.style.display='none'
   container.style.display='block'
   getHtml(arr);
 };
@@ -73,9 +66,6 @@ function getHtmlAnswersFromArr() {
   }
   return objKey.join(" ");
 }
-
-
-getHtml(arr);
 
 function giveCorrectlyAnswer() {
   let answers = document.querySelectorAll("li");
@@ -210,7 +200,6 @@ function getStatisticsResult() {
                   <span style="color:red;">${item.your_answer || ""}</span>     
                 </li>`;
       }
-      
     });
     
     main.innerHTML += `<div class = "divBlockHtmlStatistic">
@@ -222,7 +211,7 @@ function getStatisticsResult() {
       </div>`;
   });
 }
-
+ 
 function clickByItemGrid(e) {
   for (let i = 0; i < NodeListItemGrid.length; i++) {
     if (
@@ -277,7 +266,7 @@ function timer() {
     seconds = seconds < 10 ? "0" + seconds : seconds;
     time--;
     h = `${minutes}:${seconds}`;
-    if (minutes == 0 && seconds == 0) {
+    if (!minutes && !seconds ) {
       let html;
       if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
