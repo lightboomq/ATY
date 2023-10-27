@@ -129,6 +129,19 @@
             background-color: #f5f3f3;
             border-radius: 7px;
             align-items: flex-end;
+            //transition: 1s ease-in-out;
+            animation-duration: 0.7s;
+            animation-name: complete-block-animation;
+            @keyframes complete-block-animation {
+                from {
+                  width: 400px;
+                  height: 180px;
+                }
+                to {
+                  width: 470px;
+                  height: 220px;
+                }
+              }
             h3{
                 margin: auto;
                 margin-left: 110px
@@ -223,6 +236,9 @@
                 li{
                     font-size: 15px;
                 }
+                li:hover{
+                    color:#1A76CB
+                }
             }
         }
         h3{
@@ -281,6 +297,16 @@
                         height: 30px;
                     }
                 }
+                @keyframes complete-block-animation {
+                    from {
+                      width: 300px;
+                      height: 115px;
+                    }
+                    to {
+                      width: 350px;
+                      height: 140px;
+                    }
+                  }
             }
         }
         @media (max-width:1010px){

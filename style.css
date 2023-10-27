@@ -134,6 +134,18 @@
   background-color: #f5f3f3;
   border-radius: 7px;
   align-items: flex-end;
+  animation-duration: 0.7s;
+  animation-name: complete-block-animation;
+}
+@keyframes complete-block-animation {
+  from {
+    width: 400px;
+    height: 180px;
+  }
+  to {
+    width: 470px;
+    height: 220px;
+  }
 }
 .container .main .complete-block h3 {
   margin: auto;
@@ -227,6 +239,9 @@
   .container .main ol li {
     font-size: 15px;
   }
+  .container .main ol li:hover {
+    color: #1A76CB;
+  }
 }
 .container .main h3 {
   all: unset;
@@ -283,6 +298,16 @@
   .container .main .complete-block .complete-btn-block button {
     width: 120px;
     height: 30px;
+  }
+  @keyframes complete-block-animation {
+    from {
+      width: 300px;
+      height: 115px;
+    }
+    to {
+      width: 350px;
+      height: 140px;
+    }
   }
 }
 @media (max-width: 1010px) {
