@@ -63,6 +63,12 @@
   margin: auto;
   justify-content: center;
 }
+.container .count-question_block {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 12px 0 12px;
+}
 .container .timerBlock {
   display: flex;
   margin-top: 10px;
@@ -93,9 +99,10 @@
 }
 .container .grid-block {
   display: flex;
-  overflow: auto;
+  width: 99%;
 }
 .container .grid-block .grid {
+  margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,6 +120,43 @@
   flex-direction: column;
   font-weight: bold;
   padding: 0px 10px 0px 10px;
+}
+.container .main .complete-block {
+  position: absolute;
+  padding-top: 10px;
+  margin: auto;
+  width: 350px;
+  height: 100px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: whitesmoke;
+  border-radius: 7px;
+  align-items: flex-end;
+}
+.container .main .complete-block h3 {
+  margin-top: 40px;
+  margin-left: 50px;
+}
+.container .main .complete-block .complete-btn-block {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+.container .main .complete-block .complete-btn-block button {
+  width: 120px;
+  height: 30px;
+  background-color: rgb(191, 196, 196);
+  cursor: pointer;
+}
+.container .main .complete-block .complete-btn-block .btn-yes {
+  background-color: green;
+  color: white;
+}
+.container .main .complete-block .complete-btn-block .btn-no {
+  background-color: rgb(128, 4, 0);
+  color: white;
 }
 .container .main .divImagesBlock {
   display: flex;
@@ -170,6 +214,9 @@
 }
 .container .main ol li::marker {
   color: black;
+}
+.container .main ol li:hover {
+  color: blue;
 }
 @media (max-width: 800px) {
   .container .main ol li {
@@ -299,5 +346,10 @@
 @media (max-width: 340px) {
   .container .main .divBlockHtml {
     margin-top: 120px;
+  }
+}
+@media (max-width: 1023px) {
+  .container .grid-block {
+    overflow: scroll;
   }
 }/*# sourceMappingURL=style.css.map */
