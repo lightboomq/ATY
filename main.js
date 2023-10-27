@@ -3,10 +3,10 @@ import { ticket_1 } from "./ticket_1/ticket_1.js";
 import { ticket_2 } from "./ticket_2/ticket_2.js";
 import { ticket_3 } from "./ticket_3/ticket_3.js";
 
-let container = document.querySelector(".container");
-let ticketItemsBlock = document.querySelector(".ticket-items-block");
-let timerSvg = document.querySelector('.timerSvg')
-
+const container = document.querySelector(".container");
+const ticketItemsBlock = document.querySelector(".ticket-items-block");
+const timerSvg = document.querySelector('.timerSvg')
+const btnComplete =  document.querySelector('.btn-complete')
 
 let time;
 let ticketItemsHtml = "";
@@ -47,14 +47,15 @@ node.forEach((item) => {
 let main = document.querySelector(".main");
 let divButtons = document.querySelector(".divButtons");
 document.querySelector(".btn-move").onclick = getNextQuestion;
-let gridBlock = document.querySelector(".grid-block");
-let timerBlock = document.querySelector(".timerBlock");
-let timerP = document.querySelector(".timerP");
-let btnComplete =  document.querySelector('.btn-complete')
+const gridBlock = document.querySelector(".grid-block");
+const timerBlock = document.querySelector(".timerBlock");
+const timerP = document.querySelector(".timerP");
+
 let minutes;
 let seconds;
 let correctly;
-const result = [];
+let invalid
+let result = [];
 
 for (let i = 0; i < arr.length; i++) {
   gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
@@ -100,25 +101,7 @@ for (let i = 0; i < NodeListItemGrid.length; i++) {
 }
 NodeListItemGrid[0].style.backgroundColor = "lightblue";
 NodeListItemGrid[0].style.border = "1px solid black";
-let btnCompleteYes
 
-btnComplete.onclick=function(){
-  let completeHtml
-  completeHtml=`<div class='complete-block'>
-    <h3>Завершить тестирование?</h3>
-    <div class="complete-btn-block">
-      <button class="btn-yes">Да</button>
-      <button class="btn-no">Нет</button>
-    </div>
-  </div>`
-  main.insertAdjacentHTML('beforeend',completeHtml)
-  btnCompleteYes=document.querySelector('.btn-yes')
-  btnCompleteYes.onclick=function(e){
-    console.log(e.target.textContent);
-  };
-  console.log(btnCompleteYes);
-}
- 
 
 function getHtml(arr) {
 
@@ -309,11 +292,37 @@ function timer() {
     }
     return timerP.innerHTML = h;
   }
-  let invalid = setInterval(t, 1000);
+   invalid = setInterval(t, 1000);
   t();
 }
 
-
+btnComplete.onclick=function(){
+  let completeHtml
+  let btnCompleteYes
+  let btnCompleteNo
+  completeHtml=`<div class='complete-block'>
+    <h3>Завершить тестирование?</h3>
+    <div class="complete-btn-block">
+      <button class="btn-yes">Да</button>
+      <button class="btn-no">Нет</button>
+    </div>
+  </div>`
+  main.insertAdjacentHTML('beforeend',completeHtml)
+  btnCompleteYes=document.querySelector('.btn-yes')
+  btnCompleteNo=document.querySelector('.btn-no')
+  btnCompleteYes.onclick=function(e){
+    if(e.target.textContent=='Да'){
+      location.reload();
+      return false
+    }
+  };
+  btnCompleteNo.onclick=function(e){
+    if(e.target.textContent=='Нет'){
+      document.querySelector('.complete-block').remove()
+    }
+  };
+  
+}
 function hideElements() {
     divButtons.style.display = "none",
     timerBlock.style.display = "none",

@@ -123,29 +123,29 @@
 }
 .container .main .complete-block {
   position: absolute;
-  padding-top: 10px;
+  padding-top: 40px;
   margin: auto;
-  width: 350px;
-  height: 100px;
+  width: 470px;
+  height: 220px;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: whitesmoke;
+  background-color: rgb(228, 228, 228);
   border-radius: 7px;
   align-items: flex-end;
 }
 .container .main .complete-block h3 {
-  margin-top: 40px;
-  margin-left: 50px;
+  margin: auto;
+  margin-left: 110px;
 }
 .container .main .complete-block .complete-btn-block {
   display: flex;
   justify-content: space-around;
-  margin-top: 30px;
+  margin-top: 80px;
 }
 .container .main .complete-block .complete-btn-block button {
-  width: 120px;
+  width: 160px;
   height: 30px;
   background-color: rgb(191, 196, 196);
   cursor: pointer;
@@ -260,6 +260,24 @@
 @media (max-width: 800px) {
   .container .main .divButtons button {
     font-size: 15px;
+  }
+}
+@media (max-width: 600px) {
+  .container .main .complete-block {
+    width: 350px;
+    height: 100px;
+    padding: 10px;
+  }
+  .container .main .complete-block h3 {
+    margin-top: 40px;
+    margin-left: 50px;
+  }
+  .container .main .complete-block .complete-btn-block {
+    margin-top: 30px;
+  }
+  .container .main .complete-block .complete-btn-block button {
+    width: 120px;
+    height: 30px;
   }
 }
 @media (max-width: 1010px) {
