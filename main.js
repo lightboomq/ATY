@@ -313,21 +313,24 @@ function timer() {
 
 btnComplete.onclick=function(){
   let completeHtml
+  let blockAllElements
   let btnCompleteYes
   let btnCompleteNo
+  blockAllElements=`<div class='block-all-elements'></div>`
   completeHtml=`<div class='complete-block'>
-    <h3>Завершить тестирование?</h3>
-    <div class="complete-btn-block">
-      <button class="btn-yes">Да</button>
-      <button class="btn-no">Нет</button>
-    </div>
-  </div>`
+                  <h3>Завершить тестирование?</h3>
+                  <div class="complete-btn-block">
+                    <button class="btn-yes">Да</button>
+                    <button class="btn-no">Нет</button>
+                  </div>`
+  
+    
+  body.insertAdjacentHTML('beforeend',blockAllElements)
   main.insertAdjacentHTML('beforeend',completeHtml)
   btnCompleteYes=document.querySelector('.btn-yes')
   btnCompleteNo=document.querySelector('.btn-no')
-  body.style.backgroundColor='#D0D0D0'
-  btnCompleteYes.onclick=function(e){
   
+  btnCompleteYes.onclick=function(e){
     if(e.target.textContent=='Да'){
       location.reload();
       return false
@@ -335,7 +338,7 @@ btnComplete.onclick=function(){
   };
   btnCompleteNo.onclick=function(e){
     if(e.target.textContent=='Нет'){
-      body.style.backgroundColor='white'
+      document.querySelector('.block-all-elements').remove()
       document.querySelector('.complete-block').remove()
     }
   };
