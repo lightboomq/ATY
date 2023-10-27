@@ -173,7 +173,7 @@
 }
 .container .main .divBlockHtml .img-close-block {
   display: flex;
-  justify-content: end;
+  justify-content: center;
   margin-bottom: 30px;
 }
 .container .main .divBlockHtmlStatistic {
