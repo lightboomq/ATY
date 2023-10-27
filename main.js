@@ -7,7 +7,7 @@ const container = document.querySelector(".container");
 const ticketItemsBlock = document.querySelector(".ticket-items-block");
 const timerSvg = document.querySelector('.timerSvg')
 const btnComplete =  document.querySelector('.btn-complete')
-
+const body = document.querySelector('body')
 let time;
 let ticketItemsHtml = "";
 let index = 0;
@@ -104,7 +104,7 @@ NodeListItemGrid[0].style.border = "1px solid black";
 
 
 function getHtml(arr) {
-
+  let confirm
   let html;
   let img;
   if (document.querySelector(".divBlockHtml")) {
@@ -115,6 +115,9 @@ function getHtml(arr) {
     if (result.length - sum >= 2) {
       return [
         html = `<div  class="divBlockHtml"> 
+                        <div class='img-close-block'>
+                          <img style="width:40px; height:40px; cursor: pointer;" class='close-img' src= "./img/close-img.svg"/>
+                        </div>
                         <div class="timerBlockEnd">
                             <h2 class = "examInvalid">Билет № ${index+1} не сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
@@ -125,10 +128,17 @@ function getHtml(arr) {
         main.insertAdjacentHTML("afterbegin", html),
         hideElements(),
         getStatisticsResult(),
+        document.querySelector('.close-img').onclick=function(){
+        confirm=window.confirm('Завершить просмотр результа?')
+        confirm?location.reload():''
+        }
       ];
     } else {
       return [
         html = `<div class="divBlockHtml"> 
+                        <div class='img-close-block'>
+                          <img style="width:40px; height:40px; cursor: pointer;" class='close-img' src= "./img/close-img.svg"/>
+                        </div>
                         <div class="timerBlockEnd">
                             <h2 style = "color:green;">Билет № ${index+1} сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
@@ -139,6 +149,10 @@ function getHtml(arr) {
         main.insertAdjacentHTML("afterbegin", html),
         hideElements(),
         getStatisticsResult(),
+        document.querySelector('.close-img').onclick=function(){
+        confirm=window.confirm('Завершить просмотр результа?')
+        confirm?location.reload():''
+        }
       ];
     }
   }
@@ -181,8 +195,9 @@ function getStatisticsResult() {
   let statisticCount = 1;
   let help
   let is_correctTrue
- 
+
   arr.map(obj => {
+    document.querySelector('.count-ticket').style.display='none'
     is_correctTrue=obj.answers.findIndex(is_correctTrue=>is_correctTrue.is_correct==true);
     key = obj.answers.map(item => {
       if(item.your_answer=='(Ваш ответ)' && item.is_correct==false){
@@ -310,7 +325,9 @@ btnComplete.onclick=function(){
   main.insertAdjacentHTML('beforeend',completeHtml)
   btnCompleteYes=document.querySelector('.btn-yes')
   btnCompleteNo=document.querySelector('.btn-no')
+  body.style.backgroundColor='#D0D0D0'
   btnCompleteYes.onclick=function(e){
+  
     if(e.target.textContent=='Да'){
       location.reload();
       return false
@@ -318,6 +335,7 @@ btnComplete.onclick=function(){
   };
   btnCompleteNo.onclick=function(e){
     if(e.target.textContent=='Нет'){
+      body.style.backgroundColor='white'
       document.querySelector('.complete-block').remove()
     }
   };

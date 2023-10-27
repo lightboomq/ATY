@@ -131,7 +131,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgb(228, 228, 228);
+  background-color: #f5f3f3;
   border-radius: 7px;
   align-items: flex-end;
 }
@@ -170,6 +170,10 @@
 }
 .container .main .divBlockHtml {
   margin-top: 390px;
+}
+.container .main .divBlockHtml .img-close-block {
+  display: flex;
+  justify-content: end;
 }
 .container .main .divBlockHtmlStatistic {
   margin-top: 20px;
@@ -265,15 +269,15 @@
 @media (max-width: 600px) {
   .container .main .complete-block {
     width: 350px;
-    height: 100px;
-    padding: 10px;
+    height: 140px;
+    padding-top: 20px;
   }
   .container .main .complete-block h3 {
     margin-top: 40px;
     margin-left: 50px;
   }
   .container .main .complete-block .complete-btn-block {
-    margin-top: 30px;
+    margin-top: 40px;
   }
   .container .main .complete-block .complete-btn-block button {
     width: 120px;
