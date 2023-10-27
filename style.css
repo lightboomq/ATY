@@ -174,6 +174,7 @@
 .container .main .divBlockHtml .img-close-block {
   display: flex;
   justify-content: end;
+  margin-bottom: 30px;
 }
 .container .main .divBlockHtmlStatistic {
   margin-top: 20px;
