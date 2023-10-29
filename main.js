@@ -8,10 +8,12 @@ const ticketItemsBlock = document.querySelector(".ticket-items-block");
 const timerSvg = document.querySelector('.timerSvg')
 const btnComplete =  document.querySelector('.btn-complete')
 const body = document.querySelector('body')
+const examBtn = document.querySelector('.exam-btn')
 let time;
 let ticketItemsHtml = "";
 let index = 0;
 let str
+let strHtml
 const globalArr = [
     ticket_1, ticket_2,
     ticket_3, 
@@ -22,17 +24,22 @@ container.style.display='none';
 for (let i = 0; i < globalArr.length; i++) {
   ticketItemsHtml += `<div class="ticket-items-html">Билет ${i + 1}</div>`;
 }
+
 ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
+
+
 let node = document.querySelectorAll(".ticket-items-html");
 
 const clickByItemGlobalArr = (e) => {
+  str=e.target.textContent;
+  strHtml=`Билет №${str[6]}`
   document.querySelector('.h2-block').style.display='none'
   ticketItemsBlock.style.display='none'
-  str=e.target.textContent;
   index = Number(str[6]-1)
   divButtons.style.display = '';
   timerSvg.style.display = ''
-  time=1200
+  examBtn.style.display='none'
+  time=2400
   timer();
   arr = globalArr[index];
   container.style.display='block'
@@ -42,6 +49,38 @@ const clickByItemGlobalArr = (e) => {
 node.forEach((item) => {
   item.onclick = clickByItemGlobalArr;
 });
+
+
+
+examBtn.onclick=getRandomItemOfArrayWrapper
+
+function getRandomItemOfArrayWrapper(){
+  arr = []
+  strHtml=`Экзамен`
+  function getRandomItemOfArray(arr){
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    return Math.round(randomIndex);
+  };    
+
+  for (let i = 0; i <= 19; i++) {
+    const ticketIndex = getRandomItemOfArray(globalArr);
+    const question = globalArr[ticketIndex][i];
+    arr.push(question);
+  }
+  time=2400
+  timer();
+  document.querySelector('.h2-block').style.display='none'
+  document.querySelector('.count-ticket').textContent=`Экзамен`;
+  document.querySelector('.count-ticket').style.color = 'red'
+  ticketItemsBlock.style.display='none'
+  divButtons.style.display = '';
+  timerSvg.style.display = ''
+  container.style.display='block'
+  main.style.display='block'
+  examBtn.style.display='none'
+  getHtml(arr)
+}
+
 
 //////////////////////////////////////////////////////////////////////////////
 let main = document.querySelector(".main");
@@ -63,10 +102,10 @@ for (let i = 0; i < arr.length; i++) {
 let NodeListItemGrid = document.querySelectorAll(".grid");
 let count = 0;
 
-function getHtmlAnswersFromArr() {
+function getHtmlAnswersFromArr(arr) {
   let objKey;
   for (let i = -1; i < count; i++) {
-    objKey = globalArr[index][count].answers.map(item => `<li class='liAnswer'>${item.answer_text}</li>`);
+    objKey = arr[count].answers.map(item => `<li class='liAnswer'>${item.answer_text}</li>`);
   }
   return objKey.join(" ");
 }
@@ -85,15 +124,27 @@ function giveCorrectlyAnswer() {
     indexArrAnswers = arrAnswers.indexOf(e.target.textContent);
     arr[count].answers[indexArrAnswers].your_answer = "(Ваш ответ)";
     correctly = arr[count].answers[indexArrAnswers].is_correct;
-    if (correctly) {
-      NodeListItemGrid[count].style.backgroundColor = "green";
+    if(strHtml=='Экзамен'){
+      NodeListItemGrid[count].style.backgroundColor = "lightslategray";
       NodeListItemGrid[count].style.color = "white";
-    } else {
-      NodeListItemGrid[count].style.backgroundColor = "red";
-      NodeListItemGrid[count].style.color = "white";
+      correctly ? result.push(1) : result.push(0);
+      getHtml(arr);
+      return
     }
-    correctly ? result.push(1) : result.push(0);
-    getHtml(arr);
+
+    if(strHtml==`Билет №${str[6]}`){
+      if (correctly) {
+        NodeListItemGrid[count].style.backgroundColor = "green";
+        NodeListItemGrid[count].style.color = "white";
+      } else {
+        NodeListItemGrid[count].style.backgroundColor = "red";
+        NodeListItemGrid[count].style.color = "white";
+      }
+      correctly ? result.push(1) : result.push(0);
+      getHtml(arr);
+    }
+    
+    
   }
 }
 for (let i = 0; i < NodeListItemGrid.length; i++) {
@@ -107,6 +158,7 @@ function getHtml(arr) {
   let confirm
   let html;
   let img;
+ 
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
@@ -119,7 +171,7 @@ function getHtml(arr) {
                           <img style="width:40px; height:40px; cursor: pointer;" class='close-img' src= "./img/close-img.svg"/>
                         </div>
                         <div class="timerBlockEnd">
-                            <h2 class = "examInvalid">Билет № ${index+1} не сдан</h2>
+                            <h2 class = "examInvalid">${strHtml} не сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
                             <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
@@ -140,7 +192,7 @@ function getHtml(arr) {
                           <img style="width:40px; height:40px; cursor: pointer;" class='close-img' src= "./img/close-img.svg"/>
                         </div>
                         <div class="timerBlockEnd">
-                            <h2 style = "color:green;">Билет № ${index+1} сдан</h2>
+                            <h2 style = "color:green;">${strHtml} сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
                             <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
@@ -156,22 +208,30 @@ function getHtml(arr) {
       ];
     }
   }
-  while (
-    NodeListItemGrid[count].style.backgroundColor == "red" ||
-    NodeListItemGrid[count].style.backgroundColor == "green"
-  ) {
-    if (count >= 19
-      ) {
-      count = 0;
-    } else {
-      document.getElementById(count + 1).style.display = "none";
-      count++;
+  
+  while (NodeListItemGrid[count].style.backgroundColor == "red" ||NodeListItemGrid[count].style.backgroundColor == "green"){
+    if (count >= 19) {
+        count = 0;
+      } 
+      else {
+        document.getElementById(count + 1).style.display = "none";
+        count++;
+      }
     }
-  }
 
-  document.querySelector(".count-question").textContent = `Вопрос: ${
-    count + 1
-  }`;
+    while (NodeListItemGrid[count].style.backgroundColor == "lightslategray" ){
+      if (count >= 19) {
+        count = 0;
+      } 
+      else {
+        document.getElementById(count + 1).style.display = "none";
+        count++;
+      }
+    }
+  
+    
+    document.querySelector(".count-question").textContent = `Вопрос: ${ count + 1 }`;
+  
   
   return [
     img = arr.map(obj => `<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>`).join(""),
@@ -179,7 +239,7 @@ function getHtml(arr) {
     document.getElementById(count + 1).style.opacity = "1",
     html = `<div class="divBlockHtml">
                     <div class = "pDiv"><p>${arr[count].question}</p></div>
-                    <ol>${getHtmlAnswersFromArr()}</ol>
+                    <ol>${getHtmlAnswersFromArr(arr)}</ol>
                 </div>`,
     main.insertAdjacentHTML("beforeend", html),
     main.insertAdjacentElement("beforeend", divButtons),
@@ -200,6 +260,7 @@ function getStatisticsResult() {
     document.querySelector('.count-ticket').style.display='none'
     is_correctTrue=obj.answers.findIndex(is_correctTrue=>is_correctTrue.is_correct==true);
     key = obj.answers.map(item => {
+      
       if(item.your_answer=='(Ваш ответ)' && item.is_correct==false){
          help = `<div class="helpBlock">
           <h4>Правильный ответ: ${is_correctTrue+1}</h4>
@@ -209,6 +270,7 @@ function getStatisticsResult() {
       else if(item.your_answer=='(Ваш ответ)' && item.is_correct==true){
         help=''
       }
+      
       if (item.is_correct) {
         return `<li>${item.answer_text} 
                   <span style="color:green;"> (Эталон)</span>
@@ -220,7 +282,7 @@ function getStatisticsResult() {
                 </li>`;
       }
     });
-    
+     
     main.innerHTML += `<div class = "divBlockHtmlStatistic">
           <h3>Вопрос: ${statisticCount++}</h3>
           <img src = '${obj.img}'/>
@@ -230,19 +292,31 @@ function getStatisticsResult() {
       </div>`;
   });
 }
- 
+
 function clickByItemGrid(e) {
+
+  if(strHtml=='Экзамен'){
+    for (let i = 0; i < NodeListItemGrid.length; i++) {
+      if (NodeListItemGrid[i].style.backgroundColor != "lightslategray") {
+        NodeListItemGrid[i].style.backgroundColor = "lightgray";
+        NodeListItemGrid[count].style.border = "";
+      }
+    }
+    count = +e.target.textContent - 1;
+    getHtml(arr);
+    return
+  }
+if(strHtml==`Билет №${str[6]}`){
   for (let i = 0; i < NodeListItemGrid.length; i++) {
-    if (
-      NodeListItemGrid[i].style.backgroundColor != "red" &&
-      NodeListItemGrid[i].style.backgroundColor != "green"
-    ) {
+    if (NodeListItemGrid[i].style.backgroundColor != "red" && NodeListItemGrid[i].style.backgroundColor != "green") {
       NodeListItemGrid[i].style.backgroundColor = "lightgray";
       NodeListItemGrid[count].style.border = "";
     }
   }
   count = +e.target.textContent - 1;
   getHtml(arr);
+  return
+}
 }
 NodeListItemGrid.forEach((item) => {
   item.onclick = clickByItemGrid;
@@ -285,7 +359,7 @@ function timer() {
     seconds = seconds < 10 ? "0" + seconds : seconds;
     time--;
     h = `${minutes}:${seconds}`;
-    if (!minutes && !seconds ) {
+    if (minutes==0 && seconds==0) {
       let html;
       if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
@@ -294,7 +368,7 @@ function timer() {
         clearInterval(invalid),
         html = `<div class="divBlockHtml"> 
                 <div class="timerBlockEnd">
-                    <h2 style = "color:red;">Билет № ${index+1} не сдан</h2>
+                    <h2 style = "color:red;">${strHtml} не сдан</h2>
                     <h3>Правильных ответов: ${sum2} из ${result.length}<h3/>
                     <p>У вас закончилось время: ${minutes}:${seconds}<p/>
                     <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
@@ -302,7 +376,7 @@ function timer() {
             </div>`,
         main.insertAdjacentHTML("afterbegin", html),
         hideElements(),
-        getStatisticsResult(),
+        //getStatisticsResult(),
       ];
     }
     return timerP.innerHTML = h;
@@ -323,8 +397,6 @@ btnComplete.onclick=function(){
                     <button class="btn-yes">Да</button>
                     <button class="btn-no">Нет</button>
                   </div>`
-  
-    
   body.insertAdjacentHTML('beforeend',blockAllElements)
   main.insertAdjacentHTML('beforeend',completeHtml)
   btnCompleteYes=document.querySelector('.btn-yes')

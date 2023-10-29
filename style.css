@@ -24,7 +24,8 @@ body .block-all-elements {
 .h2-block .h2-ticket {
   display: flex;
   padding: 7px;
-  padding-top: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   background-color: #00BFFF;
   border-radius: 12px 12px 0 0;
   width: 500px;
@@ -40,7 +41,7 @@ body .block-all-elements {
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-color: #00BFFF;
+  background-color: whitesmoke;
   max-width: 500px;
   margin: auto;
   padding: 5px;
@@ -65,6 +66,29 @@ body .block-all-elements {
 }
 .ticket-items-block .ticket-items-html:hover {
   background-color: #8B00FF;
+}
+
+.exam-btn-block {
+  display: flex;
+  max-width: 500px;
+  justify-content: center;
+  margin: auto;
+  margin-top: 5px;
+}
+.exam-btn-block .exam-btn {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 50px;
+  background-color: #33a555;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+}
+.exam-btn-block .exam-btn:hover {
+  background-color: #28be55;
 }
 
 .container {
@@ -197,7 +221,7 @@ body .block-all-elements {
 }
 .container .main .divBlockHtml .img-close-block {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   margin-bottom: 30px;
 }
 .container .main .divBlockHtmlStatistic {
