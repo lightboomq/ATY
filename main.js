@@ -24,10 +24,7 @@ container.style.display='none';
 for (let i = 0; i < globalArr.length; i++) {
   ticketItemsHtml += `<div class="ticket-items-html">Билет ${i + 1}</div>`;
 }
-
 ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
-
-
 let node = document.querySelectorAll(".ticket-items-html");
 
 const clickByItemGlobalArr = (e) => {
@@ -49,8 +46,6 @@ const clickByItemGlobalArr = (e) => {
 node.forEach((item) => {
   item.onclick = clickByItemGlobalArr;
 });
-
-
 
 examBtn.onclick=getRandomItemOfArrayWrapper
 
