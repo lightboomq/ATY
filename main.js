@@ -442,4 +442,10 @@ function hideElements() {
     document.querySelector(".divBlockHtml").style.marginTop = "20px";
 }
 localStorage.getItem('array')?getHtml(arr):false
-localStorage.getItem('timer')?timer():false
+if(localStorage.getItem('timer')){
+  timerSvg.style.display = ''
+  timer()
+}
+else{
+  false
+}
