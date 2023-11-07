@@ -32,7 +32,6 @@ const globalArr = [
 
 let arr = localStorage.getItem('array')?JSON.parse(localStorage.getItem('array')):globalArr[index]
 
-
 localStorage.getItem('container')?localStorage.getItem('container'):localStorage.setItem('container','none')
 localStorage.getItem('main')?localStorage.getItem('container'):localStorage.setItem('main','none')
 localStorage.getItem('ticketExamBlock')?localStorage.getItem('ticketExamBlock'):localStorage.setItem('ticketExamBlock','block')
@@ -68,9 +67,9 @@ const clickByItemGlobalArr = (e) => {
   divButtons.style.display = '';
   timerSvg.style.display = ''
   examBtn.style.display='none'
-  // time=2400
-  // timer();
-  
+  localStorage.setItem('timer',2400)
+  time=localStorage.getItem('timer')
+  timer();
   arr = globalArr[index];
   localStorage.setItem('array',JSON.stringify(arr))
   
@@ -114,12 +113,8 @@ function getRandomItemOfArrayWrapper(){
 
 
 //////////////////////////////////////////////////////////////////////////////
-
-
 document.querySelector(".btn-move").onclick = getNextQuestion;
 const gridBlock = document.querySelector(".grid-block");
-
-
 
 for (let i = 0; i < arr.length; i++) {
   gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
@@ -369,8 +364,9 @@ function getNextQuestion() {
   }
 }
 
-time=localStorage.getItem('timer')?localStorage.getItem('timer'):2400
+
 function timer() {
+  time=localStorage.getItem('timer')
   let sum2 = result.reduce((sum, num) => sum + num, 0);
   function t() {
     minutes = Math.floor(time / 60);
@@ -445,5 +441,5 @@ function hideElements() {
     document.getElementById(count + 1).style.opacity = "0",
     document.querySelector(".divBlockHtml").style.marginTop = "20px";
 }
-getHtml(arr)
-timer()
+localStorage.getItem('array')?getHtml(arr):false
+localStorage.getItem('timer')?timer():false
