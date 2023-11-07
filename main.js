@@ -4,50 +4,86 @@ import { ticket_2 } from "./ticket_2/ticket_2.js";
 import { ticket_3 } from "./ticket_3/ticket_3.js";
 
 const container = document.querySelector(".container");
+const main = document.querySelector(".main");
 const ticketItemsBlock = document.querySelector(".ticket-items-block");
 const timerSvg = document.querySelector('.timerSvg')
 const btnComplete =  document.querySelector('.btn-complete')
 const body = document.querySelector('body')
 const examBtn = document.querySelector('.exam-btn')
+const ticketExamBlock=document.querySelector('.ticket-and-exam-block')
+const divButtons = document.querySelector(".divButtons");
 let time;
+let h;
 let ticketItemsHtml = "";
 let index = 0;
 let str
 let strHtml
+let correctly;
+let invalid
+let result = [];
+const timerBlock = document.querySelector(".timerBlock");
+const timerP = document.querySelector(".timerP");
+let minutes;
+let seconds;
 const globalArr = [
     ticket_1, ticket_2,
     ticket_3, 
 ];
-let arr = globalArr[index];
-container.style.display='none';
+
+let arr = localStorage.getItem('array')?JSON.parse(localStorage.getItem('array')):globalArr[index]
+
+
+localStorage.getItem('container')?localStorage.getItem('container'):localStorage.setItem('container','none')
+localStorage.getItem('main')?localStorage.getItem('container'):localStorage.setItem('main','none')
+localStorage.getItem('ticketExamBlock')?localStorage.getItem('ticketExamBlock'):localStorage.setItem('ticketExamBlock','block')
+localStorage.getItem('divButtons')?localStorage.getItem('divButtons'):localStorage.setItem('divButtons','none')
+
+container.style.display=localStorage.getItem('container')
+main.style.display=localStorage.getItem('main')
+ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
+divButtons.style.display=localStorage.getItem('divButtons')
 
 for (let i = 0; i < globalArr.length; i++) {
   ticketItemsHtml += `<div class="ticket-items-html">Билет ${i + 1}</div>`;
 }
 ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
+
 let node = document.querySelectorAll(".ticket-items-html");
 
 const clickByItemGlobalArr = (e) => {
+  localStorage.setItem('container','block')
+  localStorage.setItem('main','block')
+  localStorage.setItem('ticketExamBlock','none')
+  localStorage.setItem('divButtons','flex')
+
+  container.style.display=localStorage.getItem('container')
+  main.style.display=localStorage.getItem('main')
+  ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
+  divButtons.style.display=localStorage.getItem('divButtons')
+
   str=e.target.textContent;
   strHtml=`Билет №${str[6]}`
   document.querySelector('.h2-block').style.display='none'
-  ticketItemsBlock.style.display='none'
   index = Number(str[6]-1)
   divButtons.style.display = '';
   timerSvg.style.display = ''
   examBtn.style.display='none'
-  time=2400
-  timer();
+  // time=2400
+  // timer();
+  
   arr = globalArr[index];
-  container.style.display='block'
+  localStorage.setItem('array',JSON.stringify(arr))
+  
   document.querySelector('.count-ticket').textContent=`Билет ${index+1}`;
   getHtml(arr);
 };
+
 node.forEach((item) => {
   item.onclick = clickByItemGlobalArr;
 });
 
 examBtn.onclick=getRandomItemOfArrayWrapper
+
 
 function getRandomItemOfArrayWrapper(){
   arr = []
@@ -78,18 +114,12 @@ function getRandomItemOfArrayWrapper(){
 
 
 //////////////////////////////////////////////////////////////////////////////
-let main = document.querySelector(".main");
-let divButtons = document.querySelector(".divButtons");
+
+
 document.querySelector(".btn-move").onclick = getNextQuestion;
 const gridBlock = document.querySelector(".grid-block");
-const timerBlock = document.querySelector(".timerBlock");
-const timerP = document.querySelector(".timerP");
 
-let minutes;
-let seconds;
-let correctly;
-let invalid
-let result = [];
+
 
 for (let i = 0; i < arr.length; i++) {
   gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
@@ -153,7 +183,7 @@ function getHtml(arr) {
   let confirm
   let html;
   let img;
- 
+  
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
@@ -223,11 +253,7 @@ function getHtml(arr) {
         count++;
       }
     }
-  
-    
     document.querySelector(".count-question").textContent = `Вопрос: ${ count + 1 }`;
-  
-  
   return [
     img = arr.map(obj => `<img id="${obj.id}" src="${obj.img}" style="opacity:0"/>`).join(""),
     main.innerHTML = `<div class="divImagesBlock">${img}</div>`,
@@ -242,7 +268,6 @@ function getHtml(arr) {
     NodeListItemGrid[count].style.backgroundColor = "lightblue",
     NodeListItemGrid[count].style.border = "1px solid black",  
 ];
-  
 }
 
 function getStatisticsResult() {
@@ -344,11 +369,10 @@ function getNextQuestion() {
   }
 }
 
+time=localStorage.getItem('timer')?localStorage.getItem('timer'):2400
 function timer() {
-  
   let sum2 = result.reduce((sum, num) => sum + num, 0);
   function t() {
-    let h;
     minutes = Math.floor(time / 60);
     seconds = time % 60;
     seconds = seconds < 10 ? "0" + seconds : seconds;
@@ -374,6 +398,7 @@ function timer() {
         //getStatisticsResult(),
       ];
     }
+    localStorage.setItem('timer',time)
     return timerP.innerHTML = h;
   }
    invalid = setInterval(t, 1000);
@@ -399,6 +424,7 @@ btnComplete.onclick=function(){
   
   btnCompleteYes.onclick=function(e){
     if(e.target.textContent=='Да'){
+      localStorage.clear()
       location.reload();
       return false
     }
@@ -419,3 +445,5 @@ function hideElements() {
     document.getElementById(count + 1).style.opacity = "0",
     document.querySelector(".divBlockHtml").style.marginTop = "20px";
 }
+getHtml(arr)
+timer()

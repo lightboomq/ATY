@@ -12,13 +12,16 @@
     </head>
 
     <body>
-        <div class="h2-block">
-            <h2 class="h2-ticket">Билеты АТУ</h2>
+        <div class="ticket-and-exam-block">
+            <div class="h2-block">
+                <h2 class="h2-ticket">Билеты АТУ</h2>
+            </div>
+            <div class="ticket-items-block"></div>
+            <div class="exam-btn-block">
+                <button class="exam-btn">Сдать экзамен</button>
+            </div>
         </div>
-        <div class="ticket-items-block"></div>
-        <div class="exam-btn-block">
-            <button class="exam-btn">Сдать экзамен</button>
-        </div>
+        
         <div class="container">
             <div style="margin-top: 10px;"class="grid-block"></div>
             <div class="timerBlock">
@@ -31,8 +34,7 @@
             </div>
             
             <div class="main">
-                
-                <div style="display:none;" class="divButtons">
+                <div style="display:none;justify-content:space-around;" class="divButtons">
                     <button id="btn-1" class="btn-move">Пропустить вопрос</button>
                     <button class="btn-complete">Завершить</button>
                 </div>
