@@ -36,7 +36,7 @@ localStorage.getItem('container')?localStorage.getItem('container'):localStorage
 localStorage.getItem('main')?localStorage.getItem('container'):localStorage.setItem('main','none')
 localStorage.getItem('ticketExamBlock')?localStorage.getItem('ticketExamBlock'):localStorage.setItem('ticketExamBlock','block')
 localStorage.getItem('divButtons')?localStorage.getItem('divButtons'):localStorage.setItem('divButtons','none')
-
+strHtml=localStorage.getItem('str')?localStorage.getItem('str'):''
 container.style.display=localStorage.getItem('container')
 main.style.display=localStorage.getItem('main')
 ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
@@ -62,6 +62,7 @@ const clickByItemGlobalArr = (e) => {
 
   str=e.target.textContent;
   strHtml=`Билет №${str[6]}`
+  localStorage.setItem('str',strHtml)
   document.querySelector('.h2-block').style.display='none'
   index = Number(str[6]-1)
   divButtons.style.display = '';
@@ -72,7 +73,6 @@ const clickByItemGlobalArr = (e) => {
   timer();
   arr = globalArr[index];
   localStorage.setItem('array',JSON.stringify(arr))
-  
   document.querySelector('.count-ticket').textContent=`Билет ${index+1}`;
   getHtml(arr);
 };
@@ -110,7 +110,6 @@ function getRandomItemOfArrayWrapper(){
   examBtn.style.display='none'
   getHtml(arr)
 }
-
 
 //////////////////////////////////////////////////////////////////////////////
 document.querySelector(".btn-move").onclick = getNextQuestion;
@@ -152,7 +151,8 @@ function giveCorrectlyAnswer() {
       return
     }
 
-    if(strHtml==`Билет №${str[6]}`){
+    if(strHtml==localStorage.getItem('str')){
+      console.log(true);
       if (correctly) {
         NodeListItemGrid[count].style.backgroundColor = "green";
         NodeListItemGrid[count].style.color = "white";
@@ -321,7 +321,7 @@ function clickByItemGrid(e) {
     getHtml(arr);
     return
   }
-if(strHtml==`Билет №${str[6]}`){
+if(strHtml==localStorage.getItem('str')){
   for (let i = 0; i < NodeListItemGrid.length; i++) {
     if (NodeListItemGrid[i].style.backgroundColor != "red" && NodeListItemGrid[i].style.backgroundColor != "green") {
       NodeListItemGrid[i].style.backgroundColor = "lightgray";
@@ -363,7 +363,6 @@ function getNextQuestion() {
     getHtml(arr);
   }
 }
-
 
 function timer() {
   time=localStorage.getItem('timer')
