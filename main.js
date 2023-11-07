@@ -61,6 +61,7 @@ const clickByItemGlobalArr = (e) => {
   divButtons.style.display=localStorage.getItem('divButtons')
 
   str=e.target.textContent;
+  
   strHtml=`Билет №${str[6]}`
   localStorage.setItem('str',strHtml)
   document.querySelector('.h2-block').style.display='none'
@@ -85,8 +86,18 @@ examBtn.onclick=getRandomItemOfArrayWrapper
 
 
 function getRandomItemOfArrayWrapper(){
+  localStorage.setItem('container','block')
+  localStorage.setItem('main','block')
+  localStorage.setItem('ticketExamBlock','none')
+  localStorage.setItem('divButtons','flex')
+
+  container.style.display=localStorage.getItem('container')
+  main.style.display=localStorage.getItem('main')
+  ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
+  divButtons.style.display=localStorage.getItem('divButtons')
   arr = []
   strHtml=`Экзамен`
+  localStorage.setItem('str',strHtml)
   function getRandomItemOfArray(arr){
     const randomIndex = Math.floor(Math.random() * arr.length);
     return Math.round(randomIndex);
@@ -97,7 +108,9 @@ function getRandomItemOfArrayWrapper(){
     const question = globalArr[ticketIndex][i];
     arr.push(question);
   }
-  time=2400
+  localStorage.setItem('array',JSON.stringify(arr))
+  localStorage.setItem('timer',2400)
+  time=localStorage.getItem('timer')
   timer();
   document.querySelector('.h2-block').style.display='none'
   document.querySelector('.count-ticket').textContent=`Экзамен`;
@@ -143,7 +156,7 @@ function giveCorrectlyAnswer() {
     indexArrAnswers = arrAnswers.indexOf(e.target.textContent);
     arr[count].answers[indexArrAnswers].your_answer = "(Ваш ответ)";
     correctly = arr[count].answers[indexArrAnswers].is_correct;
-    if(strHtml=='Экзамен'){
+    if(localStorage.getItem('str')==`Экзамен`){//экзамен
       NodeListItemGrid[count].style.backgroundColor = "lightslategray";
       NodeListItemGrid[count].style.color = "white";
       correctly ? result.push(1) : result.push(0);
@@ -151,8 +164,7 @@ function giveCorrectlyAnswer() {
       return
     }
 
-    if(strHtml==localStorage.getItem('str')){
-      console.log(true);
+    if(strHtml==localStorage.getItem('str')){//билет
       if (correctly) {
         NodeListItemGrid[count].style.backgroundColor = "green";
         NodeListItemGrid[count].style.color = "white";
@@ -163,8 +175,6 @@ function giveCorrectlyAnswer() {
       correctly ? result.push(1) : result.push(0);
       getHtml(arr);
     }
-    
-    
   }
 }
 for (let i = 0; i < NodeListItemGrid.length; i++) {
