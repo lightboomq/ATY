@@ -21,6 +21,7 @@ let strHtml
 let correctly;
 let invalid
 let result = [];
+localStorage.getItem('result')?result=JSON.parse(localStorage.getItem('result')):result=[]
 let arrForLocalStorage = []
 localStorage.getItem('arrForLocalStorage')?arrForLocalStorage=JSON.parse(localStorage.getItem('arrForLocalStorage')):arrForLocalStorage=[]
 const timerBlock = document.querySelector(".timerBlock");
@@ -55,7 +56,6 @@ const clickByItemGlobalArr = (e) => {
   localStorageSaveElements()
   str=e.target.textContent;
   strHtml=`Билет №${str[6]}`
-  console.log(strHtml);
   localStorage.setItem('str',strHtml)
   document.querySelector('.h2-block').style.display='none'
   index = Number(str[6]-1)
@@ -82,7 +82,6 @@ function getRandomItemOfArrayWrapper(){
   localStorageSaveElements()
   arr = []
   strHtml=`Экзамен`
-  console.log(strHtml);
   localStorage.setItem('str',strHtml)
   function getRandomItemOfArray(arr){
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -149,11 +148,13 @@ function giveCorrectlyAnswer() {
     }
     indexArrAnswers = arrAnswers.indexOf(e.target.textContent);
     arr[count].answers[indexArrAnswers].your_answer = "(Ваш ответ)";
+    localStorage.setItem('array',JSON.stringify(arr))
     correctly = arr[count].answers[indexArrAnswers].is_correct;
     if(localStorage.getItem('str')==`Экзамен`){//экзамен
       NodeListItemGrid[count].style.backgroundColor = "lightslategray";
       NodeListItemGrid[count].style.color = "white";
       correctly ? result.push(1) : result.push(0);
+      localStorage.setItem('result',JSON.stringify(result))
       arrForLocalStorage.push({isCorrect:correctly,indexNodeListItemGrid:NodeListItemGrid[count].textContent-1})
       localStorage.setItem('arrForLocalStorage',JSON.stringify(arrForLocalStorage))
       getHtml(arr);
@@ -169,6 +170,7 @@ function giveCorrectlyAnswer() {
         NodeListItemGrid[count].style.color = "white";
       }
       correctly ? result.push(1) : result.push(0);
+      localStorage.setItem('result',JSON.stringify(result))
       arrForLocalStorage.push({isCorrect:correctly,indexNodeListItemGrid:NodeListItemGrid[count].textContent-1})
       localStorage.setItem('arrForLocalStorage',JSON.stringify(arrForLocalStorage))
       getHtml(arr);
@@ -214,7 +216,7 @@ function getHtml(arr) {
   }
   if (result.length >= 20) {
     let sum = result.reduce((sum, num) => sum + num, 0);
-    if (result.length - sum >= 2) {
+    if (result - sum >= 2) {
       return [
         html = `<div  class="divBlockHtml"> 
                         <div class='img-close-block'>
@@ -232,7 +234,11 @@ function getHtml(arr) {
         getStatisticsResult(),
         document.querySelector('.close-img').onclick=function(){
         confirm=window.confirm('Завершить просмотр результа?')
-        confirm?location.reload():''
+        if(confirm){
+          localStorage.clear()
+          location.reload()
+        }
+        
         }
       ];
     } else {
@@ -253,7 +259,11 @@ function getHtml(arr) {
         getStatisticsResult(),
         document.querySelector('.close-img').onclick=function(){
         confirm=window.confirm('Завершить просмотр результа?')
-        confirm?location.reload():''
+        //confirm?location.reload():''
+        if(confirm){
+          localStorage.clear()
+          location.reload()
+        }
         }
       ];
     }
@@ -298,6 +308,7 @@ function getHtml(arr) {
     NodeListItemGrid[count].style.border = "1px solid black",  
 ];
 }
+//localStorage.clear()
 function getStatisticsResult() {
   let key;
   let statisticCount = 1;
