@@ -216,7 +216,7 @@ function getHtml(arr) {
   }
   if (result.length >= 20) {
     let sum = result.reduce((sum, num) => sum + num, 0);
-    if (result - sum >= 2) {
+    if (sum >= 2) {
       return [
         html = `<div  class="divBlockHtml"> 
                         <div class='img-close-block'>
@@ -227,7 +227,8 @@ function getHtml(arr) {
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
                             <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
-                        </div>
+  
+                            </div>
                     </div>`,
         main.insertAdjacentHTML("afterbegin", html),
         hideElements(),
@@ -259,7 +260,6 @@ function getHtml(arr) {
         getStatisticsResult(),
         document.querySelector('.close-img').onclick=function(){
         confirm=window.confirm('Завершить просмотр результа?')
-        //confirm?location.reload():''
         if(confirm){
           localStorage.clear()
           location.reload()
@@ -318,8 +318,9 @@ function getStatisticsResult() {
   arr.map(obj => {
     document.querySelector('.count-ticket').style.display='none'
     is_correctTrue=obj.answers.findIndex(is_correctTrue=>is_correctTrue.is_correct==true);
+    
     key = obj.answers.map(item => {
-      
+    
       if(item.your_answer=='(Ваш ответ)' && item.is_correct==false){
          help = `<div class="helpBlock">
           <h4>Правильный ответ: ${is_correctTrue+1}</h4>
