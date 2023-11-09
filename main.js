@@ -125,8 +125,6 @@ else{
   localStorage.setItem('count',0)
   count = Number(localStorage.getItem('count'))
 }
-
-
 function getHtmlAnswersFromArr(arr) {
   let objKey;
   for (let i = -1; i < count; i++) {
@@ -177,9 +175,7 @@ function giveCorrectlyAnswer() {
     }
   }
 }
-for (let i = 0; i < NodeListItemGrid.length; i++) {
-  NodeListItemGrid[i].style.backgroundColor = "lightgray";
-}
+
 
 if(count>0){
   if(localStorage.getItem('str')===`Экзамен`){
@@ -233,14 +229,7 @@ function getHtml(arr) {
         main.insertAdjacentHTML("afterbegin", html),
         hideElements(),
         getStatisticsResult(),
-        document.querySelector('.close-img').onclick=function(){
-        confirm=window.confirm('Завершить просмотр результа?')
-        if(confirm){
-          localStorage.clear()
-          location.reload()
-        }
-        
-        }
+        document.querySelector('.close-img').addEventListener('click',createModalWindow)
       ];
     } else {
       return [
@@ -318,7 +307,6 @@ function getStatisticsResult() {
   arr.map(obj => {
     document.querySelector('.count-ticket').style.display='none'
     is_correctTrue=obj.answers.findIndex(is_correctTrue=>is_correctTrue.is_correct==true);
-    
     key = obj.answers.map(item => {
     
       if(item.your_answer=='(Ваш ответ)' && item.is_correct==false){
@@ -448,8 +436,8 @@ function timer() {
    invalid = setInterval(t, 1000);
   t();
 }
-
-btnComplete.onclick=function(){
+btnComplete.addEventListener('click',createModalWindow)
+function createModalWindow(){
   let completeHtml
   let blockAllElements
   let btnCompleteYes
@@ -468,6 +456,7 @@ btnComplete.onclick=function(){
   
   btnCompleteYes.onclick=function(e){
     if(e.target.textContent=='Да'){
+      console.log(true);
       localStorage.clear()
       location.reload();
       return false
@@ -479,14 +468,15 @@ btnComplete.onclick=function(){
       document.querySelector('.complete-block').remove()
     }
   };
-  
 }
 function hideElements() {
-    divButtons.style.display = "none",
-    timerBlock.style.display = "none",
-    gridBlock.style.display = "none",
-    document.querySelector(".count-question").style.display = "none",
-    document.getElementById(count + 1).style.opacity = "0",
+    divButtons.style.display = "none";
+    timerBlock.style.display = "none";
+    gridBlock.style.display = "none";
+    document.querySelector(".count-question").style.display = "none";
+    //document.getElementById(count + 1).style.opacity = "0";
+    const idTicketOfArr = document.getElementById(count + 1);
+    idTicketOfArr?idTicketOfArr.style.opacity = "0":null
     document.querySelector(".divBlockHtml").style.marginTop = "20px";
 }
 
