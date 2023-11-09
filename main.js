@@ -39,6 +39,17 @@ localStorage.getItem('container')?localStorage.getItem('container'):localStorage
 localStorage.getItem('main')?localStorage.getItem('container'):localStorage.setItem('main','none')
 localStorage.getItem('ticketExamBlock')?localStorage.getItem('ticketExamBlock'):localStorage.setItem('ticketExamBlock','block')
 localStorage.getItem('divButtons')?localStorage.getItem('divButtons'):localStorage.setItem('divButtons','none')
+
+if(localStorage.getItem('str')==='Экзамен'){
+  console.log(true);
+   document.querySelector('.count-ticket').textContent=localStorage.getItem('str')
+   document.querySelector('.count-ticket').style.color='red'
+}
+else{
+  document.querySelector('.count-ticket').textContent=localStorage.getItem('str')
+}
+
+
 strHtml=localStorage.getItem('str')?localStorage.getItem('str'):''
 container.style.display=localStorage.getItem('container')
 main.style.display=localStorage.getItem('main')
@@ -67,7 +78,8 @@ const clickByItemGlobalArr = (e) => {
   timer();
   arr = globalArr[index];
   localStorage.setItem('array',JSON.stringify(arr))
-  document.querySelector('.count-ticket').textContent=`Билет ${index+1}`;
+  document.querySelector('.count-ticket').textContent=localStorage.getItem('str');
+  
   getHtml(arr);
 };
 
@@ -98,8 +110,10 @@ function getRandomItemOfArrayWrapper(){
   time=localStorage.getItem('timer')
   timer();
   document.querySelector('.h2-block').style.display='none'
-  document.querySelector('.count-ticket').textContent=`Экзамен`;
+  document.querySelector('.count-ticket').textContent=strHtml;
   document.querySelector('.count-ticket').style.color = 'red'
+  document.querySelector('.count-ticket').textContent=localStorage.getItem('str')
+  
   ticketItemsBlock.style.display='none'
   divButtons.style.display = '';
   timerSvg.style.display = ''
