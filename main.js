@@ -21,6 +21,8 @@ let strHtml
 let correctly;
 let invalid
 let result = [];
+let arrForLocalStorage = []
+localStorage.getItem('arrForLocalStorage')?arrForLocalStorage=JSON.parse(localStorage.getItem('arrForLocalStorage')):arrForLocalStorage=[]
 const timerBlock = document.querySelector(".timerBlock");
 const timerP = document.querySelector(".timerP");
 let minutes;
@@ -50,19 +52,10 @@ ticketItemsBlock.insertAdjacentHTML("afterbegin", ticketItemsHtml);
 let node = document.querySelectorAll(".ticket-items-html");
 
 const clickByItemGlobalArr = (e) => {
-  localStorage.setItem('container','block')
-  localStorage.setItem('main','block')
-  localStorage.setItem('ticketExamBlock','none')
-  localStorage.setItem('divButtons','flex')
-
-  container.style.display=localStorage.getItem('container')
-  main.style.display=localStorage.getItem('main')
-  ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
-  divButtons.style.display=localStorage.getItem('divButtons')
-
+  localStorageSaveElements()
   str=e.target.textContent;
-  
   strHtml=`Билет №${str[6]}`
+  console.log(strHtml);
   localStorage.setItem('str',strHtml)
   document.querySelector('.h2-block').style.display='none'
   index = Number(str[6]-1)
@@ -86,17 +79,10 @@ examBtn.onclick=getRandomItemOfArrayWrapper
 
 
 function getRandomItemOfArrayWrapper(){
-  localStorage.setItem('container','block')
-  localStorage.setItem('main','block')
-  localStorage.setItem('ticketExamBlock','none')
-  localStorage.setItem('divButtons','flex')
-
-  container.style.display=localStorage.getItem('container')
-  main.style.display=localStorage.getItem('main')
-  ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
-  divButtons.style.display=localStorage.getItem('divButtons')
+  localStorageSaveElements()
   arr = []
   strHtml=`Экзамен`
+  console.log(strHtml);
   localStorage.setItem('str',strHtml)
   function getRandomItemOfArray(arr){
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -132,7 +118,15 @@ for (let i = 0; i < arr.length; i++) {
   gridBlock.innerHTML += `<div class="grid">${i + 1}</div>`;
 }
 let NodeListItemGrid = document.querySelectorAll(".grid");
-let count = 0;
+let count 
+if(localStorage.getItem('count')){
+  count = Number(localStorage.getItem('count'))
+}
+else{
+  localStorage.setItem('count',0)
+  count = Number(localStorage.getItem('count'))
+}
+
 
 function getHtmlAnswersFromArr(arr) {
   let objKey;
@@ -160,6 +154,8 @@ function giveCorrectlyAnswer() {
       NodeListItemGrid[count].style.backgroundColor = "lightslategray";
       NodeListItemGrid[count].style.color = "white";
       correctly ? result.push(1) : result.push(0);
+      arrForLocalStorage.push({isCorrect:correctly,indexNodeListItemGrid:NodeListItemGrid[count].textContent-1})
+      localStorage.setItem('arrForLocalStorage',JSON.stringify(arrForLocalStorage))
       getHtml(arr);
       return
     }
@@ -173,6 +169,8 @@ function giveCorrectlyAnswer() {
         NodeListItemGrid[count].style.color = "white";
       }
       correctly ? result.push(1) : result.push(0);
+      arrForLocalStorage.push({isCorrect:correctly,indexNodeListItemGrid:NodeListItemGrid[count].textContent-1})
+      localStorage.setItem('arrForLocalStorage',JSON.stringify(arrForLocalStorage))
       getHtml(arr);
     }
   }
@@ -180,9 +178,31 @@ function giveCorrectlyAnswer() {
 for (let i = 0; i < NodeListItemGrid.length; i++) {
   NodeListItemGrid[i].style.backgroundColor = "lightgray";
 }
-NodeListItemGrid[0].style.backgroundColor = "lightblue";
-NodeListItemGrid[0].style.border = "1px solid black";
 
+if(count>0){
+  if(localStorage.getItem('str')===`Экзамен`){
+    for(let i=0; i<arrForLocalStorage.length; i++){
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.backgroundColor = "lightslategray";
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.color = "white";
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.border = "1px solid black";
+    }
+  }
+  else{
+    for(let i=0; i<arrForLocalStorage.length; i++){
+      if(arrForLocalStorage[i].isCorrect){
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.backgroundColor = "green";
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.color = "white";
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.border = "1px solid black";
+      }
+      else{
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.backgroundColor = "red";
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.color = "white";
+        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.border = "1px solid black";
+      }
+    }
+  }
+  
+}
 
 function getHtml(arr) {
   let confirm
@@ -242,20 +262,24 @@ function getHtml(arr) {
   while (NodeListItemGrid[count].style.backgroundColor == "red" ||NodeListItemGrid[count].style.backgroundColor == "green"){
     if (count >= 19) {
         count = 0;
+        localStorage.setItem('count',count)
       } 
       else {
         document.getElementById(count + 1).style.display = "none";
         count++;
+        localStorage.setItem('count',count)
       }
     }
 
     while (NodeListItemGrid[count].style.backgroundColor == "lightslategray" ){
       if (count >= 19) {
         count = 0;
+        localStorage.setItem('count',count)
       } 
       else {
         document.getElementById(count + 1).style.display = "none";
         count++;
+        localStorage.setItem('count',count)
       }
     }
     document.querySelector(".count-question").textContent = `Вопрос: ${ count + 1 }`;
@@ -274,7 +298,6 @@ function getHtml(arr) {
     NodeListItemGrid[count].style.border = "1px solid black",  
 ];
 }
-
 function getStatisticsResult() {
   let key;
   let statisticCount = 1;
@@ -327,20 +350,22 @@ function clickByItemGrid(e) {
         NodeListItemGrid[count].style.border = "";
       }
     }
-    count = +e.target.textContent - 1;
+    localStorage.setItem('count',e.target.textContent - 1)
+    count = Number(localStorage.getItem('count'))
     getHtml(arr);
     return
   }
-if(strHtml==localStorage.getItem('str')){
-  for (let i = 0; i < NodeListItemGrid.length; i++) {
-    if (NodeListItemGrid[i].style.backgroundColor != "red" && NodeListItemGrid[i].style.backgroundColor != "green") {
-      NodeListItemGrid[i].style.backgroundColor = "lightgray";
-      NodeListItemGrid[count].style.border = "";
+  if(strHtml==localStorage.getItem('str')){
+    for (let i = 0; i < NodeListItemGrid.length; i++) {
+      if (NodeListItemGrid[i].style.backgroundColor != "red" && NodeListItemGrid[i].style.backgroundColor != "green") {
+        NodeListItemGrid[i].style.backgroundColor = "lightgray";
+        NodeListItemGrid[count].style.border = "";
+      }
     }
-  }
-  count = +e.target.textContent - 1;
-  getHtml(arr);
-  return
+    localStorage.setItem('count',e.target.textContent - 1)
+    count = Number(localStorage.getItem('count'))
+    getHtml(arr);
+    return
 }
 }
 NodeListItemGrid.forEach((item) => {
@@ -361,11 +386,13 @@ function getNextQuestion() {
     a = "";
   }
   count++;
+  localStorage.setItem('count',count)
   
   if (count > arr.length - 1) {
     NodeListItemGrid[count - 1].style.backgroundColor = "lightgray";
     NodeListItemGrid[count - 1].style.border = "";
     count = 0;
+    localStorage.setItem('count',count)
     getHtml(arr);
   } else {
     NodeListItemGrid[count - 1].style.backgroundColor = "lightgray";
@@ -450,6 +477,7 @@ function hideElements() {
     document.getElementById(count + 1).style.opacity = "0",
     document.querySelector(".divBlockHtml").style.marginTop = "20px";
 }
+
 localStorage.getItem('array')?getHtml(arr):false
 if(localStorage.getItem('timer')){
   timerSvg.style.display = ''
@@ -457,4 +485,14 @@ if(localStorage.getItem('timer')){
 }
 else{
   false
+}
+function localStorageSaveElements(){
+  localStorage.setItem('container','block')
+  localStorage.setItem('main','block')
+  localStorage.setItem('ticketExamBlock','none')
+  localStorage.setItem('divButtons','flex')
+  container.style.display=localStorage.getItem('container')
+  main.style.display=localStorage.getItem('main')
+  ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
+  divButtons.style.display=localStorage.getItem('divButtons')
 }
