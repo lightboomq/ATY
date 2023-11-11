@@ -220,7 +220,7 @@ function getHtml(arr) {
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
-  if (result.length >= 2) {
+  if (result.length >= 20) {
     let sum = result.reduce((sum, num) => sum + num, 0);
     if (sum >= 2) {
       return [
