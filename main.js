@@ -20,14 +20,15 @@ let str
 let strHtml
 let correctly;
 let invalid
+
 let result = [];
 localStorage.getItem('result')?result=JSON.parse(localStorage.getItem('result')):result=[]
 let arrForLocalStorage = []
 localStorage.getItem('arrForLocalStorage')?arrForLocalStorage=JSON.parse(localStorage.getItem('arrForLocalStorage')):arrForLocalStorage=[]
 const timerBlock = document.querySelector(".timerBlock");
 const timerP = document.querySelector(".timerP");
-let minutes;
-let seconds;
+let minutes=localStorage.getItem('minutes')?localStorage.getItem('minutes'):'';
+let seconds=localStorage.getItem('seconds')?localStorage.getItem('seconds'):'';
 const globalArr = [
     ticket_1, ticket_2,
     ticket_3, 
@@ -53,7 +54,7 @@ else{
 strHtml=localStorage.getItem('str')?localStorage.getItem('str'):''
 container.style.display=localStorage.getItem('container')
 main.style.display=localStorage.getItem('main')
-ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
+
 divButtons.style.display=localStorage.getItem('divButtons')
 
 for (let i = 0; i < globalArr.length; i++) {
@@ -68,18 +69,15 @@ const clickByItemGlobalArr = (e) => {
   str=e.target.textContent;
   strHtml=`Билет №${str[6]}`
   localStorage.setItem('str',strHtml)
-  document.querySelector('.h2-block').style.display='none'
   index = Number(str[6]-1)
   divButtons.style.display = '';
   timerSvg.style.display = ''
-  examBtn.style.display='none'
   localStorage.setItem('timer',2400)
   time=localStorage.getItem('timer')
   timer();
   arr = globalArr[index];
   localStorage.setItem('array',JSON.stringify(arr))
   document.querySelector('.count-ticket').textContent=localStorage.getItem('str');
-  
   getHtml(arr);
 };
 
@@ -109,7 +107,6 @@ function getRandomItemOfArrayWrapper(){
   localStorage.setItem('timer',2400)
   time=localStorage.getItem('timer')
   timer();
-  document.querySelector('.h2-block').style.display='none'
   document.querySelector('.count-ticket').textContent=strHtml;
   document.querySelector('.count-ticket').style.color = 'red'
   document.querySelector('.count-ticket').textContent=localStorage.getItem('str')
@@ -119,7 +116,6 @@ function getRandomItemOfArrayWrapper(){
   timerSvg.style.display = ''
   container.style.display='block'
   main.style.display='block'
-  examBtn.style.display='none'
   getHtml(arr)
 }
 
@@ -224,7 +220,7 @@ function getHtml(arr) {
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
-  if (result.length >= 20) {
+  if (result.length >= 2) {
     let sum = result.reduce((sum, num) => sum + num, 0);
     if (sum >= 2) {
       return [
@@ -236,8 +232,7 @@ function getHtml(arr) {
                             <h2 class = "examInvalid">${strHtml} не сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
                             <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
-                            <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
-  
+                            <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/>  
                             </div>
                     </div>`,
         main.insertAdjacentHTML("afterbegin", html),
@@ -261,13 +256,7 @@ function getHtml(arr) {
         main.insertAdjacentHTML("afterbegin", html),
         hideElements(),
         getStatisticsResult(),
-        document.querySelector('.close-img').onclick=function(){
-        confirm=window.confirm('Завершить просмотр результа?')
-        if(confirm){
-          localStorage.clear()
-          location.reload()
-        }
-        }
+        document.querySelector('.close-img').addEventListener('click',createModalWindow)
       ];
     }
   }
@@ -311,13 +300,16 @@ function getHtml(arr) {
     NodeListItemGrid[count].style.border = "1px solid black",  
 ];
 }
-//localStorage.clear()
+
 function getStatisticsResult() {
   let key;
   let statisticCount = 1;
   let help
   let is_correctTrue
-
+  localStorage.removeItem('timer')
+  clearInterval(invalid)
+  localStorage.setItem('minutes',minutes)
+  localStorage.setItem('seconds',seconds)
   arr.map(obj => {
     document.querySelector('.count-ticket').style.display='none'
     is_correctTrue=obj.answers.findIndex(is_correctTrue=>is_correctTrue.is_correct==true);
@@ -429,8 +421,8 @@ function timer() {
       if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
       }
+      clearInterval(invalid)
       return [
-        clearInterval(invalid),
         html = `<div class="divBlockHtml"> 
                 <div class="timerBlockEnd">
                     <h2 style = "color:red;">${strHtml} не сдан</h2>
@@ -500,7 +492,7 @@ if(localStorage.getItem('timer')){
   timer()
 }
 else{
-  false
+  localStorage.removeItem('timer')
 }
 function localStorageSaveElements(){
   localStorage.setItem('container','block')
@@ -512,3 +504,5 @@ function localStorageSaveElements(){
   ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
   divButtons.style.display=localStorage.getItem('divButtons')
 }
+
+ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
