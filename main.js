@@ -19,10 +19,10 @@ let index = 0;
 let str
 let strHtml
 let correctly;
-let invalid
+let invalidTimer
 
-let result = [];
-localStorage.getItem('result')?result=JSON.parse(localStorage.getItem('result')):result=[]
+let resultOfCorrectlyAnswers = [];
+localStorage.getItem('result')?resultOfCorrectlyAnswers=JSON.parse(localStorage.getItem('result')):resultOfCorrectlyAnswers=[]
 let arrForLocalStorage = []
 localStorage.getItem('arrForLocalStorage')?arrForLocalStorage=JSON.parse(localStorage.getItem('arrForLocalStorage')):arrForLocalStorage=[]
 const timerBlock = document.querySelector(".timerBlock");
@@ -161,7 +161,7 @@ function giveCorrectlyAnswer() {
     if(localStorage.getItem('str')==`Экзамен`){//экзамен
       NodeListItemGrid[count].style.backgroundColor = "lightslategray";
       NodeListItemGrid[count].style.color = "white";
-      correctly ? result.push(1) : result.push(0);
+      correctly ? resultOfCorrectlyAnswers.push(1) : resultOfCorrectlyAnswers.push(0);
       localStorage.setItem('result',JSON.stringify(result))
       arrForLocalStorage.push({isCorrect:correctly,indexNodeListItemGrid:NodeListItemGrid[count].textContent-1})
       localStorage.setItem('arrForLocalStorage',JSON.stringify(arrForLocalStorage))
@@ -177,8 +177,8 @@ function giveCorrectlyAnswer() {
         NodeListItemGrid[count].style.backgroundColor = "red";
         NodeListItemGrid[count].style.color = "white";
       }
-      correctly ? result.push(1) : result.push(0);
-      localStorage.setItem('result',JSON.stringify(result))
+      correctly ? resultOfCorrectlyAnswers.push(1) : resultOfCorrectlyAnswers.push(0);
+      localStorage.setItem('result',JSON.stringify(resultOfCorrectlyAnswers))
       arrForLocalStorage.push({isCorrect:correctly,indexNodeListItemGrid:NodeListItemGrid[count].textContent-1})
       localStorage.setItem('arrForLocalStorage',JSON.stringify(arrForLocalStorage))
       getHtml(arr);
@@ -211,17 +211,15 @@ if(count>0){
   }
   
 }
-
-function getHtml(arr) {
-  let confirm
+function getHtml(arr) { 
   let html;
   let img;
   
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
-  if (result.length >= 20) {
-    let sum = result.reduce((sum, num) => sum + num, 0);
+  if (resultOfCorrectlyAnswers.length >= 20) {
+    let sum = resultOfCorrectlyAnswers.reduce((sum, num) => sum + num, 0);
     if (sum >= 2) {
       return [
         html = `<div  class="divBlockHtml"> 
@@ -230,7 +228,7 @@ function getHtml(arr) {
                         </div>
                         <div class="timerBlockEnd">
                             <h2 class = "examInvalid">${strHtml} не сдан</h2>
-                            <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
+                            <h3>Правильных ответов: ${sum} из ${resultOfCorrectlyAnswers.length}<h3/>
                             <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
                             <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/>  
                             </div>
@@ -307,7 +305,7 @@ function getStatisticsResult() {
   let help
   let is_correctTrue
   localStorage.removeItem('timer')
-  clearInterval(invalid)
+  clearInterval(invalidTimer)
   localStorage.setItem('minutes',minutes)
   localStorage.setItem('seconds',seconds)
   arr.map(obj => {
@@ -409,7 +407,7 @@ function getNextQuestion() {
 
 function timer() {
   time=localStorage.getItem('timer')
-  let sum2 = result.reduce((sum, num) => sum + num, 0);
+  let sum2 = resultOfCorrectlyAnswers.reduce((sum, num) => sum + num, 0);
   function t() {
     minutes = Math.floor(time / 60);
     seconds = time % 60;
@@ -421,12 +419,12 @@ function timer() {
       if (document.querySelector(".divBlockHtml")) {
         document.querySelector(".divBlockHtml").remove();
       }
-      clearInterval(invalid)
+      clearInterval(invalidTimer)
       return [
         html = `<div class="divBlockHtml"> 
                 <div class="timerBlockEnd">
                     <h2 style = "color:red;">${strHtml} не сдан</h2>
-                    <h3>Правильных ответов: ${sum2} из ${result.length}<h3/>
+                    <h3>Правильных ответов: ${sum2} из ${resultOfCorrectlyAnswers.length}<h3/>
                     <p>У вас закончилось время: ${minutes}:${seconds}<p/>
                     <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
                 </div>
@@ -439,7 +437,7 @@ function timer() {
     localStorage.setItem('timer',time)
     return timerP.innerHTML = h;
   }
-   invalid = setInterval(t, 1000);
+  invalidTimer = setInterval(t, 1000);
   t();
 }
 btnComplete.addEventListener('click',createModalWindow)
