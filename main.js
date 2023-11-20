@@ -162,7 +162,7 @@ function giveCorrectlyAnswer() {
       NodeListItemGrid[count].style.backgroundColor = "lightslategray";
       NodeListItemGrid[count].style.color = "white";
       correctly ? resultOfCorrectlyAnswers.push(1) : resultOfCorrectlyAnswers.push(0);
-      localStorage.setItem('result',JSON.stringify(result))
+      localStorage.setItem('result',JSON.stringify(resultOfCorrectlyAnswers))
       arrForLocalStorage.push({isCorrect:correctly,indexNodeListItemGrid:NodeListItemGrid[count].textContent-1})
       localStorage.setItem('arrForLocalStorage',JSON.stringify(arrForLocalStorage))
       getHtml(arr);
