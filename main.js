@@ -304,7 +304,7 @@ function scrollToUp(){
   const imgScrollUp = document.querySelector('.imgScrollUp')
   const getTop=()=>window.pageYOffset||document.documentElement.scrollTop;
   window.addEventListener('scroll',()=>{
-    if(getTop()<1200){
+    if(getTop()<1600){
       imgScrollUp.style.visibility='hidden';
     }
     else{
