@@ -6,6 +6,7 @@
     font-family: 'Roboto', sans-serif;
 }
 body{
+    position: relative;
     .block-all-elements{
         position: absolute;
         width: 100%;
@@ -17,6 +18,7 @@ body{
         background-color:lightgray;
         z-index: 9;
     }
+    
 }   
 
     .h2-block{
@@ -99,14 +101,14 @@ body{
     margin: auto;
     justify-content: center;
     .imgScrollUp{
-        visibility: hidden;
         position: fixed;
+        visibility: hidden;
+        width: 55px;
+        height: 55px;
         z-index: 99;
-        width: 60px;
-        height: 60px;
-        margin-left:940px;
-        margin-top:800px;
         cursor: pointer;
+        top:820px;
+        margin-left: 30px;
     }
     .count-question_block{
         display: flex;
@@ -165,7 +167,6 @@ body{
         flex-direction: column;
         font-weight: bold;
         padding: 0px 10px 0px 10px;
-        
         .complete-block{
             z-index: 10;
             position: absolute;

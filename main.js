@@ -300,9 +300,27 @@ function getHtml(arr) {
     NodeListItemGrid[count].style.border = "1px solid black",  
 ];
 }
-
+function scrollToUp(){
+  
+}
 function getStatisticsResult() {
-  scrollToUp()
+  const imgScrollUp = document.querySelector('.imgScrollUp')
+  const getTop=()=>window.pageYOffset||document.documentElement.scrollTop;
+  window.addEventListener('scroll',()=>{
+    if(getTop()<1200){
+      imgScrollUp.style.visibility='hidden';
+    }
+    else{
+      imgScrollUp.style.visibility='visible';
+    }
+  });
+  imgScrollUp.addEventListener('click',()=>{
+    window.scrollTo({
+      top:0,
+      left:0,
+      behavior:'smooth'
+    })
+  })
   let key;
   let statisticCount = 1;
   let help
@@ -505,23 +523,5 @@ function localStorageSaveElements(){
   ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
   divButtons.style.display=localStorage.getItem('divButtons')
 }
-function scrollToUp(){
-  const imgScrollUp = document.querySelector('.imgScrollUp')
-  const getTop=()=>window.pageYOffset||document.documentElement.scrollTop;
-  window.addEventListener('scroll',()=>{
-    if(getTop()<1200){
-      imgScrollUp.style.visibility='hidden';
-    }
-    else{
-      imgScrollUp.style.visibility='visible';
-    }
-  });
-  imgScrollUp.addEventListener('click',()=>{
-    window.scrollTo({
-      top:0,
-      left:0,
-      behavior:'smooth'
-    })
-  })
-}
+
 ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')

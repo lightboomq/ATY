@@ -5,6 +5,9 @@
   font-family: "Roboto", sans-serif;
 }
 
+body {
+  position: relative;
+}
 body .block-all-elements {
   position: absolute;
   width: 100%;
@@ -99,14 +102,14 @@ body .block-all-elements {
   justify-content: center;
 }
 .container .imgScrollUp {
-  visibility: hidden;
   position: fixed;
+  visibility: hidden;
+  width: 55px;
+  height: 55px;
   z-index: 99;
-  width: 60px;
-  height: 60px;
-  margin-left: 940px;
-  margin-top: 800px;
   cursor: pointer;
+  top: 820px;
+  margin-left: 30px;
 }
 .container .count-question_block {
   display: flex;
