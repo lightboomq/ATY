@@ -98,6 +98,16 @@ body .block-all-elements {
   margin: auto;
   justify-content: center;
 }
+.container .imgScrollUp {
+  visibility: hidden;
+  position: fixed;
+  z-index: 99;
+  width: 60px;
+  height: 60px;
+  margin-left: 940px;
+  margin-top: 800px;
+  cursor: pointer;
+}
 .container .count-question_block {
   display: flex;
   width: 100%;

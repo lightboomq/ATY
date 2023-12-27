@@ -98,6 +98,16 @@ body{
     max-width: 1024px;
     margin: auto;
     justify-content: center;
+    .imgScrollUp{
+        visibility: hidden;
+        position: fixed;
+        z-index: 99;
+        width: 60px;
+        height: 60px;
+        margin-left:940px;
+        margin-top:800px;
+        cursor: pointer;
+    }
     .count-question_block{
         display: flex;
         width: 100%;
@@ -155,6 +165,7 @@ body{
         flex-direction: column;
         font-weight: bold;
         padding: 0px 10px 0px 10px;
+        
         .complete-block{
             z-index: 10;
             position: absolute;

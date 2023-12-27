@@ -12,6 +12,8 @@ const body = document.querySelector('body')
 const examBtn = document.querySelector('.exam-btn')
 const ticketExamBlock=document.querySelector('.ticket-and-exam-block')
 const divButtons = document.querySelector(".divButtons");
+
+
 let time;
 let h;
 let ticketItemsHtml = "";
@@ -218,9 +220,9 @@ function getHtml(arr) {
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
-  if (resultOfCorrectlyAnswers.length >= 20) {
+  if (resultOfCorrectlyAnswers.length >= 2) {
     let sum = resultOfCorrectlyAnswers.reduce((sum, num) => sum + num, 0);
-    if (sum >= 2) {
+    if (sum >= 0) {
       return [
         html = `<div  class="divBlockHtml"> 
                         <div class='img-close-block'>
@@ -300,6 +302,7 @@ function getHtml(arr) {
 }
 
 function getStatisticsResult() {
+  scrollToUp()
   let key;
   let statisticCount = 1;
   let help
@@ -502,5 +505,23 @@ function localStorageSaveElements(){
   ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
   divButtons.style.display=localStorage.getItem('divButtons')
 }
-
+function scrollToUp(){
+  const imgScrollUp = document.querySelector('.imgScrollUp')
+  const getTop=()=>window.pageYOffset||document.documentElement.scrollTop;
+  window.addEventListener('scroll',()=>{
+    if(getTop()<1200){
+      imgScrollUp.style.visibility='hidden';
+    }
+    else{
+      imgScrollUp.style.visibility='visible';
+    }
+  });
+  imgScrollUp.addEventListener('click',()=>{
+    window.scrollTo({
+      top:0,
+      left:0,
+      behavior:'smooth'
+    })
+  })
+}
 ticketExamBlock.style.display=localStorage.getItem('ticketExamBlock')
