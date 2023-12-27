@@ -220,9 +220,9 @@ function getHtml(arr) {
   if (document.querySelector(".divBlockHtml")) {
     document.querySelector(".divBlockHtml").remove();
   }
-  if (resultOfCorrectlyAnswers.length >= 2) {
+  if (resultOfCorrectlyAnswers.length >= 20) {
     let sum = resultOfCorrectlyAnswers.reduce((sum, num) => sum + num, 0);
-    if (sum >= 0) {
+    if (sum >= 2) {
       return [
         html = `<div  class="divBlockHtml"> 
                         <div class='img-close-block'>
@@ -301,9 +301,6 @@ function getHtml(arr) {
 ];
 }
 function scrollToUp(){
-  
-}
-function getStatisticsResult() {
   const imgScrollUp = document.querySelector('.imgScrollUp')
   const getTop=()=>window.pageYOffset||document.documentElement.scrollTop;
   window.addEventListener('scroll',()=>{
@@ -321,6 +318,9 @@ function getStatisticsResult() {
       behavior:'smooth'
     })
   })
+}
+function getStatisticsResult() {
+  scrollToUp();
   let key;
   let statisticCount = 1;
   let help

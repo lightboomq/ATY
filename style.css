@@ -108,7 +108,7 @@ body .block-all-elements {
   height: 55px;
   z-index: 99;
   cursor: pointer;
-  bottom: 0;
+  bottom: 15px;
   margin-left: 30px;
 }
 .container .count-question_block {
