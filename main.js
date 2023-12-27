@@ -304,9 +304,9 @@ function getHtml(arr) {
 }
 function scrollToUp(){
   const imgScrollUp = document.querySelector('.imgScrollUp')
-  const getTop=()=>window.pageYOffset||document.documentElement.scrollTop;
   window.addEventListener('scroll',()=>{
-    if(getTop()<1600){
+    console.log(window.scrollY);
+    if(window.scrollY<=1600){
       imgScrollUp.style.visibility='hidden';
     }
     else{
@@ -314,11 +314,9 @@ function scrollToUp(){
     }
   });
   imgScrollUp.addEventListener('click',()=>{
-    window.scrollTo({
-      top:0,
-      left:0,
-      behavior:'smooth'
-    })
+    console.log(`==========================================
+    ===========================================`);
+    window.scroll(0,0)
   })
 }
 function getStatisticsResult() {
