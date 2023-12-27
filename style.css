@@ -180,7 +180,7 @@ body .block-all-elements {
   left: 0;
   bottom: 1;
   right: 0;
-  background-color: #f5f3f3;
+  background-color: white;
   border-radius: 7px;
   align-items: flex-end;
   animation-duration: 0.7s;
@@ -206,6 +206,11 @@ body .block-all-elements {
   margin-top: 80px;
 }
 .container .main .complete-block .complete-btn-block button {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
   width: 160px;
   height: 30px;
   background-color: rgb(191, 196, 196);
@@ -216,7 +221,7 @@ body .block-all-elements {
   color: white;
 }
 .container .main .complete-block .complete-btn-block .btn-no {
-  background-color: rgb(128, 4, 0);
+  background-color: black;
   color: white;
 }
 .container .main .divImagesBlock {
