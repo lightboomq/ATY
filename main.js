@@ -3,6 +3,7 @@ import { ticket_1 } from "./ticket_1/ticket_1.js";
 import { ticket_2 } from "./ticket_2/ticket_2.js";
 import { ticket_3 } from "./ticket_3/ticket_3.js";
 
+const HTML = document.querySelector('html')
 const container = document.querySelector(".container");
 const main = document.querySelector(".main");
 const ticketItemsBlock = document.querySelector(".ticket-items-block");
@@ -12,6 +13,7 @@ const body = document.querySelector('body')
 const examBtn = document.querySelector('.exam-btn')
 const ticketExamBlock=document.querySelector('.ticket-and-exam-block')
 const divButtons = document.querySelector(".divButtons");
+
 
 
 let time;
@@ -475,6 +477,7 @@ function createModalWindow(){
                     <button class="btn-no">Нет</button>
                   </div>`
   body.insertAdjacentHTML('beforeend',blockAllElements)
+  // HTML.style.background='pink'
   main.insertAdjacentHTML('beforeend',completeHtml)
   btnCompleteYes=document.querySelector('.btn-yes')
   btnCompleteNo=document.querySelector('.btn-no')
