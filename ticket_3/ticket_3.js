@@ -1,4 +1,4 @@
-let  ticket_3 = [
+const ticket_3 = [
     {
         id:1,
         img: "./ticket_3/img/1.jpg",

@@ -128,6 +128,8 @@ examBtn.onclick=getRandomItemOfArrayWrapper
 
 const dataExamForSendOnServer = localStorage.getItem('dataExamForSendOnServer')?JSON.parse(localStorage.getItem('dataExamForSendOnServer')):[];
 
+
+
 function getRandomItemOfArrayWrapper(){
   localStorageSaveElements()
   arr = [];
@@ -145,6 +147,9 @@ function getRandomItemOfArrayWrapper(){
     dataExamForSendOnServer.push({ticket: ticketIndex+1,question:i+1});
     arr.push(question);
   }
+
+}
+
   localStorage.setItem('array',JSON.stringify(arr)) 
   localStorage.setItem('timer',2400)
   time=localStorage.getItem('timer')
