@@ -148,7 +148,7 @@ function getRandomItemOfArrayWrapper(){
     arr.push(question);
   }
 
-}
+
 
   localStorage.setItem('array',JSON.stringify(arr)) 
   localStorage.setItem('timer',2400)
