@@ -1,8 +1,8 @@
 
 ////////////////////////////////////--ГЛОБАЛЬНЫЙ МАССИВ--////////////////////////////////////////// 
-// import { ticket_1 } from "./ticket_1/ticket_1.js";
-// import { ticket_2 } from "./ticket_2/ticket_2.js";
-// import { ticket_3 } from "./ticket_3/ticket_3.js";
+import { ticket_1 } from "./ticket_1/ticket_1.js";
+import { ticket_2 } from "./ticket_2/ticket_2.js";
+import { ticket_3 } from "./ticket_3/ticket_3.js";
 
 
 const container = document.querySelector(".container");
@@ -14,41 +14,8 @@ const body = document.querySelector('body')
 const examBtn = document.querySelector('.exam-btn')
 const ticketExamBlock=document.querySelector('.ticket-and-exam-block')
 const divButtons = document.querySelector(".divButtons");
-const send = document.getElementById('sendRequest')
 
 
-const obj = {
-  email:'asgjfjeyerрfa213@gmail.com',
-  password:'12eryр45'
-}
-
-send.addEventListener('click',sendRequest)
-  async function sendRequest(){
-    
-    try{
-      const responce = await fetch('http://localhost:3333/auth/login',{
-      method:'POST',
-      headers: { "Content-Type": "application/json" },
-      body:JSON.stringify(obj)
-    })
-      if(!responce.ok){
-        const errorMessange = await responce.json();
-        console.log(errorMessange);
-        return 
-      }
-      else{
-        const data = await responce.json();
-        console.log(data);
-        return
-      }
-
-    }
-    catch(err){
-      console.log(err);
-    }
-    
-}
-    
 
 let time;
 let h;
