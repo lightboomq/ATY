@@ -1,3 +1,4 @@
+
 ////////////////////////////////////--ГЛОБАЛЬНЫЙ МАССИВ--////////////////////////////////////////// 
 // import { ticket_1 } from "./ticket_1/ticket_1.js";
 // import { ticket_2 } from "./ticket_2/ticket_2.js";
@@ -121,10 +122,7 @@ node.forEach((item) => {
   item.onclick = clickByItemGlobalArr;
 });
 
-
-
 examBtn.onclick=getRandomItemOfArrayWrapper
-
 
 const dataExamForSendOnServer = localStorage.getItem('dataExamForSendOnServer')?JSON.parse(localStorage.getItem('dataExamForSendOnServer')):[];
 
@@ -147,8 +145,6 @@ function getRandomItemOfArrayWrapper(){
     dataExamForSendOnServer.push({ticket: ticketIndex+1,question:i+1});
     arr.push(question);
   }
-
-
 
   localStorage.setItem('array',JSON.stringify(arr)) 
   localStorage.setItem('timer',2400)
