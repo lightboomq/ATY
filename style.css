@@ -186,18 +186,6 @@ body .block-all-elements {
   background-color: white;
   border-radius: 7px;
   align-items: flex-end;
-  animation-duration: 0.7s;
-  animation-name: complete-block-animation;
-}
-@keyframes complete-block-animation {
-  from {
-    width: 400px;
-    height: 180px;
-  }
-  to {
-    width: 470px;
-    height: 220px;
-  }
 }
 .container .main .complete-block h3 {
   margin: auto;

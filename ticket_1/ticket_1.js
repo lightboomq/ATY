@@ -1,4 +1,4 @@
-export let ticket_1 = [
+const ticket_1 = [
     {
         id:1,
         img: "./img/0.jpg",

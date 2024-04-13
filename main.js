@@ -1,9 +1,9 @@
 ////////////////////////////////////--ГЛОБАЛЬНЫЙ МАССИВ--////////////////////////////////////////// 
-import { ticket_1 } from "./ticket_1/ticket_1.js";
-import { ticket_2 } from "./ticket_2/ticket_2.js";
-import { ticket_3 } from "./ticket_3/ticket_3.js";
+// import { ticket_1 } from "./ticket_1/ticket_1.js";
+// import { ticket_2 } from "./ticket_2/ticket_2.js";
+// import { ticket_3 } from "./ticket_3/ticket_3.js";
 
-const HTML = document.querySelector('html')
+
 const container = document.querySelector(".container");
 const main = document.querySelector(".main");
 const ticketItemsBlock = document.querySelector(".ticket-items-block");
@@ -13,8 +13,41 @@ const body = document.querySelector('body')
 const examBtn = document.querySelector('.exam-btn')
 const ticketExamBlock=document.querySelector('.ticket-and-exam-block')
 const divButtons = document.querySelector(".divButtons");
+const send = document.getElementById('sendRequest')
 
 
+const obj = {
+  email:'asgjfjeyerрfa213@gmail.com',
+  password:'12eryр45'
+}
+
+send.addEventListener('click',sendRequest)
+  async function sendRequest(){
+    
+    try{
+      const responce = await fetch('http://localhost:3333/auth/login',{
+      method:'POST',
+      headers: { "Content-Type": "application/json" },
+      body:JSON.stringify(obj)
+    })
+      if(!responce.ok){
+        const errorMessange = await responce.json();
+        console.log(errorMessange);
+        return 
+      }
+      else{
+        const data = await responce.json();
+        console.log(data);
+        return
+      }
+
+    }
+    catch(err){
+      console.log(err);
+    }
+    
+}
+    
 
 let time;
 let h;
@@ -46,7 +79,6 @@ localStorage.getItem('ticketExamBlock')?localStorage.getItem('ticketExamBlock'):
 localStorage.getItem('divButtons')?localStorage.getItem('divButtons'):localStorage.setItem('divButtons','none')
 
 if(localStorage.getItem('str')==='Экзамен'){
-  console.log(true);
    document.querySelector('.count-ticket').textContent=localStorage.getItem('str')
    document.querySelector('.count-ticket').style.color='red'
 }
@@ -89,13 +121,18 @@ node.forEach((item) => {
   item.onclick = clickByItemGlobalArr;
 });
 
+
+
 examBtn.onclick=getRandomItemOfArrayWrapper
 
 
+const dataExamForSendOnServer = localStorage.getItem('dataExamForSendOnServer')?JSON.parse(localStorage.getItem('dataExamForSendOnServer')):[];
+
 function getRandomItemOfArrayWrapper(){
   localStorageSaveElements()
-  arr = []
+  arr = [];
   strHtml=`Экзамен`
+  
   localStorage.setItem('str',strHtml)
   function getRandomItemOfArray(arr){
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -105,9 +142,10 @@ function getRandomItemOfArrayWrapper(){
   for (let i = 0; i <= 19; i++) {
     const ticketIndex = getRandomItemOfArray(globalArr);
     const question = globalArr[ticketIndex][i];
+    dataExamForSendOnServer.push({ticket: ticketIndex+1,question:i+1});
     arr.push(question);
   }
-  localStorage.setItem('array',JSON.stringify(arr))
+  localStorage.setItem('array',JSON.stringify(arr)) 
   localStorage.setItem('timer',2400)
   time=localStorage.getItem('timer')
   timer();
@@ -147,7 +185,17 @@ function getHtmlAnswersFromArr(arr) {
   return objKey.join(" ");
 }
 
+let dataTicketForSendOnServer=[];
+if(localStorage.getItem('dataTicketForSendOnServer')){
+  dataTicketForSendOnServer=localStorage.getItem('dataTicketForSendOnServer').split(',')
+}
+else{
+  dataTicketForSendOnServer=[];
+}
+
+
 function giveCorrectlyAnswer() {
+  
   let answers = document.querySelectorAll("li");
   answers.forEach((answers) => {
     answers.onclick = clickByAnswer;
@@ -158,7 +206,14 @@ function giveCorrectlyAnswer() {
     for (let i = 0; i < answers.length; i++) {
       arrAnswers.push(answers[i].textContent);
     }
+
     indexArrAnswers = arrAnswers.indexOf(e.target.textContent);
+    dataTicketForSendOnServer.push(String(indexArrAnswers+1))
+    localStorage.setItem('dataTicketForSendOnServer',dataTicketForSendOnServer)
+    dataExamForSendOnServer[count].answer = indexArrAnswers+1;
+  
+    localStorage.setItem('dataExamForSendOnServer',JSON.stringify(dataExamForSendOnServer)); 
+    
     arr[count].answers[indexArrAnswers].your_answer = "(Ваш ответ)";
     localStorage.setItem('array',JSON.stringify(arr))
     correctly = arr[count].answers[indexArrAnswers].is_correct;
@@ -194,9 +249,9 @@ function giveCorrectlyAnswer() {
 if(count>0){
   if(localStorage.getItem('str')===`Экзамен`){
     for(let i=0; i<arrForLocalStorage.length; i++){
-        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.backgroundColor = "lightslategray";
-        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.color = "white";
-        NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.border = "1px solid black";
+      NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.backgroundColor = "lightslategray";
+      NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.color = "white";
+      NodeListItemGrid[arrForLocalStorage[i].indexNodeListItemGrid].style.border = "1px solid black";
     }
   }
   else{
@@ -224,7 +279,7 @@ function getHtml(arr) {
   }
   if (resultOfCorrectlyAnswers.length >= 20) {
     let sum = resultOfCorrectlyAnswers.reduce((sum, num) => sum + num, 0);
-    if (sum >= 2) {
+    if (sum >= 3) {
       return [
         html = `<div  class="divBlockHtml"> 
                         <div class='img-close-block'>
@@ -234,7 +289,7 @@ function getHtml(arr) {
                             <h2 class = "examInvalid">${strHtml} не сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${resultOfCorrectlyAnswers.length}<h3/>
                             <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
-                            <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/>  
+                            <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/>                       
                             </div>
                     </div>`,
         main.insertAdjacentHTML("afterbegin", html),
@@ -252,7 +307,7 @@ function getHtml(arr) {
                             <h2 style = "color:green;">${strHtml} сдан</h2>
                             <h3>Правильных ответов: ${sum} из ${result.length}<h3/>
                             <p>Оставшееся время тестирования: ${minutes}:${seconds}<p/>
-                            <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/> 
+                            <h3 class='exam-results'>Результаты тестирования АТУ:</h3><br/>                           
                         </div>
                     </div>`,
         main.insertAdjacentHTML("afterbegin", html),
@@ -305,7 +360,6 @@ function getHtml(arr) {
 function scrollToUp(){
   const imgScrollUp = document.querySelector('.imgScrollUp')
   window.addEventListener('scroll',()=>{
-    console.log(window.scrollY);
     if(window.scrollY<=1600){
       imgScrollUp.style.visibility='hidden';
     }
@@ -314,8 +368,6 @@ function scrollToUp(){
     }
   });
   imgScrollUp.addEventListener('click',()=>{
-    console.log(`==========================================
-    ===========================================`);
     window.scroll(0,0)
   })
 }
@@ -329,11 +381,12 @@ function getStatisticsResult() {
   clearInterval(invalidTimer)
   localStorage.setItem('minutes',minutes)
   localStorage.setItem('seconds',seconds)
+
+ 
   arr.map(obj => {
     document.querySelector('.count-ticket').style.display='none'
     is_correctTrue=obj.answers.findIndex(is_correctTrue=>is_correctTrue.is_correct==true);
     key = obj.answers.map(item => {
-    
       if(item.your_answer=='(Ваш ответ)' && item.is_correct==false){
          help = `<div class="helpBlock">
           <h4>Правильный ответ: ${is_correctTrue+1}</h4>
@@ -367,7 +420,6 @@ function getStatisticsResult() {
 }
 
 function clickByItemGrid(e) {
-
   if(strHtml=='Экзамен'){
     for (let i = 0; i < NodeListItemGrid.length; i++) {
       if (NodeListItemGrid[i].style.backgroundColor != "lightslategray") {
@@ -475,14 +527,12 @@ function createModalWindow(){
                     <button class="btn-no">Нет</button>
                   </div>`
   body.insertAdjacentHTML('beforeend',blockAllElements)
-  // HTML.style.background='pink'
   main.insertAdjacentHTML('beforeend',completeHtml)
   btnCompleteYes=document.querySelector('.btn-yes')
   btnCompleteNo=document.querySelector('.btn-no')
   
   btnCompleteYes.onclick=function(e){
     if(e.target.textContent=='Да'){
-      console.log(true);
       localStorage.clear()
       location.reload();
       return false
@@ -500,7 +550,6 @@ function hideElements() {
     timerBlock.style.display = "none";
     gridBlock.style.display = "none";
     document.querySelector(".count-question").style.display = "none";
-    //document.getElementById(count + 1).style.opacity = "0";
     const idTicketOfArr = document.getElementById(count + 1);
     idTicketOfArr?idTicketOfArr.style.opacity = "0":null
     document.querySelector(".divBlockHtml").style.marginTop = "20px";
