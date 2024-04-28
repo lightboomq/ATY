@@ -247,7 +247,7 @@ function getHtml(arr) {
   }
   if (resultOfCorrectlyAnswers.length >= 20) {
     let sum = resultOfCorrectlyAnswers.reduce((sum, num) => sum + num, 0);
-    if (sum >= 3) {
+    if (sum >= 0) {
       return [
         html = `<div  class="divBlockHtml"> 
                         <div class='img-close-block'>
